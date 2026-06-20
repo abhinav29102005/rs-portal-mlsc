@@ -10,6 +10,9 @@
     "db:seed:projects": "node --env-file=.env.local --import tsx src/db/seed/projects-2026.ts",
     "db:seed:scrape": "node --env-file=.env.local --import tsx src/db/seed/scrape-faculty.ts"
   },
+  "overrides": {
+    "nodemailer": "$nodemailer"
+  },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",
     "@libsql/client": "^0.17.4",
