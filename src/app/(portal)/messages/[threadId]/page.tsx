@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { auth } from "@/lib/auth";
 import { redirect, notFound } from "next/navigation";
 import { db } from "@/db";
