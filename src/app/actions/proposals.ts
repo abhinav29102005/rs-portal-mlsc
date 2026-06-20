@@ -7,6 +7,8 @@ import { studentProfiles } from "@/db/schema/profiles";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
+import { workspaces, workspaceMembers, workspaceSupervisors } from "@/db/schema/workspaces";
+
 export async function submitProposal(formData: FormData) {
   const session = await auth();
   if (!session?.user || session.user.role !== "student") {
@@ -51,8 +53,15 @@ export async function updateProposalStatus(proposalId: string, status: "under_re
     throw new Error("Unauthorized");
   }
 
-  // In a real app, verify that the proposal belongs to this faculty member's profile
-  
+  const proposal = await db.query.proposals.findFirst({
+    where: (p, { eq }) => eq(p.id, proposalId),
+    with: {
+      facultyProfile: true
+    }
+  });
+
+  if (!proposal) throw new Error("Proposal not found");
+
   await db.update(proposals)
     .set({
       status,
@@ -62,6 +71,35 @@ export async function updateProposalStatus(proposalId: string, status: "under_re
     })
     .where(eq(proposals.id, proposalId));
 
+  if (status === "accepted") {
+    const existingWorkspace = await db.query.workspaces.findFirst({
+      where: (w, { eq }) => eq(w.proposalId, proposalId)
+    });
+
+    if (!existingWorkspace) {
+      const [newWorkspace] = await db.insert(workspaces).values({
+        facultyProfileId: proposal.facultyProfileId,
+        proposalId: proposal.id,
+        title: proposal.title,
+        description: proposal.abstract,
+        status: "active"
+      }).returning();
+
+      await db.insert(workspaceMembers).values({
+        workspaceId: newWorkspace.id,
+        studentProfileId: proposal.studentProfileId,
+        role: "lead",
+      });
+
+      await db.insert(workspaceSupervisors).values({
+        workspaceId: newWorkspace.id,
+        userId: proposal.facultyProfile.userId,
+        role: "primary",
+      });
+    }
+  }
+
   revalidatePath("/proposals");
+  revalidatePath("/workspaces");
   return { success: true };
 }
