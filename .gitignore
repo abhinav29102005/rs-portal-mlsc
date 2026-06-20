@@ -45,3 +45,7 @@ next-env.d.ts
 
 # drizzle
 drizzle/
+
+# open-next
+.open-next
+.wrangler

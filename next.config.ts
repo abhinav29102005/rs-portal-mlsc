@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.thapar.edu" },
     ],
   },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "drizzle-orm", "@auth/core"],
+  },
 };
 
 export default nextConfig;
