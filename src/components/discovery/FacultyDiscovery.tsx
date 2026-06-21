@@ -43,7 +43,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
 
   return (
     <Link href={`/discover/faculty/${faculty.id}`}>
-      <motion.div variants={itemVariants} className="card-glass p-6 flex gap-5 hover:border-amber-500/50 hover:bg-white/[0.02] cursor-pointer">
+      <motion.div variants={itemVariants} className="card-glass p-8 flex gap-6 hover:border-amber-500/50 hover:bg-white/[0.02] cursor-pointer">
         {/* Avatar */}
         <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ring-2 ring-amber-500/10 overflow-hidden relative">
           <ImageWithFallback 
@@ -80,7 +80,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
           </div>
 
           {/* Research tags */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="flex flex-wrap gap-2 mt-4">
             {faculty.researchTags.map((tag) => (
               <span key={tag} className="badge badge-amber">
                 {tag}
@@ -89,7 +89,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
           </div>
 
           {/* Bottom stats */}
-          <div className="flex items-center gap-4 mt-3 text-xs text-noir-400">
+          <div className="flex items-center gap-5 mt-5 text-sm text-noir-400">
             <span className="flex items-center gap-1.5">
               <BookOpen size={12} className="text-noir-500" />
               h-index: <span className="text-noir-200 font-medium">{faculty.hIndex}</span>
@@ -246,7 +246,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex-1 space-y-6 min-w-0"
+          className="flex-1 space-y-8 min-w-0"
         >
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-noir-400 font-medium">
