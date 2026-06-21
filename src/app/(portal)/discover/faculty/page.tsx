@@ -35,53 +35,64 @@ export default async function DiscoverFacultyPage() {
 
   const formattedFaculty = [];
 
-  for (const f of facultyDataRaw) {
-    let researchTags: string[] = [];
-    let activeOpeningsCount = 0;
-    
-    if (f.profileId) {
-      // Find all openings for this faculty
-      const facultyOpenings = await db
+  if (facultyDataRaw.length > 0) {
+    const profileIds = facultyDataRaw.map((f) => f.profileId).filter(Boolean) as string[];
+
+    let allOpenings: any[] = [];
+    let allDomains: any[] = [];
+
+    if (profileIds.length > 0) {
+      allOpenings = await db
         .select({
           id: openings.id,
           status: openings.status,
+          facultyProfileId: openings.facultyProfileId,
         })
         .from(openings)
-        .where(eq(openings.facultyProfileId, f.profileId))
+        .where(inArray(openings.facultyProfileId, profileIds))
         .all();
-      
-      const openPositions = facultyOpenings.filter(o => o.status === "open");
-      activeOpeningsCount = openPositions.length;
 
-      const openingIds = facultyOpenings.map(o => o.id);
+      const openingIds = allOpenings.map((o) => o.id);
 
-      // Collect all research domains from these openings to use as tags
       if (openingIds.length > 0) {
-         const domains = await db
-           .select({
-             name: researchDomains.name,
-           })
-           .from(openingDomains)
-           .innerJoin(researchDomains, eq(openingDomains.researchDomainId, researchDomains.id))
-           .where(inArray(openingDomains.openingId, openingIds))
-           .all();
-           
-         // Get unique domain names
-         researchTags = Array.from(new Set(domains.map(d => d.name)));
+        allDomains = await db
+          .select({
+            openingId: openingDomains.openingId,
+            name: researchDomains.name,
+          })
+          .from(openingDomains)
+          .innerJoin(researchDomains, eq(openingDomains.researchDomainId, researchDomains.id))
+          .where(inArray(openingDomains.openingId, openingIds))
+          .all();
       }
     }
 
-    formattedFaculty.push({
-      id: f.id,
-      name: f.name || "Unknown Faculty",
-      designation: f.designation || "Faculty",
-      department: f.department || "Unknown Department",
-      researchTags,
-      hIndex: f.hIndex || 0,
-      openings: activeOpeningsCount,
-      isAccepting: activeOpeningsCount > 0,
-      image: f.image || null,
-    });
+    for (const f of facultyDataRaw) {
+      let researchTags: string[] = [];
+      let activeOpeningsCount = 0;
+
+      if (f.profileId) {
+        const facultyOpenings = allOpenings.filter((o) => o.facultyProfileId === f.profileId);
+        const openPositions = facultyOpenings.filter((o) => o.status === "open");
+        activeOpeningsCount = openPositions.length;
+
+        const facultyOpeningIds = facultyOpenings.map((o) => o.id);
+        const domains = allDomains.filter((d) => facultyOpeningIds.includes(d.openingId));
+        researchTags = Array.from(new Set(domains.map((d) => d.name)));
+      }
+
+      formattedFaculty.push({
+        id: f.id,
+        name: f.name || "Unknown Faculty",
+        designation: f.designation || "Faculty",
+        department: f.department || "Unknown Department",
+        researchTags,
+        hIndex: f.hIndex || 0,
+        openings: activeOpeningsCount,
+        isAccepting: activeOpeningsCount > 0,
+        image: f.image || null,
+      });
+    }
   }
 
   return <FacultyDiscovery initialFaculty={formattedFaculty} />;
