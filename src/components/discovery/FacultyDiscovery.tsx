@@ -241,7 +241,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex-1 space-y-8 min-w-0"
+          className="flex-1 space-y-10 min-w-0"
         >
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-noir-400 font-medium">
