@@ -111,6 +111,12 @@ export const facultyProfiles = sqliteTable("faculty_profiles", {
   isManuallyEdited: integer("is_manually_edited", { mode: "boolean" })
     .default(false)
     .notNull(),
+  projects: text("projects", { mode: "json" })
+    .$type<Array<{ title: string; description: string; url: string }>>()
+    .default([]),
+  publications: text("publications", { mode: "json" })
+    .$type<Array<{ title: string; journal: string; url: string; year: string }>>()
+    .default([]),
   lastSeededAt: integer("last_seeded_at", { mode: "timestamp_ms" }),
   profileCompleteness: integer("profile_completeness").default(0).notNull(),
   onboardingComplete: integer("onboarding_complete", { mode: "boolean" })

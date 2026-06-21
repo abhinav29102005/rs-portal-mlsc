@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
-import { User, Library, Link as LinkIcon, Settings, Save, Loader2, CheckCircle } from "lucide-react";
+import { User, Library, Link as LinkIcon, Settings, Save, Loader2, CheckCircle, FolderGit2, BookOpen, Plus, X } from "lucide-react";
 import { updateFacultyProfile } from "@/app/actions/profiles";
 import { DEPARTMENTS, DESIGNATIONS, MENTORSHIP_STYLES } from "@/db/seed/taxonomy";
 
@@ -29,9 +29,49 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
     githubUsername: initialData.githubUsername || "",
     contactPreference: initialData.contactPreference || "portal_dm",
     minimumCgpa: initialData.minimumCgpa || "",
+    projects: initialData.projects || [],
+    publications: initialData.publications || [],
   });
 
   const [mentoringStyle, setMentoringStyle] = useState<string[]>(parseJsonStr(initialData.mentoringStyle, []));
+
+  const addProject = () => {
+    setFormData(prev => ({ ...prev, projects: [...prev.projects, { title: "", description: "", url: "" }] }));
+    setIsSaved(false);
+  };
+
+  const updateProject = (index: number, field: string, value: string) => {
+    const newProjects = [...formData.projects];
+    newProjects[index] = { ...newProjects[index], [field]: value };
+    setFormData(prev => ({ ...prev, projects: newProjects }));
+    setIsSaved(false);
+  };
+
+  const removeProject = (index: number) => {
+    const newProjects = [...formData.projects];
+    newProjects.splice(index, 1);
+    setFormData(prev => ({ ...prev, projects: newProjects }));
+    setIsSaved(false);
+  };
+
+  const addPublication = () => {
+    setFormData(prev => ({ ...prev, publications: [...prev.publications, { title: "", journal: "", year: "", url: "" }] }));
+    setIsSaved(false);
+  };
+
+  const updatePublication = (index: number, field: string, value: string) => {
+    const newPubs = [...formData.publications];
+    newPubs[index] = { ...newPubs[index], [field]: value };
+    setFormData(prev => ({ ...prev, publications: newPubs }));
+    setIsSaved(false);
+  };
+
+  const removePublication = (index: number) => {
+    const newPubs = [...formData.publications];
+    newPubs.splice(index, 1);
+    setFormData(prev => ({ ...prev, publications: newPubs }));
+    setIsSaved(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -136,6 +176,112 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
             <label className="text-label block mb-2">GitHub Username</label>
             <input name="githubUsername" value={formData.githubUsername} onChange={handleChange} className="input-noir" placeholder="username" />
           </div>
+        </div>
+      </motion.div>
+
+      {/* Publications */}
+      <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="card-glass p-6 sm:p-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <BookOpen className="text-amber-400" size={24} />
+            <h2 className="text-xl font-bold text-noir-50 font-heading">Key Publications</h2>
+          </div>
+          <button type="button" onClick={addPublication} className="btn btn-secondary btn-sm flex items-center gap-1.5">
+            <Plus size={16} /> Add Publication
+          </button>
+        </div>
+        
+        <div className="space-y-6">
+          {formData.publications.length === 0 ? (
+            <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
+              <BookOpen size={32} className="mx-auto text-noir-500 mb-2" />
+              <p className="text-noir-300">Highlight your most impactful papers.</p>
+              <button type="button" onClick={addPublication} className="text-amber-400 hover:text-amber-300 text-sm mt-2 font-medium">Add first publication</button>
+            </div>
+          ) : (
+            formData.publications.map((pub: any, index: number) => (
+              <div key={index} className="relative p-5 bg-black/20 border border-white/5 rounded-xl space-y-4 group">
+                <button 
+                  type="button" 
+                  onClick={() => removePublication(index)}
+                  className="absolute top-4 right-4 text-noir-400 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X size={18} />
+                </button>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <label className="text-label block mb-2">Paper Title</label>
+                    <input value={pub.title} onChange={(e) => updatePublication(index, 'title', e.target.value)} className="input-noir" placeholder="e.g. A novel approach to..." />
+                  </div>
+                  <div>
+                    <label className="text-label block mb-2">Journal / Conference</label>
+                    <input value={pub.journal} onChange={(e) => updatePublication(index, 'journal', e.target.value)} className="input-noir" placeholder="e.g. IEEE Transactions" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-label block mb-2">Year</label>
+                      <input value={pub.year} onChange={(e) => updatePublication(index, 'year', e.target.value)} className="input-noir" placeholder="2024" />
+                    </div>
+                    <div>
+                      <label className="text-label block mb-2">Link (DOI)</label>
+                      <input value={pub.url} onChange={(e) => updatePublication(index, 'url', e.target.value)} className="input-noir" placeholder="https://..." />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </motion.div>
+
+      {/* Projects */}
+      <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.18 }} className="card-glass p-6 sm:p-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <FolderGit2 className="text-amber-400" size={24} />
+            <h2 className="text-xl font-bold text-noir-50 font-heading">Research Projects</h2>
+          </div>
+          <button type="button" onClick={addProject} className="btn btn-secondary btn-sm flex items-center gap-1.5">
+            <Plus size={16} /> Add Project
+          </button>
+        </div>
+        
+        <div className="space-y-6">
+          {formData.projects.length === 0 ? (
+            <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
+              <FolderGit2 size={32} className="mx-auto text-noir-500 mb-2" />
+              <p className="text-noir-300">Showcase your ongoing or completed grants/projects.</p>
+              <button type="button" onClick={addProject} className="text-amber-400 hover:text-amber-300 text-sm mt-2 font-medium">Add first project</button>
+            </div>
+          ) : (
+            formData.projects.map((project: any, index: number) => (
+              <div key={index} className="relative p-5 bg-black/20 border border-white/5 rounded-xl space-y-4 group">
+                <button 
+                  type="button" 
+                  onClick={() => removeProject(index)}
+                  className="absolute top-4 right-4 text-noir-400 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X size={18} />
+                </button>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-label block mb-2">Project Title</label>
+                    <input value={project.title} onChange={(e) => updateProject(index, 'title', e.target.value)} className="input-noir" placeholder="Title..." />
+                  </div>
+                  <div>
+                    <label className="text-label block mb-2">Link (Optional)</label>
+                    <input value={project.url} onChange={(e) => updateProject(index, 'url', e.target.value)} className="input-noir" placeholder="https://..." />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-label block mb-2">Description</label>
+                    <textarea value={project.description} onChange={(e) => updateProject(index, 'description', e.target.value)} className="input-noir min-h-[80px]" placeholder="Briefly describe the research..." />
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </motion.div>
 

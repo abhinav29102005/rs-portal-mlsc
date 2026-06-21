@@ -22,7 +22,6 @@ type FacultyData = {
   designation: string;
   department: string;
   researchTags: string[];
-  hIndex: number;
   openings: number;
   isAccepting: boolean;
   image: string | null;
@@ -90,10 +89,6 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
 
           {/* Bottom stats */}
           <div className="flex items-center gap-5 mt-5 text-sm text-noir-400">
-            <span className="flex items-center gap-1.5">
-              <BookOpen size={12} className="text-noir-500" />
-              h-index: <span className="text-noir-200 font-medium">{faculty.hIndex}</span>
-            </span>
             {faculty.openings > 0 && (
               <span className="flex items-center gap-1.5">
                 <Sparkles size={12} className="text-amber-500" />
