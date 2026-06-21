@@ -18,7 +18,6 @@ import {
   ClipboardList,
   Users,
   Briefcase,
-  Sparkles,
 } from "lucide-react";
 
 interface NavItem {
@@ -110,6 +109,8 @@ interface SidebarProps {
 
 import { RoleSwitcher } from "@/components/dashboard/RoleSwitcher";
 
+import Image from "next/image";
+
 export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
   const pathname = usePathname();
   const filteredItems = navItems.filter((item) => item.roles.includes(role));
@@ -118,8 +119,14 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
     <aside className="bg-sidebar-gradient fixed left-0 top-0 h-screen w-[260px] z-40 flex flex-col">
       {/* Logo */}
       <div className="px-6 py-6 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-          <Sparkles size={18} className="text-noir-950" />
+        <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-lg shadow-amber-500/20">
+          <Image
+            src="/thapar-logo.png"
+            alt="Thapar University Logo"
+            width={36}
+            height={36}
+            className="object-contain"
+          />
         </div>
         <div>
           <h1

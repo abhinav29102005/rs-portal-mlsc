@@ -21,16 +21,16 @@
   --color-noir-50: var(--bg-50);
 
   /* ── Amber Accent ── */
-  --color-amber-950: #451a03;
-  --color-amber-900: #78350f;
-  --color-amber-800: #92400e;
-  --color-amber-700: #b45309;
-  --color-amber-600: #d97706;
-  --color-amber-500: #f59e0b;
-  --color-amber-400: #fbbf24;
-  --color-amber-300: #fcd34d;
-  --color-amber-200: #fde68a;
-  --color-amber-100: #fef3c7;
+  --color-amber-950: #450a0a;
+  --color-amber-900: #7f1d1d;
+  --color-amber-800: #991b1b;
+  --color-amber-700: #b91c1c;
+  --color-amber-600: #dc2626;
+  --color-amber-500: #ef4444;
+  --color-amber-400: #f87171;
+  --color-amber-300: #fca5a5;
+  --color-amber-200: #fecaca;
+  --color-amber-100: #fee2e2;
 
   /* ── Teal Success ── */
   --color-teal-600: #0d9488;
@@ -92,7 +92,7 @@
   
   --bg-glass-1: rgba(255, 250, 240, 0.03);
   --bg-glass-2: rgba(255, 250, 240, 0.01);
-  --border-glass: rgba(245, 158, 11, 0.1);
+  --border-glass: rgba(239, 68, 68, 0.1);
   
   --shadow-color: rgba(0, 0, 0, 0.3);
   --sidebar-gradient-start: rgba(12, 12, 20, 0.95);
@@ -173,9 +173,9 @@ body::before {
 }
 
 .card-glass:hover {
-  border-color: rgba(245, 158, 11, 0.25);
+  border-color: rgba(239, 68, 68, 0.25);
   box-shadow:
-    0 0 0 1px rgba(245, 158, 11, 0.05),
+    0 0 0 1px rgba(239, 68, 68, 0.05),
     0 8px 32px var(--shadow-color),
     inset 0 1px 0 var(--bg-glass-1);
   transform: translateY(-2px);
@@ -198,16 +198,16 @@ body::before {
 
 .glow-amber {
   box-shadow:
-    0 0 20px rgba(245, 158, 11, 0.15),
-    0 0 60px rgba(245, 158, 11, 0.05);
+    0 0 20px rgba(239, 68, 68, 0.15),
+    0 0 60px rgba(239, 68, 68, 0.05);
 }
 
 .glow-amber-sm {
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.1);
 }
 
 .text-glow-amber {
-  text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
 
 /* ═══════════════════════════════════════════
@@ -217,7 +217,7 @@ body::before {
 .bg-hero-gradient {
   background: radial-gradient(
       ellipse 80% 50% at 50% -20%,
-      rgba(245, 158, 11, 0.08) 0%,
+      rgba(239, 68, 68, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
@@ -259,9 +259,9 @@ body::before {
 }
 
 .badge-amber {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(239, 68, 68, 0.12);
   color: var(--color-amber-400);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .badge-teal {
@@ -344,7 +344,7 @@ body::before {
 .status-draft { background: rgba(100, 100, 150, 0.1); color: var(--color-noir-300); }
 
 .status-pending::before { background: var(--color-amber-500); animation: pulse-dot 2s ease-in-out infinite; }
-.status-pending { background: rgba(245, 158, 11, 0.1); color: var(--color-amber-400); }
+.status-pending { background: rgba(239, 68, 68, 0.1); color: var(--color-amber-400); }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
@@ -373,8 +373,8 @@ body::before {
 }
 
 .input-noir:focus {
-  border-color: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
   background: var(--bg-glass-2);
 }
 
@@ -412,12 +412,12 @@ body::before {
 .btn-primary {
   background: linear-gradient(135deg, var(--color-amber-600), var(--color-amber-500));
   color: #000;
-  box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.25);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--color-amber-500), var(--color-amber-400));
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.35);
   transform: translateY(-1px);
 }
 
@@ -429,7 +429,7 @@ body::before {
 
 .btn-secondary:hover {
   background: var(--bg-glass-2);
-  border-color: rgba(245, 158, 11, 0.2);
+  border-color: rgba(239, 68, 68, 0.2);
 }
 
 .btn-ghost {
@@ -576,7 +576,7 @@ body::before {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(245, 158, 11, 0.15),
+    rgba(239, 68, 68, 0.15),
     transparent
   );
   margin: 24px 0;
