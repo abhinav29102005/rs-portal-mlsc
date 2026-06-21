@@ -33,6 +33,12 @@ export const studentProfiles = sqliteTable("student_profiles", {
   preferredEngagement: text("preferred_engagement", { mode: "json" })
     .$type<string[]>()
     .default([]),
+  technicalStack: text("technical_stack", { mode: "json" })
+    .$type<string[]>()
+    .default([]),
+  projects: text("projects", { mode: "json" })
+    .$type<Array<{ title: string; description: string; url: string }>>()
+    .default([]),
   visibility: text("visibility", { enum: ["public", "faculty_only"] })
     .notNull()
     .default("public"),
