@@ -175,9 +175,9 @@ export default async function HomePage() {
         <p>© {new Date().getFullYear()} Thapar Institute of Engineering and Technology.</p>
         <div className="mt-8 flex justify-center items-center gap-2 text-sm">
           <span>Powered by</span>
-          {/* MLSC Logo Placeholder */}
+          {/* MLSC Logo */}
           <div className="w-8 h-8 relative rounded-full overflow-hidden bg-gray-100">
-            <img src="/mlsc-logo.png" alt="MLSC Logo" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+            <img src="/mlsc-logo.png" alt="MLSC Logo" className="w-full h-full object-cover" />
           </div>
           <span className="font-semibold text-gray-800 tracking-wide">MLSC</span>
         </div>
