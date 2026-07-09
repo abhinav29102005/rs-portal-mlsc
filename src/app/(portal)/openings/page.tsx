@@ -217,6 +217,7 @@ async function StudentOpeningsList() {
     coMentors: opening.coMentors,
     facultyName: facultyName,
     domain: null, // Since we don't have domain natively on openings yet
+    skills: opening.prerequisites,
   }));
 
   return <ProjectDiscovery initialProjects={projectData} />;

@@ -163,28 +163,28 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value)}
-                  className="input-noir text-sm"
+                  className="input-noir text-sm bg-white text-gray-900 border-gray-300"
                 >
-                  <option value="" className="bg-noir-900 text-noir-50">All Departments</option>
+                  <option value="">All Departments</option>
                   {DEPARTMENTS.map((d) => (
-                    <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                    <option key={d} value={d}>{d}</option>
                   ))}
-                  <option value="Other / Interdisciplinary" className="bg-noir-900 text-noir-50">Other / Interdisciplinary</option>
+                  <option value="Other / Interdisciplinary">Other / Interdisciplinary</option>
                 </select>
               </div>
 
               {/* Mentorship Domain */}
               {allDomains.length > 0 && (
                 <div>
-                  <label className="text-label block mb-2">Mentorship Domain</label>
+                  <label className="text-label block mb-2">Project Domain</label>
                   <select
                     value={selectedDomain}
                     onChange={(e) => setSelectedDomain(e.target.value)}
-                    className="input-noir text-sm"
+                    className="input-noir text-sm bg-white text-gray-900 border-gray-300"
                   >
-                    <option value="" className="bg-noir-900 text-noir-50">All Domains</option>
+                    <option value="">All Domains</option>
                     {allDomains.map((d) => (
-                      <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                      <option key={d} value={d}>{d}</option>
                     ))}
                   </select>
                 </div>
@@ -278,14 +278,14 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                           const isAvailable = isAvailableNow(hours);
 
                           return (
-                            <div key={mentor.id} className="card-glass p-6 flex flex-col hover:border-red-500/30 transition-colors relative">
+                            <div key={mentor.id} className="card-glass p-6 flex flex-col h-full min-w-0 break-words hover:border-red-500/30 transition-colors relative">
                               {isAvailable && (
                                 <span className="absolute -top-2 -right-2 flex h-4 w-4">
                                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                  <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-noir-950"></span>
+                                  <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-white"></span>
                                 </span>
                               )}
-                              <div className="flex-1">
+                              <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-4 mb-4">
                                   <div className="w-12 h-12 rounded-xl overflow-hidden bg-noir-800 ring-2 ring-red-500/10 relative flex-shrink-0">
                                     {mentor.image ? (
@@ -297,7 +297,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                                     )}
                                   </div>
                                   <div>
-                                    <h3 className="text-lg font-bold text-noir-50 hover:text-red-400 transition-colors">
+                                    <h3 className="text-lg font-bold text-noir-50 hover:text-red-400 transition-colors truncate">
                                       {mentor.type === "faculty" ? (
                                         <Link href={`/discover/faculty/${mentor.userId}`}>{mentor.name}</Link>
                                       ) : (
@@ -314,7 +314,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                                   {mentor.company && (
                                     <div className="flex items-start gap-2 text-noir-300">
                                       <Building2 size={16} className="text-noir-500 mt-0.5 flex-shrink-0" />
-                                      <span>
+                                      <span className="truncate">
                                         At <span className="text-noir-100 font-medium">{mentor.company}</span>
                                       </span>
                                     </div>
@@ -345,9 +345,9 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                                 )}
                               </div>
 
-                              <div className="mt-6 flex flex-col gap-2">
+                              <div className="mt-6 flex flex-col gap-2 pt-4 border-t border-gray-100">
                                 {mentor.type === "faculty" && hours.length > 0 && (
-                                  <button onClick={() => setSelectedMentor(mentor)} className="w-full btn btn-ghost bg-white/5 py-2 text-xs text-noir-200 hover:text-red-400 flex items-center justify-center gap-2">
+                                  <button onClick={() => setSelectedMentor(mentor)} className="w-full btn btn-ghost bg-gray-50 py-2 text-xs text-gray-700 hover:text-red-600 flex items-center justify-center gap-2">
                                     <Calendar size={14} /> View Timetable
                                   </button>
                                 )}

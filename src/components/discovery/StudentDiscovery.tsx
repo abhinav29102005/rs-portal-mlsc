@@ -53,6 +53,9 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
         s.technicalStack.forEach((skill) => skills.add(skill));
       }
     });
+    if (skills.size === 0) {
+      ["Python", "JavaScript", "React", "Next.js", "C++", "PyTorch", "TensorFlow"].forEach(s => skills.add(s));
+    }
     return Array.from(skills).sort();
   }, [initialStudents]);
 
@@ -63,6 +66,11 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
         years.add(s.batchYear);
       }
     });
+    // Fallback if empty database
+    if (years.size === 0) {
+      const currentYear = new Date().getFullYear();
+      [currentYear, currentYear+1, currentYear+2, currentYear+3].forEach(y => years.add(y));
+    }
     return Array.from(years).sort((a, b) => b - a);
   }, [initialStudents]);
 
@@ -73,6 +81,9 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
         s.domains.forEach(d => domainsSet.add(d));
       }
     });
+    if (domainsSet.size === 0) {
+      ["Machine Learning", "Web Development", "Computer Vision", "NLP", "Robotics"].forEach(d => domainsSet.add(d));
+    }
     return Array.from(domainsSet).sort();
   }, [initialStudents]);
 
@@ -176,9 +187,9 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
                           if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
                           else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
                         }}
-                        className="w-4 h-4 rounded border-gray-600 bg-gray-800 text-red-500 focus:ring-red-500 focus:ring-offset-gray-900"
+                        className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
                       />
-                      <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{d}</span>
+                      <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{d}</span>
                     </label>
                   ))}
                 </div>

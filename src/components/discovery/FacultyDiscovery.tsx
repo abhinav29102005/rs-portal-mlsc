@@ -208,12 +208,12 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value)}
-                  className="input-noir text-sm"
+                  className="input-noir text-sm bg-white text-gray-900 border-gray-300"
                   id="dept-filter"
                 >
-                  <option value="" className="bg-noir-900 text-noir-50">All Departments</option>
+                  <option value="">All Departments</option>
                   {DEPARTMENTS.map((d) => (
-                    <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                    <option key={d} value={d}>{d}</option>
                   ))}
                   </select>
                 </div>
@@ -221,16 +221,16 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 {/* Research Domain Filter */}
                 {allDomains.length > 0 && (
                   <div>
-                    <label className="text-label block mb-2">Research Domain</label>
+                    <label className="text-label block mb-2">Project Domain</label>
                     <select
                       value={selectedDomain}
                       onChange={(e) => setSelectedDomain(e.target.value)}
-                      className="input-noir text-sm"
+                      className="input-noir text-sm bg-white text-gray-900 border-gray-300"
                       id="domain-filter"
                     >
-                      <option value="" className="bg-noir-900 text-noir-50">All Domains</option>
+                      <option value="">All Domains</option>
                       {allDomains.map((d) => (
-                        <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                        <option key={d} value={d}>{d}</option>
                       ))}
                     </select>
                   </div>
@@ -243,12 +243,12 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                   <select
                     value={selectedSkill}
                     onChange={(e) => setSelectedSkill(e.target.value)}
-                    className="input-noir text-sm"
+                    className="input-noir text-sm bg-white text-gray-900 border-gray-300"
                     id="skill-filter"
                   >
-                    <option value="" className="bg-noir-900 text-noir-50">All Skills</option>
+                    <option value="">All Skills</option>
                     {allSkills.map((s) => (
-                      <option key={s} value={s} className="bg-noir-900 text-noir-50">{s}</option>
+                      <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
                 </div>

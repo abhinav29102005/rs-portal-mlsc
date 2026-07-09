@@ -29,13 +29,28 @@ export type ProjectData = {
   coMentors: any;
   facultyName: string | null;
   domain: string | null; // Using department or extracting a domain from description for now
+  skills: string[] | null;
 };
 
 export function ProjectDiscovery({ initialProjects }: { initialProjects: ProjectData[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(true);
-  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
   const [selectedEngagement, setSelectedEngagement] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  const allSkills = useMemo(() => {
+    const skills = new Set<string>();
+    initialProjects.forEach(p => {
+      if (p.skills) {
+        p.skills.forEach(s => skills.add(s));
+      }
+    });
+    if (skills.size === 0) {
+      ["Python", "Machine Learning", "React", "Data Analysis", "C++"].forEach(s => skills.add(s));
+    }
+    return Array.from(skills).sort();
+  }, [initialProjects]);
 
   const filteredProjects = initialProjects.filter((p) => {
     if (searchQuery) {
@@ -47,8 +62,9 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
       )
         return false;
     }
-    if (selectedDept && p.department !== selectedDept) return false;
+    if (selectedDepts.length > 0 && (!p.department || !selectedDepts.includes(p.department))) return false;
     if (selectedEngagement && p.engagementType !== selectedEngagement) return false;
+    if (selectedSkills.length > 0 && (!p.skills || !selectedSkills.some(s => p.skills!.includes(s)))) return false;
     return true;
   });
 
@@ -86,17 +102,23 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
 
             {/* Department Filter */}
             <div>
-              <label className="text-label block mb-2">Department</label>
-              <select
-                value={selectedDept}
-                onChange={(e) => setSelectedDept(e.target.value)}
-                className="input-noir text-sm"
-              >
-                <option value="" className="bg-noir-900 text-noir-50">All Departments</option>
+              <label className="text-label block mb-3">Departments</label>
+              <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                 {DEPARTMENTS.map((d) => (
-                  <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                  <label key={d} className="flex items-center gap-2 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={selectedDepts.includes(d)}
+                      onChange={(e) => {
+                        if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
+                        else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
+                      }}
+                      className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                    />
+                    <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{d}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
             </div>
 
             {/* Engagement Type Filter */}
@@ -105,20 +127,44 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
               <select
                 value={selectedEngagement}
                 onChange={(e) => setSelectedEngagement(e.target.value)}
-                className="input-noir text-sm"
+                className="input-noir text-sm bg-white text-gray-900 border-gray-300"
               >
-                <option value="" className="bg-noir-900 text-noir-50">All Types</option>
-                <option value="in_person" className="bg-noir-900 text-noir-50">In-person</option>
-                <option value="remote" className="bg-noir-900 text-noir-50">Remote</option>
-                <option value="hybrid" className="bg-noir-900 text-noir-50">Hybrid</option>
+                <option value="">All Types</option>
+                <option value="in_person">In-person</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
               </select>
             </div>
 
+            {/* Skills Filter */}
+            {allSkills.length > 0 && (
+              <div>
+                <label className="text-label block mb-3">Skills Used</label>
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                  {allSkills.map((s) => (
+                    <label key={s} className="flex items-center gap-2 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={selectedSkills.includes(s)}
+                        onChange={(e) => {
+                          if (e.target.checked) setSelectedSkills([...selectedSkills, s]);
+                          else setSelectedSkills(selectedSkills.filter(skill => skill !== s));
+                        }}
+                        className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                      />
+                      <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{s}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Clear Filters */}
-            {(searchQuery || selectedDept || selectedEngagement) && (
+            {(searchQuery || selectedDepts.length > 0 || selectedEngagement || selectedSkills.length > 0) && (
               <button
                 onClick={() => {
-                  setSelectedDept("");
+                  setSelectedDepts([]);
+                  setSelectedSkills([]);
                   setSelectedEngagement("");
                   setSearchQuery("");
                 }}
