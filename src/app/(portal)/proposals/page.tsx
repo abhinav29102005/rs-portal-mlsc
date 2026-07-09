@@ -13,10 +13,10 @@ export const metadata = { title: "Proposals — TIET Research Portal" };
 
 function getStatusColor(status: string) {
   switch (status) {
-    case "accepted": return "text-emerald-400 bg-emerald-400/10 border-emerald-500/20";
-    case "rejected": return "text-rose-400 bg-rose-400/10 border-rose-500/20";
-    case "under_review": return "text-amber-400 bg-amber-400/10 border-amber-500/20";
-    case "revision_requested": return "text-blue-400 bg-blue-400/10 border-blue-500/20";
+    case "accepted": return "text-red-400 bg-red-400/10 border-red-500/20";
+    case "rejected": return "text-red-400 bg-red-400/10 border-red-500/20";
+    case "under_review": return "text-red-400 bg-red-400/10 border-red-500/20";
+    case "revision_requested": return "text-red-400 bg-red-400/10 border-red-500/20";
     default: return "text-noir-300 bg-noir-800 border-white/10";
   }
 }
@@ -67,7 +67,7 @@ export default async function ProposalsPage() {
         <p className="text-label mb-1">Management</p>
         <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
           Research{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             Proposals
           </span>
         </h1>
@@ -112,7 +112,7 @@ export default async function ProposalsPage() {
                     <p className="text-sm text-noir-300 mb-4 line-clamp-2">{p.abstract}</p>
 
                     <div className="flex items-center gap-3 bg-noir-900/50 p-3 rounded-xl border border-white/5 inline-flex">
-                      <div className="w-8 h-8 rounded-full bg-noir-800 flex items-center justify-center text-amber-400 font-bold overflow-hidden relative">
+                      <div className="w-8 h-8 rounded-full bg-noir-800 flex items-center justify-center text-red-400 font-bold overflow-hidden relative">
                         {otherParty?.image ? (
                           <img src={otherParty.image} alt={otherParty.name} className="object-cover w-full h-full" />
                         ) : (
@@ -129,12 +129,12 @@ export default async function ProposalsPage() {
                   {role === "faculty" && p.status === "submitted" && (
                     <div className="flex flex-col gap-2 min-w-[140px] border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6 justify-center">
                       <form action={async () => { "use server"; await updateProposalStatus(p.id, "accepted"); }}>
-                        <button type="submit" className="btn btn-primary w-full text-xs py-2 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30">
+                        <button type="submit" className="btn btn-primary w-full text-xs py-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30">
                           <CheckCircle size={14} /> Accept
                         </button>
                       </form>
                       <form action={async () => { "use server"; await updateProposalStatus(p.id, "rejected"); }}>
-                        <button type="submit" className="btn btn-secondary w-full text-xs py-2 text-rose-400 hover:text-rose-300 hover:border-rose-500/30">
+                        <button type="submit" className="btn btn-secondary w-full text-xs py-2 text-red-400 hover:text-red-300 hover:border-red-500/30">
                           <XCircle size={14} /> Reject
                         </button>
                       </form>

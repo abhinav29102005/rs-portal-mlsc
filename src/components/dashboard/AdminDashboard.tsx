@@ -98,12 +98,12 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <ShieldCheck size={20} className="text-rose-400" />
+            <ShieldCheck size={20} className="text-red-400" />
             <p className="text-label">Admin Dashboard</p>
           </div>
           <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
             Platform{" "}
-            <span className="bg-gradient-to-r from-rose-400 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-400 bg-clip-text text-transparent">
               Command Center
             </span>
           </h1>
@@ -121,7 +121,7 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id 
-                  ? "bg-noir-800 text-amber-400 shadow-sm ring-1 ring-white/5" 
+                  ? "bg-noir-800 text-red-400 shadow-sm ring-1 ring-white/5" 
                   : "text-noir-400 hover:text-noir-200"
               }`}
             >
@@ -170,11 +170,11 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                   {pendingFaculty.map((faculty) => (
                     <div key={faculty.id} className="card-glass p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full overflow-hidden bg-noir-800 ring-2 ring-amber-500/20">
+                        <div className="w-10 h-10 rounded-full overflow-hidden bg-noir-800 ring-2 ring-red-500/20">
                           {faculty.image ? (
                             <Image src={faculty.image} alt={faculty.name || "Avatar"} width={40} height={40} className="object-cover" unoptimized />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-sm font-bold text-amber-400">
+                            <div className="w-full h-full flex items-center justify-center text-sm font-bold text-red-400">
                               {faculty.name?.[0]?.toUpperCase() || "?"}
                             </div>
                           )}
@@ -188,7 +188,7 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                         <button 
                           onClick={() => handleReject(faculty.id)}
                           disabled={isPending}
-                          className="btn btn-ghost btn-sm text-rose-400 hover:text-rose-300 hover:bg-rose-500/10"
+                          className="btn btn-ghost btn-sm text-red-400 hover:text-red-300 hover:bg-red-500/10"
                         >
                           <XCircle size={16} className="mr-1.5" />
                           Reject
@@ -196,7 +196,7 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                         <button 
                           onClick={() => handleApprove(faculty.id)}
                           disabled={isPending}
-                          className="btn btn-secondary btn-sm border-amber-500/30 text-amber-400 hover:bg-amber-500/10"
+                          className="btn btn-secondary btn-sm border-red-500/30 text-red-400 hover:bg-red-500/10"
                         >
                           <CheckCircle size={16} className="mr-1.5" />
                           Approve
@@ -260,7 +260,7 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                               {u.image ? (
                                 <Image src={u.image} alt={u.name || "User"} width={32} height={32} unoptimized className="object-cover" />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-amber-400">
+                                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-red-400">
                                   {u.name?.[0]?.toUpperCase() || "?"}
                                 </div>
                               )}
@@ -273,8 +273,8 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                         </td>
                         <td className="px-6 py-4">
                           <span className={`badge ${
-                            u.role === 'admin' ? 'badge-rose' : 
-                            u.role === 'faculty' ? 'badge-amber' : 'badge-teal'
+                            u.role === 'admin' ? 'badge-red' : 
+                            u.role === 'faculty' ? 'badge-red' : 'badge-red'
                           }`}>
                             {u.role}
                           </span>
@@ -293,15 +293,15 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
                             {u.status === "suspended" ? (
-                              <button onClick={() => handleActivate(u.id)} disabled={isPending} className="p-1.5 text-emerald-400 hover:bg-emerald-500/10 rounded-md transition-colors" title="Activate User">
+                              <button onClick={() => handleActivate(u.id)} disabled={isPending} className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-md transition-colors" title="Activate User">
                                 <CheckCircle size={16} />
                               </button>
                             ) : (
-                              <button onClick={() => handleSuspend(u.id)} disabled={isPending} className="p-1.5 text-amber-500 hover:bg-amber-500/10 rounded-md transition-colors" title="Suspend User">
+                              <button onClick={() => handleSuspend(u.id)} disabled={isPending} className="p-1.5 text-red-500 hover:bg-red-500/10 rounded-md transition-colors" title="Suspend User">
                                 <Ban size={16} />
                               </button>
                             )}
-                            <button onClick={() => handleDelete(u.id)} disabled={isPending} className="p-1.5 text-rose-500 hover:bg-rose-500/10 rounded-md transition-colors" title="Delete User">
+                            <button onClick={() => handleDelete(u.id)} disabled={isPending} className="p-1.5 text-red-500 hover:bg-red-500/10 rounded-md transition-colors" title="Delete User">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -317,8 +317,8 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
 
         {activeTab === "system" && (
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card-glass p-6 border-amber-500/20">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4">
+            <div className="card-glass p-6 border-red-500/20">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4">
                 <Database size={24} />
               </div>
               <h3 className="text-lg font-bold text-noir-50 font-heading mb-2">Faculty Scraper Pipeline</h3>
@@ -331,8 +331,8 @@ export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: A
               </button>
             </div>
 
-            <div className="card-glass p-6 border-rose-500/20">
-              <div className="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-4">
+            <div className="card-glass p-6 border-red-500/20">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4">
                 <ShieldCheck size={24} />
               </div>
               <h3 className="text-lg font-bold text-noir-50 font-heading mb-2">System Seed Utilities</h3>

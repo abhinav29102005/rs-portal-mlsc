@@ -33,7 +33,7 @@ export function SettingsClient({ user }: { user: { name: string; email: string; 
             onClick={() => setActiveTab(tab.id)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
               activeTab === tab.id
-                ? "bg-amber-500/10 text-amber-400"
+                ? "bg-red-500/10 text-red-400"
                 : "text-noir-300 hover:bg-white/5 hover:text-noir-100"
             }`}
           >
@@ -76,8 +76,8 @@ export function SettingsClient({ user }: { user: { name: string; email: string; 
                 </div>
               </div>
 
-              <div className="card-glass p-8 border-rose-500/20">
-                <h2 className="text-xl font-bold text-rose-400 font-heading mb-2">Sign Out</h2>
+              <div className="card-glass p-8 border-red-500/20">
+                <h2 className="text-xl font-bold text-red-400 font-heading mb-2">Sign Out</h2>
                 <p className="text-sm text-noir-400 mb-6">Log out of your current session.</p>
                 <button onClick={() => signOut()} className="btn btn-destructive">
                   <LogOut size={18} /> Sign Out
@@ -110,12 +110,12 @@ export function SettingsClient({ user }: { user: { name: string; email: string; 
                       onClick={() => setTheme(t.id)}
                       className={`relative flex flex-col items-center justify-center gap-4 p-6 rounded-2xl border transition-all ${
                         theme === t.id
-                          ? "border-amber-500 bg-amber-500/10 text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.15)]"
+                          ? "border-red-500 bg-red-500/10 text-red-400 shadow-[0_0_20px_rgba(245,158,11,0.15)]"
                           : "border-white/10 bg-noir-900 text-noir-400 hover:bg-noir-800 hover:text-noir-200 hover:border-white/20"
                       }`}
                     >
                       {theme === t.id && (
-                        <span className="absolute top-3 right-3 text-amber-400">
+                        <span className="absolute top-3 right-3 text-red-400">
                           <CheckCircle size={16} />
                         </span>
                       )}
@@ -151,7 +151,7 @@ export function SettingsClient({ user }: { user: { name: string; email: string; 
                       <button
                         onClick={() => setNotifications(prev => ({ ...prev, [item.key]: !prev[item.key as keyof typeof notifications] }))}
                         className={`relative w-12 h-6 rounded-full transition-colors ${
-                          notifications[item.key as keyof typeof notifications] ? "bg-amber-500" : "bg-noir-600"
+                          notifications[item.key as keyof typeof notifications] ? "bg-red-500" : "bg-noir-600"
                         }`}
                       >
                         <div

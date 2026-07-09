@@ -26,7 +26,7 @@ export default async function ShortlistsPage() {
   if (!faculty) {
     return (
       <div className="card-glass-static p-12 text-center max-w-2xl mx-auto mt-12">
-        <h1 className="text-2xl font-bold text-rose-400 mb-2 font-heading">Profile Incomplete</h1>
+        <h1 className="text-2xl font-bold text-red-400 mb-2 font-heading">Profile Incomplete</h1>
         <p className="text-noir-400 mb-6">Please complete your faculty profile before accessing shortlists.</p>
         <Link href="/profile" className="btn btn-primary">Go to Profile</Link>
       </div>
@@ -72,7 +72,7 @@ export default async function ShortlistsPage() {
           <p className="text-label mb-1">Recruitment</p>
           <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
             Saved{" "}
-            <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Candidates
             </span>
           </h1>
@@ -119,13 +119,13 @@ export default async function ShortlistsPage() {
                         {c.student.image ? (
                           <Image src={c.student.image} alt={c.student.name || "Student"} fill className="object-cover" unoptimized />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center font-bold text-amber-400 font-heading">
+                          <div className="w-full h-full flex items-center justify-center font-bold text-red-400 font-heading">
                             {c.student.name?.[0] || "?"}
                           </div>
                         )}
                       </div>
                       <div>
-                        <div className="font-bold text-noir-50 group-hover:text-amber-400 transition-colors">
+                        <div className="font-bold text-noir-50 group-hover:text-red-400 transition-colors">
                           {c.student.name}
                         </div>
                         <div className="text-xs text-noir-400 mt-0.5 max-w-[200px] truncate">
@@ -154,7 +154,7 @@ export default async function ShortlistsPage() {
                         </a>
                       )}
                       <form action={async () => { "use server"; await toggleShortlistCandidate(c.student.id); }}>
-                        <button type="submit" className="btn btn-ghost px-2 py-1.5 text-noir-400 hover:text-rose-400 hover:bg-rose-500/10" title="Remove">
+                        <button type="submit" className="btn btn-ghost px-2 py-1.5 text-noir-400 hover:text-red-400 hover:bg-red-500/10" title="Remove">
                           <XCircle size={16} />
                         </button>
                       </form>

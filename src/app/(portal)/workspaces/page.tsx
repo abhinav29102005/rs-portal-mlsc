@@ -50,7 +50,7 @@ export default async function WorkspacesPage() {
           <p className="text-label mb-1">Collaboration</p>
           <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
             Project{" "}
-            <span className="bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Workspaces
             </span>
           </h1>
@@ -81,9 +81,9 @@ export default async function WorkspacesPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {uniqueWorkspaces.map((w: any) => (
-            <div key={w.id} className="card-glass p-6 flex flex-col group hover:border-teal-500/30 transition-all cursor-pointer relative overflow-hidden">
+            <div key={w.id} className="card-glass p-6 flex flex-col group hover:border-red-500/30 transition-all cursor-pointer relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                 <Link href={`/workspaces/${w.id}`} className="w-8 h-8 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-400 hover:bg-teal-500/20">
+                 <Link href={`/workspaces/${w.id}`} className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 hover:bg-red-500/20">
                    <ArrowUpRight size={16} />
                  </Link>
               </div>
@@ -95,7 +95,7 @@ export default async function WorkspacesPage() {
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold text-noir-50 font-heading mb-2 group-hover:text-teal-400 transition-colors line-clamp-2">
+                <h3 className="text-xl font-bold text-noir-50 font-heading mb-2 group-hover:text-red-400 transition-colors line-clamp-2">
                   <Link href={`/workspaces/${w.id}`} className="focus:outline-none">
                     <span className="absolute inset-0" aria-hidden="true" />
                     {w.title}
@@ -112,7 +112,7 @@ export default async function WorkspacesPage() {
                    <Clock size={14} />
                    Started {new Date(w.createdAt).toLocaleDateString()}
                  </div>
-                 <div className="flex items-center gap-1.5 text-teal-400 font-medium">
+                 <div className="flex items-center gap-1.5 text-red-400 font-medium">
                    <Users size={14} />
                    View Team
                  </div>

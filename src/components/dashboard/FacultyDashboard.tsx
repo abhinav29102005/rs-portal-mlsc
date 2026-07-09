@@ -63,12 +63,12 @@ export function FacultyDashboard({
       {/* Greeting */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-3 mb-1">
-          <Sparkles size={20} className="text-amber-400" />
+          <Sparkles size={20} className="text-red-400" />
           <p className="text-label">Faculty Dashboard</p>
         </div>
         <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
           Welcome,{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             {greeting}
           </span>
         </h1>
@@ -148,15 +148,15 @@ export function FacultyDashboard({
           ].map((action) => (
             <Link key={action.href} href={action.href} className="group">
               <div className="card-glass p-5 flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/8 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/15 transition-colors">
-                  <span className="text-amber-400">{action.icon}</span>
+                <div className="w-10 h-10 rounded-xl bg-red-500/8 flex items-center justify-center flex-shrink-0 group-hover:bg-red-500/15 transition-colors">
+                  <span className="text-red-400">{action.icon}</span>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-semibold text-noir-100 group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-sm font-semibold text-noir-100 group-hover:text-red-400 transition-colors">
                       {action.label}
                     </h3>
-                    <ArrowUpRight size={14} className="text-noir-500 group-hover:text-amber-400 transition-all" />
+                    <ArrowUpRight size={14} className="text-noir-500 group-hover:text-red-400 transition-all" />
                   </div>
                   <p className="text-xs text-noir-400 mt-1">{action.description}</p>
                 </div>
@@ -182,14 +182,14 @@ export function FacultyDashboard({
                 ? "Almost there — add a few more details"
                 : "Your profile is complete!"}
             </p>
-            <span className="text-amber-400 font-bold text-lg">{profileCompleteness}%</span>
+            <span className="text-red-400 font-bold text-lg">{profileCompleteness}%</span>
           </div>
           <div className="progress-bar-track">
             <div className="progress-bar-fill" style={{ width: `${profileCompleteness}%` }} />
           </div>
           {profileCompleteness < 100 && (
             <p className="text-xs text-noir-500 mt-3">
-              <Link href="/portfolio" className="text-amber-400/70 hover:text-amber-400 transition-colors">
+              <Link href="/portfolio" className="text-red-400/70 hover:text-red-400 transition-colors">
                 Add your bio, research interests, and office hours
               </Link>{" "}
               to help students find you

@@ -102,12 +102,12 @@ export default async function ThreadPage(props: { params: Promise<{ threadId: st
                 <div 
                   className={`max-w-[75%] p-4 rounded-2xl ${
                     isMe 
-                      ? "bg-amber-500/10 text-amber-50 border border-amber-500/20 rounded-br-sm" 
+                      ? "bg-red-500/10 text-red-50 border border-red-500/20 rounded-br-sm" 
                       : "bg-noir-800/80 text-noir-50 border border-white/5 rounded-bl-sm"
                   }`}
                 >
                   <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                  <span className={`text-[10px] mt-2 block ${isMe ? "text-amber-500/60 text-right" : "text-noir-500"}`}>
+                  <span className={`text-[10px] mt-2 block ${isMe ? "text-red-500/60 text-right" : "text-noir-500"}`}>
                     {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>

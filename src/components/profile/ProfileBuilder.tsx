@@ -115,7 +115,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       {/* Basic Info */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <User className="text-amber-400" size={24} />
+          <User className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Academic Information</h2>
         </div>
         
@@ -154,7 +154,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       {/* Lab & External Links */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Library className="text-amber-400" size={24} />
+          <Library className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Lab & Links</h2>
         </div>
         
@@ -186,7 +186,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <BookOpen className="text-amber-400" size={24} />
+            <BookOpen className="text-red-400" size={24} />
             <h2 className="text-xl font-bold text-noir-50 font-heading">Key Publications</h2>
           </div>
           <button type="button" onClick={addPublication} className="btn btn-secondary btn-sm flex items-center gap-1.5">
@@ -199,7 +199,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
             <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
               <BookOpen size={32} className="mx-auto text-noir-500 mb-2" />
               <p className="text-noir-300">Highlight your most impactful papers.</p>
-              <button type="button" onClick={addPublication} className="text-amber-400 hover:text-amber-300 text-sm mt-2 font-medium">Add first publication</button>
+              <button type="button" onClick={addPublication} className="text-red-400 hover:text-red-300 text-sm mt-2 font-medium">Add first publication</button>
             </div>
           ) : (
             formData.publications.map((pub: any, index: number) => (
@@ -207,7 +207,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
                 <button 
                   type="button" 
                   onClick={() => removePublication(index)}
-                  className="absolute top-4 right-4 text-noir-400 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-4 right-4 text-noir-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <X size={18} />
                 </button>
@@ -242,7 +242,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.18 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <FolderGit2 className="text-amber-400" size={24} />
+            <FolderGit2 className="text-red-400" size={24} />
             <h2 className="text-xl font-bold text-noir-50 font-heading">Research Projects</h2>
           </div>
           <button type="button" onClick={addProject} className="btn btn-secondary btn-sm flex items-center gap-1.5">
@@ -255,7 +255,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
             <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
               <FolderGit2 size={32} className="mx-auto text-noir-500 mb-2" />
               <p className="text-noir-300">Showcase your ongoing or completed grants/projects.</p>
-              <button type="button" onClick={addProject} className="text-amber-400 hover:text-amber-300 text-sm mt-2 font-medium">Add first project</button>
+              <button type="button" onClick={addProject} className="text-red-400 hover:text-red-300 text-sm mt-2 font-medium">Add first project</button>
             </div>
           ) : (
             formData.projects.map((project: any, index: number) => (
@@ -263,7 +263,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
                 <button 
                   type="button" 
                   onClick={() => removeProject(index)}
-                  className="absolute top-4 right-4 text-noir-400 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-4 right-4 text-noir-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <X size={18} />
                 </button>
@@ -291,7 +291,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       {/* Preferences */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Settings className="text-amber-400" size={24} />
+          <Settings className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Mentorship Preferences</h2>
         </div>
         
@@ -320,7 +320,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
                 onClick={() => toggleMentoringStyle(style)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border ${
                   mentoringStyle.includes(style) 
-                    ? "bg-amber-500/20 border-amber-500/50 text-amber-400" 
+                    ? "bg-red-500/20 border-red-500/50 text-red-400" 
                     : "bg-noir-800 border-noir-700 text-noir-300 hover:bg-noir-700 hover:text-noir-100"
                 }`}
               >
@@ -334,7 +334,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       {/* Office Hours / Timetable */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.25 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Clock className="text-amber-400" size={24} />
+          <Clock className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Availability Timetable</h2>
         </div>
         <p className="text-sm text-noir-400 mb-6">Set your weekly availability. This will be visible to students in the Mentor Directory.</p>
@@ -352,7 +352,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
       {/* Actions */}
       <div className="flex items-center justify-end gap-4 sticky bottom-6 z-20 p-4 bg-noir-950/80 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl">
         {isSaved && (
-          <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+          <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 text-red-400 text-sm font-medium">
             <CheckCircle size={16} /> Saved Successfully
           </motion.span>
         )}

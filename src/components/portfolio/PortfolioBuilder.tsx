@@ -103,7 +103,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       {/* Basic Info */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <User className="text-amber-400" size={24} />
+          <User className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Basic Information</h2>
         </div>
         
@@ -155,7 +155,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       {/* Links */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <LinkIcon className="text-amber-400" size={24} />
+          <LinkIcon className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Links & Socials</h2>
         </div>
         
@@ -178,7 +178,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       {/* Technical Stack */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Code className="text-amber-400" size={24} />
+          <Code className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Technical Stack</h2>
         </div>
         
@@ -197,9 +197,9 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
           
           <div className="flex flex-wrap gap-2">
             {formData.technicalStack.map((tech: string) => (
-              <span key={tech} className="badge badge-amber flex items-center gap-1.5 pl-3 pr-1.5 py-1 text-sm">
+              <span key={tech} className="badge badge-red flex items-center gap-1.5 pl-3 pr-1.5 py-1 text-sm">
                 {tech}
-                <button type="button" onClick={() => removeTech(tech)} className="hover:bg-amber-500/20 p-0.5 rounded-full text-amber-500 hover:text-amber-400 transition-colors">
+                <button type="button" onClick={() => removeTech(tech)} className="hover:bg-red-500/20 p-0.5 rounded-full text-red-500 hover:text-red-400 transition-colors">
                   <X size={14} />
                 </button>
               </span>
@@ -215,7 +215,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <FolderGit2 className="text-amber-400" size={24} />
+            <FolderGit2 className="text-red-400" size={24} />
             <h2 className="text-xl font-bold text-noir-50 font-heading">Projects</h2>
           </div>
           <button type="button" onClick={addProject} className="btn btn-secondary btn-sm flex items-center gap-1.5">
@@ -228,7 +228,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
             <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
               <FolderGit2 size={32} className="mx-auto text-noir-500 mb-2" />
               <p className="text-noir-300">Showcase your best work here.</p>
-              <button type="button" onClick={addProject} className="text-amber-400 hover:text-amber-300 text-sm mt-2 font-medium">Add your first project</button>
+              <button type="button" onClick={addProject} className="text-red-400 hover:text-red-300 text-sm mt-2 font-medium">Add your first project</button>
             </div>
           ) : (
             formData.projects.map((project: any, index: number) => (
@@ -236,7 +236,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
                 <button 
                   type="button" 
                   onClick={() => removeProject(index)}
-                  className="absolute top-4 right-4 text-noir-400 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-4 right-4 text-noir-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
                   title="Remove project"
                 >
                   <X size={18} />
@@ -280,7 +280,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       {/* Preferences */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="card-glass p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
-          <Briefcase className="text-amber-400" size={24} />
+          <Briefcase className="text-red-400" size={24} />
           <h2 className="text-xl font-bold text-noir-50 font-heading">Preferences</h2>
         </div>
         
@@ -288,7 +288,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
           <label className="flex items-start gap-4 cursor-pointer group">
             <div className="relative flex items-center mt-1">
               <input type="checkbox" name="openToResearch" checked={formData.openToResearch} onChange={handleChange} className="sr-only" />
-              <div className={`w-12 h-6 rounded-full transition-colors ${formData.openToResearch ? "bg-amber-500" : "bg-noir-600 group-hover:bg-noir-500"}`}>
+              <div className={`w-12 h-6 rounded-full transition-colors ${formData.openToResearch ? "bg-red-500" : "bg-noir-600 group-hover:bg-noir-500"}`}>
                 <div className={`w-4 h-4 rounded-full bg-white shadow transition-transform mt-1 ${formData.openToResearch ? "translate-x-7 ml-0.5" : "translate-x-1"}`} />
               </div>
             </div>
@@ -311,7 +311,7 @@ export function PortfolioBuilder({ initialData }: { initialData: any }) {
       {/* Actions */}
       <div className="flex items-center justify-end gap-4 sticky bottom-6 z-20 p-4 bg-noir-950/80 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl">
         {isSaved && (
-          <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+          <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 text-red-400 text-sm font-medium">
             <CheckCircle size={16} /> Saved Successfully
           </motion.span>
         )}

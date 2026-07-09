@@ -43,10 +43,10 @@ export function ProposalModal({ facultyProfileId, facultyName, isOpen, onClose }
           </button>
           
           <h2 className="text-2xl font-bold text-noir-50 font-heading mb-2">Submit Proposal</h2>
-          <p className="text-sm text-noir-400 mb-6">Propose a research idea to <span className="font-medium text-amber-400">{facultyName}</span>.</p>
+          <p className="text-sm text-noir-400 mb-6">Propose a research idea to <span className="font-medium text-red-400">{facultyName}</span>.</p>
 
           {error && (
-            <div className="p-3 mb-6 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-lg text-sm">
+            <div className="p-3 mb-6 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm">
               {error}
             </div>
           )}

@@ -29,6 +29,7 @@ export type StudentData = {
   cgpa: number | null;
   bio: string | null;
   preferredEngagement: string[] | null;
+  domains: string[] | null;
   technicalStack: string[] | null;
   githubUrl: string | null;
   linkedinUrl: string | null;
@@ -39,10 +40,11 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
   const [students, setStudents] = useState<StudentData[]>(initialStudents);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(true);
-  const [selectedDept, setSelectedDept] = useState("");
-  const [selectedBatchYear, setSelectedBatchYear] = useState<string>("");
+  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
+  const [selectedBatchYears, setSelectedBatchYears] = useState<number[]>([]);
   const [minCgpa, setMinCgpa] = useState<number>(0);
-  const [selectedSkill, setSelectedSkill] = useState<string>("");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const allSkills = useMemo(() => {
     const skills = new Set<string>();
@@ -64,6 +66,16 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
     return Array.from(years).sort((a, b) => b - a);
   }, [initialStudents]);
 
+  const allDomains = useMemo(() => {
+    const domainsSet = new Set<string>();
+    initialStudents.forEach((s) => {
+      if (s.domains) {
+        s.domains.forEach(d => domainsSet.add(d));
+      }
+    });
+    return Array.from(domainsSet).sort();
+  }, [initialStudents]);
+
   const filteredStudents = students.filter((s) => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -74,10 +86,11 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
       )
         return false;
     }
-    if (selectedDept && s.department !== selectedDept) return false;
-    if (selectedBatchYear && s.batchYear !== parseInt(selectedBatchYear)) return false;
+    if (selectedDepts.length > 0 && (!s.department || !selectedDepts.includes(s.department))) return false;
+    if (selectedBatchYears.length > 0 && (!s.batchYear || !selectedBatchYears.includes(s.batchYear))) return false;
     if (minCgpa > 0 && (s.cgpa || 0) < minCgpa) return false;
-    if (selectedSkill && (!s.technicalStack || !s.technicalStack.includes(selectedSkill))) return false;
+    if (selectedSkills.length > 0 && (!s.technicalStack || !selectedSkills.some(skill => s.technicalStack!.includes(skill)))) return false;
+    if (selectedDomains.length > 0 && (!s.domains || !selectedDomains.some(d => s.domains!.includes(d)))) return false;
     return true;
   });
 
@@ -95,12 +108,12 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <Users size={20} className="text-teal-400" />
+            <Users size={20} className="text-red-400" />
             <p className="text-label">Recruitment</p>
           </div>
           <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
             Discover{" "}
-            <span className="bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Students
             </span>
           </h1>
@@ -110,7 +123,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
           </p>
         </div>
         <div className="flex gap-3">
-          <Link href="/shortlists" className="btn btn-secondary bg-teal-500/10 text-teal-400 hover:bg-teal-500/20 border-teal-500/20">
+          <Link href="/shortlists" className="btn btn-secondary bg-red-500/10 text-red-400 hover:bg-red-500/20 border-red-500/20">
             <BookmarkCheck size={16} /> View Shortlist
           </Link>
         </div>
@@ -132,7 +145,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`btn btn-secondary flex items-center gap-2 ${
-            showFilters ? "border-teal-500/30 text-teal-400" : ""
+            showFilters ? "border-red-500/30 text-red-400" : ""
           }`}
           id="toggle-filters"
         >
@@ -150,55 +163,98 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
             className="w-full md:w-64 flex-shrink-0 space-y-5"
           >
             <div className="card-glass-static p-5 space-y-6">
-              {/* Department Filter */}
+              {/* Department Filter (Multi-select via checkboxes) */}
               <div>
-                <label className="text-label block mb-2">Department</label>
-                <select
-                  value={selectedDept}
-                  onChange={(e) => setSelectedDept(e.target.value)}
-                  className="input-noir text-sm"
-                  id="dept-filter"
-                >
-                  <option value="" className="bg-noir-900 text-noir-50">All Departments</option>
+                <label className="text-label block mb-3">Departments</label>
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                   {DEPARTMENTS.map((d) => (
-                    <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                    <label key={d} className="flex items-center gap-2 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={selectedDepts.includes(d)}
+                        onChange={(e) => {
+                          if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
+                          else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
+                        }}
+                        className="w-4 h-4 rounded border-gray-600 bg-gray-800 text-red-500 focus:ring-red-500 focus:ring-offset-gray-900"
+                      />
+                      <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{d}</span>
+                    </label>
                   ))}
-                </select>
+                </div>
               </div>
+
+              {/* Domains Filter */}
+              {allDomains.length > 0 && (
+                <div>
+                  <label className="text-label block mb-3">Research Domains</label>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                    {allDomains.map((domain) => (
+                      <label key={domain} className="flex items-center gap-2 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={selectedDomains.includes(domain)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSelectedDomains([...selectedDomains, domain]);
+                            else setSelectedDomains(selectedDomains.filter(d => d !== domain));
+                          }}
+                          className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                        />
+                        <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{domain}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Skill Filter */}
               {allSkills.length > 0 && (
                 <div>
-                  <label className="text-label block mb-2">Skill / Tech Stack</label>
-                  <select
-                    value={selectedSkill}
-                    onChange={(e) => setSelectedSkill(e.target.value)}
-                    className="input-noir text-sm"
-                    id="skill-filter"
-                  >
-                    <option value="" className="bg-noir-900 text-noir-50">All Skills</option>
+                  <label className="text-label block mb-3">Skills & Tech Stack</label>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                     {allSkills.map((s) => (
-                      <option key={s} value={s} className="bg-noir-900 text-noir-50">{s}</option>
+                      <label key={s} className="flex items-center gap-2 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={selectedSkills.includes(s)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSelectedSkills([...selectedSkills, s]);
+                            else setSelectedSkills(selectedSkills.filter(skill => skill !== s));
+                          }}
+                          className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                        />
+                        <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{s}</span>
+                      </label>
                     ))}
-                  </select>
+                  </div>
                 </div>
               )}
 
               {/* Batch Year Filter */}
               {allBatchYears.length > 0 && (
                 <div>
-                  <label className="text-label block mb-2">Batch Year</label>
-                  <select
-                    value={selectedBatchYear}
-                    onChange={(e) => setSelectedBatchYear(e.target.value)}
-                    className="input-noir text-sm"
-                    id="batch-year-filter"
-                  >
-                    <option value="" className="bg-noir-900 text-noir-50">All Years</option>
+                  <label className="text-label block mb-3">Batch Years</label>
+                  <div className="flex flex-wrap gap-2">
                     {allBatchYears.map((y) => (
-                      <option key={y} value={y.toString()} className="bg-noir-900 text-noir-50">{y}</option>
+                      <button
+                        key={y}
+                        onClick={() => {
+                          if (selectedBatchYears.includes(y)) {
+                            setSelectedBatchYears(selectedBatchYears.filter(year => year !== y));
+                          } else {
+                            setSelectedBatchYears([...selectedBatchYears, y]);
+                          }
+                        }}
+                        className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                          selectedBatchYears.includes(y)
+                            ? "bg-red-500/20 border-red-500 text-red-400"
+                            : "bg-gray-800 border-gray-700 text-gray-400 hover:text-white hover:border-gray-500"
+                        }`}
+                      >
+                        {y}
+                      </button>
                     ))}
-                  </select>
+                  </div>
                 </div>
               )}
 
@@ -212,7 +268,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
                   step="0.1"
                   value={minCgpa}
                   onChange={(e) => setMinCgpa(parseFloat(e.target.value))}
-                  className="w-full accent-teal-500"
+                  className="w-full accent-red-500 h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer"
                   id="cgpa-filter"
                 />
               </div>
@@ -220,9 +276,10 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
               {/* Clear Filters */}
               <button
                 onClick={() => {
-                  setSelectedDept("");
-                  setSelectedSkill("");
-                  setSelectedBatchYear("");
+                  setSelectedDepts([]);
+                  setSelectedSkills([]);
+                  setSelectedDomains([]);
+                  setSelectedBatchYears([]);
                   setMinCgpa(0);
                   setSearchQuery("");
                 }}
@@ -250,14 +307,14 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
           {filteredStudents.length > 0 ? (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               {filteredStudents.map((student) => (
-                <motion.div variants={itemVariants} key={student.id} className="card-glass p-6 flex flex-col hover:border-teal-500/30 transition-colors group relative">
+                <motion.div variants={itemVariants} key={student.id} className="card-glass p-6 flex flex-col hover:border-red-500/30 transition-colors group relative">
                   {/* Shortlist Action Button */}
                   <div className="absolute top-4 right-4 z-10">
                     <button 
                       onClick={() => handleToggleShortlist(student.id)}
                       className={`p-2 rounded-xl transition-all ${
                         student.isSaved 
-                          ? 'bg-teal-500/20 text-teal-400 hover:bg-rose-500/20 hover:text-rose-400' 
+                          ? 'bg-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-red-400' 
                           : 'bg-white/5 text-noir-400 hover:bg-white/10 hover:text-noir-200'
                       }`}
                       title={student.isSaved ? "Remove from Shortlist" : "Add to Shortlist"}
@@ -268,11 +325,11 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
 
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-14 h-14 rounded-2xl overflow-hidden bg-noir-800 ring-2 ring-teal-500/10 relative flex-shrink-0">
+                      <div className="w-14 h-14 rounded-2xl overflow-hidden bg-noir-800 ring-2 ring-red-500/10 relative flex-shrink-0">
                         {student.image ? (
                           <Image src={student.image} alt={student.name || "Student"} fill className="object-cover" unoptimized />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-teal-400 font-heading">
+                          <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-red-400 font-heading">
                             {student.name?.[0] || "?"}
                           </div>
                         )}

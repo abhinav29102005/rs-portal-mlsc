@@ -23,7 +23,7 @@ export function SeededReviewBanner({
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      className="relative p-4 rounded-xl bg-sky-500/8 border border-sky-500/20"
+      className="relative p-4 rounded-xl bg-red-500/8 border border-red-500/20"
     >
       <button
         onClick={() => setDismissed(true)}
@@ -34,8 +34,8 @@ export function SeededReviewBanner({
       </button>
 
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-lg bg-sky-500/15 flex items-center justify-center flex-shrink-0">
-          <AlertCircle size={16} className="text-sky-400" />
+        <div className="w-8 h-8 rounded-lg bg-red-500/15 flex items-center justify-center flex-shrink-0">
+          <AlertCircle size={16} className="text-red-400" />
         </div>
         <div>
           <h4
@@ -48,7 +48,7 @@ export function SeededReviewBanner({
             We&apos;ve imported your profile and{" "}
             {seededOpeningsCount > 0 ? (
               <>
-                <strong className="text-sky-300">
+                <strong className="text-red-300">
                   {seededOpeningsCount} project
                   {seededOpeningsCount > 1 ? "s" : ""}
                 </strong>{" "}
@@ -70,7 +70,7 @@ export function SeededReviewBanner({
             {seededOpeningsCount > 0 && (
               <Link
                 href="/openings"
-                className="btn btn-sm btn-ghost gap-1 text-sky-400"
+                className="btn btn-sm btn-ghost gap-1 text-red-400"
               >
                 Review Projects
                 <ArrowRight size={12} />

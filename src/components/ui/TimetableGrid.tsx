@@ -72,7 +72,7 @@ export function TimetableGrid({ officeHours, onChange, editMode = false }: Timet
           return (
             <div key={day} className="flex flex-col space-y-3">
               {/* Header */}
-              <div className="card-glass-static p-3 text-center rounded-xl bg-noir-900 border-b-2 border-teal-500">
+              <div className="card-glass-static p-3 text-center rounded-xl bg-noir-900 border-b-2 border-red-500">
                 <h3 className="font-bold text-noir-100">{day}</h3>
               </div>
 
@@ -82,13 +82,13 @@ export function TimetableGrid({ officeHours, onChange, editMode = false }: Timet
                   <div key={index} className="card-glass p-3 relative group text-sm border-l-2 border-l-amber-500">
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center gap-1.5 text-noir-100 font-medium">
-                        <Clock size={14} className="text-amber-500" />
+                        <Clock size={14} className="text-red-500" />
                         {slot.startTime} - {slot.endTime}
                       </div>
                       {editMode && (
                         <button 
                           onClick={() => handleDeleteSlot(day, index)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-rose-400 hover:bg-rose-500/20 p-1 rounded"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:bg-red-500/20 p-1 rounded"
                         >
                           <X size={14} />
                         </button>
@@ -112,7 +112,7 @@ export function TimetableGrid({ officeHours, onChange, editMode = false }: Timet
                 {editMode && editingSlot?.day !== day && (
                   <button 
                     onClick={() => handleAddSlot(day)}
-                    className="w-full p-2 flex items-center justify-center gap-2 text-xs text-noir-400 hover:text-teal-400 border border-dashed border-white/10 hover:border-teal-500/30 rounded-xl transition-all"
+                    className="w-full p-2 flex items-center justify-center gap-2 text-xs text-noir-400 hover:text-red-400 border border-dashed border-white/10 hover:border-red-500/30 rounded-xl transition-all"
                   >
                     <Plus size={14} /> Add Slot
                   </button>
@@ -161,7 +161,7 @@ export function TimetableGrid({ officeHours, onChange, editMode = false }: Timet
                       />
                     </div>
                     <div className="flex gap-2 pt-1">
-                      <button onClick={handleSaveSlot} className="flex-1 bg-teal-500/20 text-teal-400 py-1 rounded text-xs hover:bg-teal-500/30">Save</button>
+                      <button onClick={handleSaveSlot} className="flex-1 bg-red-500/20 text-red-400 py-1 rounded text-xs hover:bg-red-500/30">Save</button>
                       <button onClick={() => setEditingSlot(null)} className="flex-1 bg-white/5 text-noir-300 py-1 rounded text-xs hover:bg-white/10">Cancel</button>
                     </div>
                   </div>

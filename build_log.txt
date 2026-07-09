@@ -1,0 +1,62 @@
+
+> rs-portal-mlsc@0.1.0 build
+> npx @opennextjs/cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+App directory: /mnt/storage/Projects/rs-portal-mlsc
+Next.js version : 16.2.9
+@opennextjs/cloudflare version: 1.19.11
+@opennextjs/aws version: 4.0.2
+WARN workerd compatibility_date: 2024-09-23, consider updating your wrangler config to a more recent date to benefit from the latest features and fixes.
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+▲ Next.js 16.2.9 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · optimizePackageImports
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.5s
+  Running TypeScript ...
+Failed to type check.
+
+./src/app/(portal)/discover/students/page.tsx:79:23
+Type error: Type '{ isSaved: boolean; id: string; userId: string; name: string | null; image: string | null; department: string | null; program: string | null; batchYear: number | null; cgpa: number | null; ... 4 more ...; linkedinUrl: string | null; }[]' is not assignable to type 'StudentData[]'.
+  Property 'domains' is missing in type '{ isSaved: boolean; id: string; userId: string; name: string | null; image: string | null; department: string | null; program: string | null; batchYear: number | null; cgpa: number | null; ... 4 more ...; linkedinUrl: string | null; }' but required in type 'StudentData'.
+
+  [90m77 |[0m
+  [90m78 |[0m   [36mreturn[0m (
+[31m[1m>[0m [90m79 |[0m     <[33mStudentDiscovery[0m initialStudents={initialStudents} />
+  [90m   |[0m                       [31m[1m^[0m
+  [90m80 |[0m   );
+  [90m81 |[0m }
+  [90m82 |[0m
+Next.js build worker exited with code: 1 and signal: null
+node:internal/errors:983
+  const err = new Error(message);
+              ^
+
+Error: Command failed: next build
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at Object.execSync (node:child_process:988:15)
+    at buildNextjsApp (file:///mnt/storage/Projects/rs-portal-mlsc/node_modules/@opennextjs/aws/dist/build/buildNextApp.js:15:8)
+    at build (file:///mnt/storage/Projects/rs-portal-mlsc/node_modules/@opennextjs/cloudflare/dist/cli/build/build.js:63:9)
+    at async buildCommand (file:///mnt/storage/Projects/rs-portal-mlsc/node_modules/@opennextjs/cloudflare/dist/cli/commands/build.js:40:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 471281,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v22.22.0

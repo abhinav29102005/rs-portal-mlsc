@@ -68,7 +68,7 @@ export function CoMentorField({
             className="absolute top-3 right-3 btn btn-ghost btn-sm p-1 opacity-0 group-hover:opacity-100 transition-opacity"
             title="Remove co-mentor"
           >
-            <Trash2 size={14} className="text-rose-400" />
+            <Trash2 size={14} className="text-red-400" />
           </button>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -96,13 +96,13 @@ export function CoMentorField({
                   <span title="Matched to existing faculty profile" className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
                     <CheckCircle
                       size={16}
-                      className="text-teal-400"
+                      className="text-red-400"
                     />
                   </span>
                 )}
               </div>
               {cm.email && matchedEmails.has(cm.email.toLowerCase()) && (
-                <p className="text-[11px] text-teal-400 mt-1 flex items-center gap-1">
+                <p className="text-[11px] text-red-400 mt-1 flex items-center gap-1">
                   <CheckCircle size={10} />
                   Matched to existing profile
                 </p>

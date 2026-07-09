@@ -159,7 +159,7 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
                 transition-all duration-200 group
                 ${
                   isActive
-                    ? "text-amber-400 bg-amber-500/8"
+                    ? "text-red-400 bg-red-500/8"
                     : "text-noir-300 hover:text-noir-100 hover:bg-white/[0.03]"
                 }
               `}
@@ -167,13 +167,13 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
               {isActive && (
                 <motion.div
                   layoutId="sidebar-active"
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-amber-500"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-red-500"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
               <span
                 className={`transition-colors ${
-                  isActive ? "text-amber-400" : "text-noir-400 group-hover:text-noir-200"
+                  isActive ? "text-red-400" : "text-noir-400 group-hover:text-noir-200"
                 }`}
               >
                 {item.icon}

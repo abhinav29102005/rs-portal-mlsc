@@ -64,7 +64,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
           <div className="card-glass-static p-5 space-y-6">
             <div className="flex items-center justify-between pb-4 border-b border-white/5">
               <div className="flex items-center gap-2 text-noir-200 font-medium">
-                <SlidersHorizontal size={18} className="text-amber-400" />
+                <SlidersHorizontal size={18} className="text-red-400" />
                 Filters
               </div>
             </div>
@@ -122,7 +122,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
                   setSelectedEngagement("");
                   setSearchQuery("");
                 }}
-                className="w-full py-2 text-xs font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 rounded-xl transition-colors border border-rose-500/20"
+                className="w-full py-2 text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-colors border border-red-500/20"
               >
                 Clear All Filters
               </button>
@@ -145,7 +145,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`lg:hidden btn btn-secondary btn-sm flex items-center gap-2 ${
-              showFilters ? "border-amber-500/30 text-amber-400" : ""
+              showFilters ? "border-red-500/30 text-red-400" : ""
             }`}
           >
             <SlidersHorizontal size={14} />
@@ -159,17 +159,17 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
               <motion.div variants={itemVariants} key={opening.id}>
                 <Link
                   href={`/openings/${opening.id}`}
-                  className="card-glass p-5 space-y-3 group hover:border-amber-500/30 transition-colors block h-full flex flex-col"
+                  className="card-glass p-5 space-y-3 group hover:border-red-500/30 transition-colors block h-full flex flex-col"
                 >
                   <div className="flex justify-between items-start">
                     <div>
                       <h3
-                        className="heading-3 text-noir-50 line-clamp-2 mb-1 group-hover:text-amber-400 transition-colors"
+                        className="heading-3 text-noir-50 line-clamp-2 mb-1 group-hover:text-red-400 transition-colors"
                         style={{ fontFamily: "var(--font-heading)" }}
                       >
                         {opening.title}
                       </h3>
-                      <p className="text-sm text-amber-400">{opening.facultyName || "Faculty Member"}</p>
+                      <p className="text-sm text-red-400">{opening.facultyName || "Faculty Member"}</p>
                     </div>
                     <ExternalLink size={16} className="text-noir-500 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                   </div>
@@ -180,13 +180,13 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
 
                   <div className="flex flex-wrap gap-2 pt-2 mt-auto">
                     {opening.department && (
-                      <span className="badge badge-amber">{opening.department}</span>
+                      <span className="badge badge-red">{opening.department}</span>
                     )}
                     {opening.engagementType && (
-                      <span className="badge badge-teal">{opening.engagementType.replace("_", "-")}</span>
+                      <span className="badge badge-red">{opening.engagementType.replace("_", "-")}</span>
                     )}
                     {opening.stipendType && (
-                      <span className="badge badge-sky">
+                      <span className="badge badge-red">
                         {opening.stipendType}
                         {opening.stipendAmount && ` — ${opening.stipendAmount}`}
                       </span>

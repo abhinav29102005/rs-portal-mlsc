@@ -59,7 +59,7 @@ export default async function EventDetailPage({
     <div className="max-w-3xl mx-auto space-y-6">
       <Link
         href="/events"
-        className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-amber-400 transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors"
       >
         <ArrowLeft size={16} />
         Back to Events
@@ -67,11 +67,11 @@ export default async function EventDetailPage({
 
       <div className="card-glass-static p-8">
         <div className="flex items-start justify-between mb-6">
-          <span className="badge badge-amber text-sm px-3 py-1">
+          <span className="badge badge-red text-sm px-3 py-1">
             {event.eventType}
           </span>
           {event.status === "cancelled" && (
-            <span className="badge badge-rose">Cancelled</span>
+            <span className="badge badge-red">Cancelled</span>
           )}
         </div>
 
@@ -105,7 +105,7 @@ export default async function EventDetailPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05] mb-8">
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <Calendar className="text-amber-400 mt-0.5" size={18} />
+              <Calendar className="text-red-400 mt-0.5" size={18} />
               <div>
                 <p className="text-xs text-noir-400 mb-0.5">Date</p>
                 <p className="text-sm text-noir-100 font-medium">
@@ -120,7 +120,7 @@ export default async function EventDetailPage({
             </div>
 
             <div className="flex items-start gap-3">
-              <Clock className="text-amber-400 mt-0.5" size={18} />
+              <Clock className="text-red-400 mt-0.5" size={18} />
               <div>
                 <p className="text-xs text-noir-400 mb-0.5">Time</p>
                 <p className="text-sm text-noir-100 font-medium">
@@ -145,7 +145,7 @@ export default async function EventDetailPage({
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <MapPin className="text-amber-400 mt-0.5" size={18} />
+              <MapPin className="text-red-400 mt-0.5" size={18} />
               <div>
                 <p className="text-xs text-noir-400 mb-0.5">Location</p>
                 <p className="text-sm text-noir-100 font-medium">
@@ -155,7 +155,7 @@ export default async function EventDetailPage({
             </div>
 
             <div className="flex items-start gap-3">
-              <Users className="text-amber-400 mt-0.5" size={18} />
+              <Users className="text-red-400 mt-0.5" size={18} />
               <div>
                 <p className="text-xs text-noir-400 mb-0.5">Capacity</p>
                 <p className="text-sm text-noir-100 font-medium">
@@ -186,7 +186,7 @@ export default async function EventDetailPage({
               This event has already taken place
             </div>
           ) : event.status === "cancelled" ? (
-            <div className="flex items-center gap-2 justify-center p-4 rounded-xl bg-rose-500/10 text-rose-400 text-sm">
+            <div className="flex items-center gap-2 justify-center p-4 rounded-xl bg-red-500/10 text-red-400 text-sm">
               <Info size={16} />
               This event was cancelled by the host
             </div>

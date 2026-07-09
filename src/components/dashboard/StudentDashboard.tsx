@@ -50,24 +50,24 @@ function StatCard({
 }) {
   const colors = {
     amber: {
-      bg: "bg-amber-500/10",
-      text: "text-amber-400",
-      border: "border-amber-500/15",
+      bg: "bg-red-500/10",
+      text: "text-red-400",
+      border: "border-red-500/15",
     },
     teal: {
-      bg: "bg-teal-500/10",
-      text: "text-teal-400",
-      border: "border-teal-500/15",
+      bg: "bg-red-500/10",
+      text: "text-red-400",
+      border: "border-red-500/15",
     },
     sky: {
-      bg: "bg-sky-500/10",
-      text: "text-sky-400",
-      border: "border-sky-500/15",
+      bg: "bg-red-500/10",
+      text: "text-red-400",
+      border: "border-red-500/15",
     },
     rose: {
-      bg: "bg-rose-500/10",
-      text: "text-rose-400",
-      border: "border-rose-500/15",
+      bg: "bg-red-500/10",
+      text: "text-red-400",
+      border: "border-red-500/15",
     },
   }[color];
 
@@ -80,7 +80,7 @@ function StatCard({
           <span className={colors.text}>{icon}</span>
         </div>
         {trend && (
-          <span className="flex items-center gap-1 text-xs text-emerald-400">
+          <span className="flex items-center gap-1 text-xs text-red-400">
             <TrendingUp size={12} />
             {trend}
           </span>
@@ -108,17 +108,17 @@ function QuickAction({
   return (
     <Link href={href} className="group">
       <div className="card-glass p-5 flex items-start gap-4">
-        <div className="w-10 h-10 rounded-xl bg-amber-500/8 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/15 transition-colors">
-          <span className="text-amber-400">{icon}</span>
+        <div className="w-10 h-10 rounded-xl bg-red-500/8 flex items-center justify-center flex-shrink-0 group-hover:bg-red-500/15 transition-colors">
+          <span className="text-red-400">{icon}</span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-noir-100 group-hover:text-amber-400 transition-colors">
+            <h3 className="text-sm font-semibold text-noir-100 group-hover:text-red-400 transition-colors">
               {label}
             </h3>
             <ArrowUpRight
               size={14}
-              className="text-noir-500 group-hover:text-amber-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="text-noir-500 group-hover:text-red-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </div>
           <p className="text-xs text-noir-400 mt-1">{description}</p>
@@ -147,7 +147,7 @@ export function StudentDashboard({
       {/* Greeting */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-3 mb-1">
-          <Sparkles size={20} className="text-amber-400" />
+          <Sparkles size={20} className="text-red-400" />
           <p className="text-label">Student Dashboard</p>
         </div>
         <h1
@@ -155,7 +155,7 @@ export function StudentDashboard({
           style={{ fontFamily: "var(--font-heading)" }}
         >
           Welcome back,{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             {firstName}
           </span>
         </h1>

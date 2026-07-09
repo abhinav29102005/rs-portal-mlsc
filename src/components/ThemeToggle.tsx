@@ -34,7 +34,7 @@ export function ThemeToggle() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-9 h-9 rounded-full flex items-center justify-center text-noir-300 hover:text-amber-400 hover:bg-white/5 transition-colors focus:outline-none"
+        className="w-9 h-9 rounded-full flex items-center justify-center text-noir-300 hover:text-red-400 hover:bg-white/5 transition-colors focus:outline-none"
         aria-label="Toggle theme"
       >
         {currentIcon}
@@ -64,7 +64,7 @@ export function ThemeToggle() {
                 }}
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
                   theme === "light"
-                    ? "bg-amber-500/10 text-amber-500 font-medium"
+                    ? "bg-red-500/10 text-red-500 font-medium"
                     : "text-noir-200 hover:bg-white/5 hover:text-noir-50"
                 }`}
               >
@@ -77,7 +77,7 @@ export function ThemeToggle() {
                 }}
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors mt-1 ${
                   theme === "dark"
-                    ? "bg-amber-500/10 text-amber-500 font-medium"
+                    ? "bg-red-500/10 text-red-500 font-medium"
                     : "text-noir-200 hover:bg-white/5 hover:text-noir-50"
                 }`}
               >
@@ -90,7 +90,7 @@ export function ThemeToggle() {
                 }}
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors mt-1 ${
                   theme === "system"
-                    ? "bg-amber-500/10 text-amber-500 font-medium"
+                    ? "bg-red-500/10 text-red-500 font-medium"
                     : "text-noir-200 hover:bg-white/5 hover:text-noir-50"
                 }`}
               >

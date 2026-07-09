@@ -98,7 +98,7 @@ export default async function MessagesInboxPage() {
             <Link 
               key={thread.id} 
               href={`/messages/${thread.id}`}
-              className="card-glass p-5 flex items-center gap-5 hover:border-amber-500/50 hover:bg-white/[0.02] transition-colors group block"
+              className="card-glass p-5 flex items-center gap-5 hover:border-red-500/50 hover:bg-white/[0.02] transition-colors group block"
             >
               <div className="w-12 h-12 rounded-xl flex-shrink-0 ring-2 ring-white/5 overflow-hidden relative bg-noir-800 flex items-center justify-center">
                 <ImageWithFallback 
@@ -112,7 +112,7 @@ export default async function MessagesInboxPage() {
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-bold text-noir-50 text-sm group-hover:text-amber-400 transition-colors truncate">
+                  <h3 className="font-bold text-noir-50 text-sm group-hover:text-red-400 transition-colors truncate">
                     {otherParticipant?.name || "Unknown User"}
                   </h3>
                   {latestMessage && (

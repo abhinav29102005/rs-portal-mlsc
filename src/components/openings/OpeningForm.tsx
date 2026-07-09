@@ -216,14 +216,14 @@ export function OpeningForm({
           {mode === "create" ? (
             <>
               Post a{" "}
-              <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
                 Project
               </span>
             </>
           ) : (
             <>
               Edit{" "}
-              <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
                 Posting
               </span>
             </>
@@ -233,9 +233,9 @@ export function OpeningForm({
 
       {/* Active proposals warning */}
       {mode === "edit" && hasActiveProposals && (
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-500/8 border border-amber-500/20">
-          <AlertTriangle size={18} className="text-amber-400 mt-0.5 flex-shrink-0" />
-          <p className="text-sm text-amber-300">
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/8 border border-red-500/20">
+          <AlertTriangle size={18} className="text-red-400 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-red-300">
             Students have already applied to this posting. Changing requirements
             won&apos;t notify them automatically.
           </p>
@@ -250,7 +250,7 @@ export function OpeningForm({
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-sm text-rose-300"
+          className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-300"
         >
           {error}
         </motion.div>
@@ -269,7 +269,7 @@ export function OpeningForm({
             <div className="card-glass-static p-6 space-y-5">
               <div>
                 <label className="text-label mb-2 block">
-                  Project Title <span className="text-rose-400">*</span>
+                  Project Title <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -286,7 +286,7 @@ export function OpeningForm({
 
               <div>
                 <label className="text-label mb-2 block">
-                  Department <span className="text-rose-400">*</span>
+                  Department <span className="text-red-400">*</span>
                 </label>
                 <select
                   className="input-noir"
@@ -305,7 +305,7 @@ export function OpeningForm({
               <div>
                 <label className="text-label mb-2 block">
                   Project Description / Abstract{" "}
-                  <span className="text-rose-400">*</span>
+                  <span className="text-red-400">*</span>
                 </label>
                 <textarea
                   className="input-noir min-h-[160px] resize-y"
@@ -332,7 +332,7 @@ export function OpeningForm({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="text-label mb-2 block">
-                    Engagement Type <span className="text-rose-400">*</span>
+                    Engagement Type <span className="text-red-400">*</span>
                   </label>
                   <select
                     className="input-noir"
@@ -476,17 +476,17 @@ export function OpeningForm({
 
                       <div className="flex flex-wrap gap-2">
                         {form.department && (
-                          <span className="badge badge-amber">
+                          <span className="badge badge-red">
                             {form.department}
                           </span>
                         )}
                         {form.engagementType && (
-                          <span className="badge badge-teal">
+                          <span className="badge badge-red">
                             {form.engagementType}
                           </span>
                         )}
                         {form.stipendType && (
-                          <span className="badge badge-sky">
+                          <span className="badge badge-red">
                             {form.stipendType}
                             {form.stipendAmount && ` — ${form.stipendAmount}`}
                           </span>

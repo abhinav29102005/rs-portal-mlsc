@@ -19,13 +19,13 @@ export function RecommendationWidget({
   const isStudent = type === "student";
 
   return (
-    <div className="card-glass p-6 border-amber-500/20 relative overflow-hidden">
+    <div className="card-glass p-6 border-red-500/20 relative overflow-hidden">
       {/* Decorative gradient orb */}
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/20 blur-[80px] rounded-full pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/20 blur-[80px] rounded-full pointer-events-none" />
 
       <div className="flex items-center gap-3 mb-6 relative z-10">
-        <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-          <Sparkles size={20} className="text-amber-400" />
+        <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+          <Sparkles size={20} className="text-red-400" />
         </div>
         <div>
           <h2
@@ -34,7 +34,7 @@ export function RecommendationWidget({
           >
             Recommended for You
           </h2>
-          <p className="text-sm text-amber-400/80">
+          <p className="text-sm text-red-400/80">
             Based on your {isStudent ? "skills and interests" : "research domains"}
           </p>
         </div>
@@ -52,20 +52,20 @@ export function RecommendationWidget({
                   {isStudent ? match.item.title : match.item.name}
                 </h3>
                 {isStudent ? (
-                  <Briefcase size={16} className="text-amber-400 flex-shrink-0" />
+                  <Briefcase size={16} className="text-red-400 flex-shrink-0" />
                 ) : (
-                  <User size={16} className="text-amber-400 flex-shrink-0" />
+                  <User size={16} className="text-red-400 flex-shrink-0" />
                 )}
               </div>
               
               {isStudent && match.item.department && (
-                <span className="badge badge-amber text-[10px] mb-3">
+                <span className="badge badge-red text-[10px] mb-3">
                   {match.item.department}
                 </span>
               )}
 
               {!isStudent && match.item.department && (
-                <span className="badge badge-teal text-[10px] mb-3">
+                <span className="badge badge-red text-[10px] mb-3">
                   {match.item.department}
                 </span>
               )}
@@ -73,7 +73,7 @@ export function RecommendationWidget({
               <div className="space-y-1 mb-4">
                 {match.matchReasons.slice(0, 2).map((reason, i) => (
                   <p key={i} className="text-xs text-noir-400 flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-amber-400/50" />
+                    <span className="w-1 h-1 rounded-full bg-red-400/50" />
                     {reason}
                   </p>
                 ))}
@@ -87,7 +87,7 @@ export function RecommendationWidget({
                     ? `/openings/${match.item.id}` // Assuming there's a details page or they go to openings
                     : `/discover/students?q=${encodeURIComponent(match.item.name)}`
                 }
-                className="flex items-center justify-between text-xs text-amber-400 hover:text-amber-300 transition-colors group"
+                className="flex items-center justify-between text-xs text-red-400 hover:text-red-300 transition-colors group"
               >
                 View Details
                 <ArrowRight

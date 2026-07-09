@@ -36,7 +36,7 @@ export default async function AlumniDiscoveryPage() {
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Alumni{" "}
-            <span className="bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Mentors
             </span>
           </h1>
@@ -71,7 +71,7 @@ export default async function AlumniDiscoveryPage() {
                 <div className="space-y-2 mt-3 text-sm">
                   {profile.currentRole && profile.currentCompany && (
                     <div className="flex items-start gap-2 text-noir-300">
-                      <Building2 size={16} className="text-teal-400 mt-0.5 flex-shrink-0" />
+                      <Building2 size={16} className="text-red-400 mt-0.5 flex-shrink-0" />
                       <span>
                         {profile.currentRole} at{" "}
                         <span className="text-noir-100 font-medium">
@@ -120,7 +120,7 @@ export default async function AlumniDiscoveryPage() {
                     href={profile.linkedinUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-between text-sm text-teal-400 hover:text-teal-300 transition-colors group"
+                    className="flex items-center justify-between text-sm text-red-400 hover:text-red-300 transition-colors group"
                   >
                     Connect on LinkedIn
                     <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

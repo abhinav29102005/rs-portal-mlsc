@@ -52,7 +52,7 @@ export default async function EventsPage() {
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Events &{" "}
-            <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Seminars
             </span>
           </h1>
@@ -93,9 +93,9 @@ export default async function EventsPage() {
               >
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="badge badge-amber">{event.eventType}</span>
+                    <span className="badge badge-red">{event.eventType}</span>
                     {isToday && (
-                      <span className="badge badge-rose animate-pulse">Today</span>
+                      <span className="badge badge-red animate-pulse">Today</span>
                     )}
                   </div>
 
@@ -106,7 +106,7 @@ export default async function EventsPage() {
                     {event.title}
                   </h3>
 
-                  <p className="text-sm text-amber-400 mb-4 line-clamp-1">
+                  <p className="text-sm text-red-400 mb-4 line-clamp-1">
                     {hostName || "TIET Faculty"}{" "}
                     {hostDepartment && (
                       <span className="text-noir-500">— {hostDepartment}</span>

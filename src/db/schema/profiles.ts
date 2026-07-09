@@ -33,6 +33,9 @@ export const studentProfiles = sqliteTable("student_profiles", {
   preferredEngagement: text("preferred_engagement", { mode: "json" })
     .$type<string[]>()
     .default([]),
+  domains: text("domains", { mode: "json" })
+    .$type<string[]>()
+    .default([]),
   technicalStack: text("technical_stack", { mode: "json" })
     .$type<string[]>()
     .default([]),

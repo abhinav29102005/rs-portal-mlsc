@@ -14,7 +14,7 @@ export default async function SettingsPage() {
         <p className="text-label mb-1">Preferences</p>
         <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
           Account{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             Settings
           </span>
         </h1>

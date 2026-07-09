@@ -80,7 +80,7 @@ export default async function OpeningsPage() {
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Open{" "}
-            <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Positions
             </span>
           </h1>
@@ -158,7 +158,7 @@ async function FacultyOpeningsList({ userId }: { userId: string }) {
                   </span>
                 )}
                 {opening.engagementType && (
-                  <span className="badge badge-teal">{opening.engagementType}</span>
+                  <span className="badge badge-red">{opening.engagementType}</span>
                 )}
                 {opening.seatsAvailable && (
                   <span className="flex items-center gap-1">
@@ -167,10 +167,10 @@ async function FacultyOpeningsList({ userId }: { userId: string }) {
                   </span>
                 )}
                 {opening.source === "elc_2026_call" && (
-                  <span className="badge badge-sky">ELC 2026</span>
+                  <span className="badge badge-red">ELC 2026</span>
                 )}
                 {opening.needsReview && (
-                  <span className="badge badge-amber">Needs Review</span>
+                  <span className="badge badge-red">Needs Review</span>
                 )}
               </div>
             </div>

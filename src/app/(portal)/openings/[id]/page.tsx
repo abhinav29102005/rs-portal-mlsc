@@ -67,7 +67,7 @@ export default async function OpeningDetailPage({
     <div className="max-w-4xl mx-auto space-y-6">
       <Link
         href="/openings"
-        className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-amber-400 transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors"
       >
         <ArrowLeft size={16} />
         Back to Openings
@@ -75,12 +75,12 @@ export default async function OpeningDetailPage({
 
       <div className="card-glass p-8 relative overflow-hidden">
         {/* Decorative element */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="flex items-start justify-between mb-6 relative z-10">
           <div className="flex gap-2 flex-wrap">
-            <span className="badge badge-amber">{opening.engagementType || "Research Project"}</span>
-            <span className={`badge ${opening.status === "open" ? "badge-teal" : "badge-rose"}`}>
+            <span className="badge badge-red">{opening.engagementType || "Research Project"}</span>
+            <span className={`badge ${opening.status === "open" ? "badge-red" : "badge-red"}`}>
               {opening.status.toUpperCase()}
             </span>
           </div>
@@ -99,28 +99,28 @@ export default async function OpeningDetailPage({
         {/* Project Metadata Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 relative z-10">
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-            <Clock size={18} className="text-amber-400 mb-2" />
+            <Clock size={18} className="text-red-400 mb-2" />
             <p className="text-xs text-noir-400 mb-1">Duration</p>
             <p className="text-sm font-medium text-noir-100">
               {opening.duration || "TBA"}
             </p>
           </div>
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-            <Banknote size={18} className="text-teal-400 mb-2" />
+            <Banknote size={18} className="text-red-400 mb-2" />
             <p className="text-xs text-noir-400 mb-1">Stipend</p>
             <p className="text-sm font-medium text-noir-100">
               {opening.stipendType === "Paid" ? opening.stipendAmount : opening.stipendType || "Unpaid"}
             </p>
           </div>
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-            <Users size={18} className="text-sky-400 mb-2" />
+            <Users size={18} className="text-red-400 mb-2" />
             <p className="text-xs text-noir-400 mb-1">Seats Available</p>
             <p className="text-sm font-medium text-noir-100">
               {opening.seatsAvailable || 1}
             </p>
           </div>
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-            <Calendar size={18} className="text-rose-400 mb-2" />
+            <Calendar size={18} className="text-red-400 mb-2" />
             <p className="text-xs text-noir-400 mb-1">Deadline</p>
             <p className="text-sm font-medium text-noir-100">
               {opening.applicationDeadline
@@ -152,7 +152,7 @@ export default async function OpeningDetailPage({
                     <p className="text-xs text-noir-400 uppercase tracking-wider mb-2">Research Domains</p>
                     <div className="flex flex-wrap gap-2">
                       {domainNames.map((d) => (
-                        <span key={d} className="badge badge-sky">{d}</span>
+                        <span key={d} className="badge badge-red">{d}</span>
                       ))}
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export default async function OpeningDetailPage({
                 <h2 className="heading-3 text-noir-100 mb-4" style={{ fontFamily: "var(--font-heading)" }}>
                   How to Apply
                 </h2>
-                <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/10 text-sm text-amber-200/80 leading-relaxed whitespace-pre-wrap">
+                <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10 text-sm text-red-200/80 leading-relaxed whitespace-pre-wrap">
                   {opening.applicationInstructions}
                 </div>
               </section>
@@ -206,12 +206,12 @@ export default async function OpeningDetailPage({
               
               <div className="space-y-3 text-xs text-noir-300">
                 <div className="flex items-start gap-2">
-                  <Building size={14} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Building size={14} className="text-red-400 flex-shrink-0 mt-0.5" />
                   <span>{facultyProfile.department || opening.department || "Thapar Institute"}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Mail size={14} className="text-amber-400 flex-shrink-0" />
-                  <a href={`mailto:${hostEmail}`} className="hover:text-amber-400 transition-colors">
+                  <Mail size={14} className="text-red-400 flex-shrink-0" />
+                  <a href={`mailto:${hostEmail}`} className="hover:text-red-400 transition-colors">
                     {hostEmail}
                   </a>
                 </div>

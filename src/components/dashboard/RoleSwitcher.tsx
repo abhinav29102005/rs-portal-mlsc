@@ -23,12 +23,12 @@ function RoleSwitcherInner({ currentRole }: RoleSwitcherProps) {
   };
 
   return (
-    <div className="px-3 py-2 mt-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-      <div className="flex items-center gap-2 mb-2 text-xs font-semibold text-amber-500 uppercase tracking-wider">
+    <div className="px-3 py-2 mt-2 bg-red-500/10 rounded-lg border border-red-500/20">
+      <div className="flex items-center gap-2 mb-2 text-xs font-semibold text-red-500 uppercase tracking-wider">
         <ArrowRightLeft size={12} />
         Admin Immersive Mode
       </div>
-      <p className="text-[10px] text-amber-500/70 mb-3 leading-tight">
+      <p className="text-[10px] text-red-500/70 mb-3 leading-tight">
         Temporarily view the portal as a different user role.
       </p>
       
@@ -40,8 +40,8 @@ function RoleSwitcherInner({ currentRole }: RoleSwitcherProps) {
             disabled={isPending || role === currentRole}
             className={`w-full text-left px-2 py-1.5 rounded-md text-xs font-medium transition-all flex items-center justify-between ${
               role === currentRole 
-                ? "bg-amber-500 text-noir-950" 
-                : "text-amber-400 hover:bg-amber-500/10"
+                ? "bg-red-500 text-noir-950" 
+                : "text-red-400 hover:bg-red-500/10"
             }`}
           >
             <span className="capitalize">{role}</span>

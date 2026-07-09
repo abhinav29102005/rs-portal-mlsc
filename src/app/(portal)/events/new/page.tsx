@@ -55,7 +55,7 @@ export default function NewEventPage() {
       <div>
         <Link
           href="/events"
-          className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-amber-400 transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors mb-4"
         >
           <ArrowLeft size={16} />
           Back to Events
@@ -65,7 +65,7 @@ export default function NewEventPage() {
           style={{ fontFamily: "var(--font-heading)" }}
         >
           Create{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             Event
           </span>
         </h1>
@@ -78,7 +78,7 @@ export default function NewEventPage() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-sm text-rose-300 flex items-start gap-3"
+          className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-300 flex items-start gap-3"
         >
           <AlertTriangle size={16} className="mt-0.5 flex-shrink-0" />
           {error}
@@ -89,7 +89,7 @@ export default function NewEventPage() {
         <div className="space-y-4">
           <div>
             <label className="text-label mb-2 block">
-              Event Title <span className="text-rose-400">*</span>
+              Event Title <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
@@ -130,7 +130,7 @@ export default function NewEventPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-label mb-2 block">
-                Start Time <span className="text-rose-400">*</span>
+                Start Time <span className="text-red-400">*</span>
               </label>
               <input
                 type="datetime-local"

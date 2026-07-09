@@ -14,8 +14,8 @@ export default function LoginPage() {
       <div className="absolute inset-0 bg-hero-gradient" />
 
       {/* Decorative orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-amber-500/5 blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-teal-500/5 blur-[100px]" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-red-500/5 blur-[120px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-red-500/5 blur-[100px]" />
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
         {/* Left: Hero Text */}
@@ -25,7 +25,7 @@ export default function LoginPage() {
           transition={{ duration: 0.7 }}
           className="flex-1 text-center lg:text-left"
         >
-          <div className="inline-flex items-center gap-2 badge badge-amber mb-6">
+          <div className="inline-flex items-center gap-2 badge badge-red mb-6">
             <Sparkles size={12} />
             Thapar Institute of Engineering & Technology
           </div>
@@ -36,7 +36,7 @@ export default function LoginPage() {
           >
             <span className="text-noir-50">Research &</span>
             <br />
-            <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 via-amber-300 to-red-500 bg-clip-text text-transparent">
               Mentor Portal
             </span>
           </h1>
@@ -58,7 +58,7 @@ export default function LoginPage() {
                 key={feature.label}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] text-noir-200 text-sm"
               >
-                <span className="text-amber-400">{feature.icon}</span>
+                <span className="text-red-400">{feature.icon}</span>
                 {feature.label}
               </div>
             ))}
@@ -74,7 +74,7 @@ export default function LoginPage() {
         >
           <div className="card-glass p-8 glow-amber-sm">
             <div className="text-center mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
                 <Sparkles size={24} className="text-noir-950" />
               </div>
               <h2
@@ -105,7 +105,7 @@ export default function LoginPage() {
 
             <div className="mt-6 text-center">
               <p className="text-xs text-noir-500">
-                Only <span className="text-amber-400/70 font-medium">@thapar.edu</span> accounts are accepted
+                Only <span className="text-red-400/70 font-medium">@thapar.edu</span> accounts are accepted
               </p>
             </div>
 
@@ -119,7 +119,7 @@ export default function LoginPage() {
                   "Build your profile and start connecting",
                 ].map((step, i) => (
                   <div key={i} className="flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-red-500/10 text-red-400 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <p className="text-xs text-noir-300">{step}</p>

@@ -113,7 +113,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
           <p className="text-label mb-1">Network</p>
           <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
             Mentorship{" "}
-            <span className="bg-gradient-to-r from-teal-400 to-teal-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
               Directory
             </span>
           </h1>
@@ -130,7 +130,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
           <div className="card-glass p-5 space-y-6 sticky top-24">
             <div className="flex items-center justify-between pb-4 border-b border-white/5">
               <div className="flex items-center gap-2 text-noir-200 font-medium">
-                <SlidersHorizontal size={18} className="text-amber-400" />
+                <SlidersHorizontal size={18} className="text-red-400" />
                 Filters
               </div>
               <button 
@@ -193,8 +193,8 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
               {/* Available Now */}
               <div>
                 <label className="flex items-center justify-between cursor-pointer group">
-                  <span className="text-sm font-medium text-noir-200 group-hover:text-teal-400 transition-colors">Available Now</span>
-                  <div className={`relative w-10 h-5 rounded-full transition-colors ${showAvailableOnly ? "bg-teal-500" : "bg-noir-700"}`}>
+                  <span className="text-sm font-medium text-noir-200 group-hover:text-red-400 transition-colors">Available Now</span>
+                  <div className={`relative w-10 h-5 rounded-full transition-colors ${showAvailableOnly ? "bg-red-500" : "bg-noir-700"}`}>
                     <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${showAvailableOnly ? "translate-x-5 left-0.5" : "translate-x-0.5"}`} style={{ left: showAvailableOnly ? '20px' : '0' }} />
                   </div>
                   <input 
@@ -216,7 +216,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                   setSelectedDomain("");
                   setShowAvailableOnly(false);
                 }}
-                className="w-full py-2 text-xs font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 rounded-xl transition-colors border border-rose-500/20"
+                className="w-full py-2 text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-colors border border-red-500/20"
               >
                 Clear All Filters
               </button>
@@ -270,7 +270,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                 <div className="space-y-8">
                   {sortedDesigs.map(desig => (
                     <div key={desig} className="space-y-4">
-                      <h3 className="text-sm font-semibold text-teal-400 uppercase tracking-wider">{desig}</h3>
+                      <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider">{desig}</h3>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {groupedByDesig[desig].map(mentor => {
@@ -278,26 +278,26 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                           const isAvailable = isAvailableNow(hours);
 
                           return (
-                            <div key={mentor.id} className="card-glass p-6 flex flex-col hover:border-teal-500/30 transition-colors relative">
+                            <div key={mentor.id} className="card-glass p-6 flex flex-col hover:border-red-500/30 transition-colors relative">
                               {isAvailable && (
                                 <span className="absolute -top-2 -right-2 flex h-4 w-4">
-                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                                  <span className="relative inline-flex rounded-full h-4 w-4 bg-teal-500 border-2 border-noir-950"></span>
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-noir-950"></span>
                                 </span>
                               )}
                               <div className="flex-1">
                                 <div className="flex items-center gap-4 mb-4">
-                                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-noir-800 ring-2 ring-teal-500/10 relative flex-shrink-0">
+                                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-noir-800 ring-2 ring-red-500/10 relative flex-shrink-0">
                                     {mentor.image ? (
                                       <Image src={mentor.image} alt={mentor.name || "Mentor"} fill className="object-cover" unoptimized />
                                     ) : (
-                                      <div className="w-full h-full flex items-center justify-center text-xl font-bold text-teal-400 font-heading">
+                                      <div className="w-full h-full flex items-center justify-center text-xl font-bold text-red-400 font-heading">
                                         {mentor.name?.[0] || "?"}
                                       </div>
                                     )}
                                   </div>
                                   <div>
-                                    <h3 className="text-lg font-bold text-noir-50 hover:text-teal-400 transition-colors">
+                                    <h3 className="text-lg font-bold text-noir-50 hover:text-red-400 transition-colors">
                                       {mentor.type === "faculty" ? (
                                         <Link href={`/discover/faculty/${mentor.userId}`}>{mentor.name}</Link>
                                       ) : (
@@ -337,7 +337,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                                 {mentor.mentorshipDomains && (mentor.mentorshipDomains as string[]).length > 0 && (
                                   <div className="mt-4 flex flex-wrap gap-1.5">
                                     {(mentor.mentorshipDomains as string[]).slice(0, 3).map((domain: string) => (
-                                      <span key={domain} className="badge badge-teal">
+                                      <span key={domain} className="badge badge-red">
                                         {domain}
                                       </span>
                                     ))}
@@ -347,7 +347,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
 
                               <div className="mt-6 flex flex-col gap-2">
                                 {mentor.type === "faculty" && hours.length > 0 && (
-                                  <button onClick={() => setSelectedMentor(mentor)} className="w-full btn btn-ghost bg-white/5 py-2 text-xs text-noir-200 hover:text-teal-400 flex items-center justify-center gap-2">
+                                  <button onClick={() => setSelectedMentor(mentor)} className="w-full btn btn-ghost bg-white/5 py-2 text-xs text-noir-200 hover:text-red-400 flex items-center justify-center gap-2">
                                     <Calendar size={14} /> View Timetable
                                   </button>
                                 )}
@@ -357,7 +357,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                                   </Link>
                                   {mentor.linkedinUrl && (
                                     <a href={mentor.linkedinUrl} target="_blank" rel="noreferrer" className="btn btn-secondary py-2 px-3 group" title="LinkedIn Profile">
-                                      <ArrowUpRight size={14} className="group-hover:text-teal-400" />
+                                      <ArrowUpRight size={14} className="group-hover:text-red-400" />
                                     </a>
                                   )}
                                 </div>
@@ -401,7 +401,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                 </div>
                 <button
                   onClick={() => setSelectedMentor(null)}
-                  className="p-2 text-noir-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-full transition-colors"
+                  className="p-2 text-noir-400 hover:text-red-400 hover:bg-red-500/10 rounded-full transition-colors"
                 >
                   <X size={20} />
                 </button>

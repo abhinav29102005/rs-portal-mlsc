@@ -32,6 +32,7 @@ export default async function DiscoverStudentsPage() {
       cgpa: studentProfiles.cgpa,
       bio: studentProfiles.bio,
       preferredEngagement: studentProfiles.preferredEngagement,
+      domains: studentProfiles.domains,
       technicalStack: studentProfiles.technicalStack,
       githubUrl: studentProfiles.githubUrl,
       linkedinUrl: studentProfiles.linkedinUrl,

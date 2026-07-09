@@ -24,9 +24,9 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
                 transition-all duration-300
                 ${
                   isCompleted
-                    ? "bg-amber-500 text-noir-950"
+                    ? "bg-red-500 text-noir-950"
                     : isCurrent
-                    ? "bg-amber-500/20 text-amber-400 border-2 border-amber-500"
+                    ? "bg-red-500/20 text-red-400 border-2 border-red-500"
                     : "bg-noir-800 text-noir-500 border border-noir-600"
                 }
               `}
@@ -40,7 +40,7 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
             <span
               className={`ml-2 text-xs font-medium hidden sm:inline ${
                 isCurrent
-                  ? "text-amber-400"
+                  ? "text-red-400"
                   : isCompleted
                   ? "text-noir-200"
                   : "text-noir-500"
@@ -53,7 +53,7 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
             {i < steps.length - 1 && (
               <div className="flex-1 mx-3 h-[2px] rounded-full overflow-hidden bg-noir-700">
                 <motion.div
-                  className="h-full bg-amber-500"
+                  className="h-full bg-red-500"
                   initial={{ width: "0%" }}
                   animate={{ width: isCompleted ? "100%" : "0%" }}
                   transition={{ duration: 0.4 }}

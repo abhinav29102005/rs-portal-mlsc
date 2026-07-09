@@ -31,7 +31,7 @@ export function ChatInput({ threadId, toUserId }: { threadId?: string; toUserId?
   return (
     <div className="flex flex-col gap-2">
       {errorMsg && (
-        <div className="flex items-center gap-2 text-xs text-rose-400 bg-rose-500/10 p-2 rounded-lg border border-rose-500/20">
+        <div className="flex items-center gap-2 text-xs text-red-400 bg-red-500/10 p-2 rounded-lg border border-red-500/20">
           <AlertCircle size={14} />
           {errorMsg}
         </div>

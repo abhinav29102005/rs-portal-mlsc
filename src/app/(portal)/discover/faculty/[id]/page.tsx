@@ -56,7 +56,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
       {/* Back Button */}
-      <Link href="/discover/faculty" className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-amber-400 transition-colors">
+      <Link href="/discover/faculty" className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors">
         <ChevronLeft size={16} /> Back to Faculty Directory
       </Link>
 
@@ -82,7 +82,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
             <h1 className="text-3xl font-bold text-noir-50 font-heading tracking-tight mb-1">
               {user.name}
             </h1>
-            <p className="text-lg text-amber-400 font-medium mb-3">
+            <p className="text-lg text-red-400 font-medium mb-3">
               {profile.designation} · {profile.department}
             </p>
             
@@ -110,7 +110,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
           {profile.bio && (
             <section className="card-glass p-6 sm:p-8">
               <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
-                <GraduationCap className="text-amber-400" size={20} /> About
+                <GraduationCap className="text-red-400" size={20} /> About
               </h2>
               <p className="text-noir-200 leading-relaxed whitespace-pre-wrap">
                 {profile.bio}
@@ -121,16 +121,16 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
           {/* Active Projects */}
           <section className="card-glass p-6 sm:p-8">
             <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
-              <Sparkles className="text-amber-400" size={20} /> Research Projects
+              <Sparkles className="text-red-400" size={20} /> Research Projects
             </h2>
             
             {activeProjects.length > 0 ? (
               <div className="space-y-4">
                 {activeProjects.map(proj => (
-                  <div key={proj.id} className="p-4 rounded-xl bg-noir-900/50 border border-white/5 hover:border-amber-500/20 transition-colors">
+                  <div key={proj.id} className="p-4 rounded-xl bg-noir-900/50 border border-white/5 hover:border-red-500/20 transition-colors">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <h3 className="font-semibold text-noir-50">{proj.title}</h3>
-                      <span className="badge badge-amber text-[10px] whitespace-nowrap px-2 py-0.5 uppercase tracking-wider">{proj.status.replace('_', ' ')}</span>
+                      <span className="badge badge-red text-[10px] whitespace-nowrap px-2 py-0.5 uppercase tracking-wider">{proj.status.replace('_', ' ')}</span>
                     </div>
                     {proj.description && (
                       <p className="text-sm text-noir-300 line-clamp-3">{proj.description}</p>
@@ -171,7 +171,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
                 <div>
                   <p className="text-xs font-semibold text-noir-400 uppercase tracking-wider mb-1">Requirements</p>
                   <p className="text-sm text-noir-200 flex items-center gap-2">
-                    <Award size={14} className="text-amber-400" /> Minimum CGPA: <span className="font-medium">{profile.minimumCgpa}</span>
+                    <Award size={14} className="text-red-400" /> Minimum CGPA: <span className="font-medium">{profile.minimumCgpa}</span>
                   </p>
                 </div>
               )}
@@ -191,12 +191,12 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
               <h2 className="text-lg font-bold text-noir-50 font-heading mb-4">External Links</h2>
               <div className="space-y-3">
                 {profile.labWebsiteUrl && (
-                  <a href={profile.labWebsiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-teal-400 hover:text-teal-300 transition-colors">
+                  <a href={profile.labWebsiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-red-400 hover:text-red-300 transition-colors">
                     <Building2 size={16} /> Lab Website
                   </a>
                 )}
                 {profile.scholarId && (
-                  <a href={`https://scholar.google.com/citations?user=${profile.scholarId}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-sky-400 hover:text-sky-300 transition-colors">
+                  <a href={`https://scholar.google.com/citations?user=${profile.scholarId}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-red-400 hover:text-red-300 transition-colors">
                     <BookOpen size={16} /> Google Scholar
                   </a>
                 )}
@@ -213,7 +213,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
           {officeHours.length > 0 && (
             <section className="card-glass p-6 sm:p-8 md:col-span-2 lg:col-span-3">
               <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
-                <Sparkles className="text-amber-400" size={20} /> Availability & Office Hours
+                <Sparkles className="text-red-400" size={20} /> Availability & Office Hours
               </h2>
               <TimetableGrid officeHours={officeHours} editMode={false} />
             </section>

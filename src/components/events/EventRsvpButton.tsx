@@ -44,10 +44,10 @@ export function EventRsvpButton({ eventId, hasRsvpd, isFull }: EventRsvpButtonPr
         className="btn btn-secondary w-full group relative overflow-hidden"
       >
         <span className="flex items-center gap-2 group-hover:opacity-0 transition-opacity">
-          <Check size={16} className="text-teal-400" />
+          <Check size={16} className="text-red-400" />
           RSVP Confirmed
         </span>
-        <span className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-rose-500/10 text-rose-400">
+        <span className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500/10 text-red-400">
           {isLoading ? <Loader2 size={16} className="animate-spin" /> : <X size={16} />}
           Cancel RSVP
         </span>

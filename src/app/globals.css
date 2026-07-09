@@ -20,7 +20,7 @@
   --color-noir-100: var(--bg-100);
   --color-noir-50: var(--bg-50);
 
-  /* ── Amber Accent ── */
+  /* ── Thapar Red Accent ── */
   --color-amber-950: #450a0a;
   --color-amber-900: #7f1d1d;
   --color-amber-800: #991b1b;
@@ -32,16 +32,16 @@
   --color-amber-200: #fecaca;
   --color-amber-100: #fee2e2;
 
-  /* ── Teal Success ── */
-  --color-teal-600: #0d9488;
-  --color-teal-500: #14b8a6;
-  --color-teal-400: #2dd4bf;
+  /* ── Red Success (no green allowed) ── */
+  --color-teal-600: #b91c1c;
+  --color-teal-500: #dc2626;
+  --color-teal-400: #ef4444;
 
-  /* ── Status Colors ── */
-  --color-rose-500: #f43f5e;
-  --color-rose-600: #e11d48;
-  --color-emerald-500: #10b981;
-  --color-sky-500: #0ea5e9;
+  /* ── Status Colors (strictly red/gray) ── */
+  --color-rose-500: #ef4444;
+  --color-rose-600: #dc2626;
+  --color-emerald-500: #b91c1c; /* Using dark red instead of emerald */
+  --color-sky-500: #991b1b; /* Using darker red instead of sky */
 
   /* ── Typography ── */
   --font-heading: 'Outfit', sans-serif;
@@ -56,47 +56,47 @@
 :root {
   /* Light Mode Palette (slate/white base) */
   --bg-950: #ffffff;
-  --bg-900: #f8fafc;
-  --bg-800: #f1f5f9;
-  --bg-700: #e2e8f0;
-  --bg-600: #cbd5e1;
-  --bg-500: #94a3b8;
-  --bg-400: #64748b;
-  --bg-300: #475569;
-  --bg-200: #334155;
-  --bg-100: #1e293b;
-  --bg-50: #0f172a;
+  --bg-900: #fafafa;
+  --bg-800: #f4f4f5;
+  --bg-700: #e4e4e7;
+  --bg-600: #d4d4d8;
+  --bg-500: #a1a1aa;
+  --bg-400: #71717a;
+  --bg-300: #52525b;
+  --bg-200: #3f3f46;
+  --bg-100: #27272a;
+  --bg-50: #18181b;
   
-  --bg-glass-1: rgba(0, 0, 0, 0.03);
-  --bg-glass-2: rgba(0, 0, 0, 0.01);
-  --border-glass: rgba(0, 0, 0, 0.08);
+  --bg-glass-1: rgba(255, 255, 255, 0.95);
+  --bg-glass-2: rgba(255, 255, 255, 0.85);
+  --border-glass: rgba(185, 28, 28, 0.15); /* Red tinted border */
   
-  --shadow-color: rgba(0, 0, 0, 0.08);
-  --sidebar-gradient-start: #f1f5f9;
-  --sidebar-gradient-end: #f8fafc;
+  --shadow-color: rgba(185, 28, 28, 0.05);
+  --sidebar-gradient-start: #ffffff;
+  --sidebar-gradient-end: #fafafa;
 }
 
+/* Force light mode variables onto .dark if used anywhere */
 .dark {
-  /* Dark Mode Palette (original Academic Noir) */
-  --bg-950: #06060a;
-  --bg-900: #0c0c14;
-  --bg-800: #12121e;
-  --bg-700: #1a1a2e;
-  --bg-600: #252540;
-  --bg-500: #33335a;
-  --bg-400: #4a4a7a;
-  --bg-300: #6b6ba0;
-  --bg-200: #9494c0;
-  --bg-100: #c4c4df;
-  --bg-50: #e8e8f2;
+  --bg-950: #ffffff;
+  --bg-900: #fafafa;
+  --bg-800: #f4f4f5;
+  --bg-700: #e4e4e7;
+  --bg-600: #d4d4d8;
+  --bg-500: #a1a1aa;
+  --bg-400: #71717a;
+  --bg-300: #52525b;
+  --bg-200: #3f3f46;
+  --bg-100: #27272a;
+  --bg-50: #18181b;
   
-  --bg-glass-1: rgba(255, 250, 240, 0.03);
-  --bg-glass-2: rgba(255, 250, 240, 0.01);
-  --border-glass: rgba(239, 68, 68, 0.1);
+  --bg-glass-1: rgba(255, 255, 255, 0.95);
+  --bg-glass-2: rgba(255, 255, 255, 0.85);
+  --border-glass: rgba(185, 28, 28, 0.15);
   
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --sidebar-gradient-start: rgba(12, 12, 20, 0.95);
-  --sidebar-gradient-end: rgba(6, 6, 10, 0.98);
+  --shadow-color: rgba(185, 28, 28, 0.05);
+  --sidebar-gradient-start: #ffffff;
+  --sidebar-gradient-end: #fafafa;
 }
 
 /* ═══════════════════════════════════════════
@@ -193,21 +193,21 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════
-   AMBER GLOW EFFECTS
+   RED GLOW EFFECTS
    ═══════════════════════════════════════════ */
 
-.glow-amber {
+.glow-red {
   box-shadow:
-    0 0 20px rgba(239, 68, 68, 0.15),
-    0 0 60px rgba(239, 68, 68, 0.05);
+    0 0 20px rgba(185, 28, 28, 0.15),
+    0 0 60px rgba(185, 28, 28, 0.05);
 }
 
-.glow-amber-sm {
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.1);
+.glow-red-sm {
+  box-shadow: 0 0 12px rgba(185, 28, 28, 0.1);
 }
 
-.text-glow-amber {
-  text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+.text-glow-red {
+  text-shadow: 0 0 20px rgba(185, 28, 28, 0.3);
 }
 
 /* ═══════════════════════════════════════════
@@ -258,28 +258,10 @@ body::before {
   transition: all 0.2s ease;
 }
 
-.badge-amber {
-  background: rgba(239, 68, 68, 0.12);
-  color: var(--color-amber-400);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-.badge-teal {
-  background: rgba(20, 184, 166, 0.12);
-  color: var(--color-teal-400);
-  border: 1px solid rgba(20, 184, 166, 0.2);
-}
-
-.badge-rose {
-  background: rgba(244, 63, 94, 0.12);
-  color: #fb7185;
-  border: 1px solid rgba(244, 63, 94, 0.2);
-}
-
-.badge-sky {
-  background: rgba(14, 165, 233, 0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(14, 165, 233, 0.2);
+.badge-red {
+  background: rgba(185, 28, 28, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(185, 28, 28, 0.2);
 }
 
 .badge-neutral {
@@ -300,15 +282,15 @@ body::before {
 }
 
 .proficiency-familiar {
-  background: var(--color-sky-500);
+  background: var(--color-red-500);
 }
 
 .proficiency-proficient {
-  background: var(--color-amber-500);
+  background: var(--color-red-600);
 }
 
 .proficiency-expert {
-  background: var(--color-emerald-500);
+  background: var(--color-red-700);
 }
 
 /* ═══════════════════════════════════════════
@@ -334,17 +316,17 @@ body::before {
   border-radius: 50%;
 }
 
-.status-open::before { background: var(--color-emerald-500); }
-.status-open { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+.status-open::before { background: var(--color-red-600); }
+.status-open { background: rgba(220, 38, 38, 0.1); color: #ef4444; }
 
-.status-closed::before { background: var(--color-rose-500); }
-.status-closed { background: rgba(244, 63, 94, 0.1); color: #fb7185; }
+.status-closed::before { background: var(--color-red-700); }
+.status-closed { background: rgba(185, 28, 28, 0.1); color: #dc2626; }
 
 .status-draft::before { background: var(--color-noir-400); }
 .status-draft { background: rgba(100, 100, 150, 0.1); color: var(--color-noir-300); }
 
-.status-pending::before { background: var(--color-amber-500); animation: pulse-dot 2s ease-in-out infinite; }
-.status-pending { background: rgba(239, 68, 68, 0.1); color: var(--color-amber-400); }
+.status-pending::before { background: var(--color-red-500); animation: pulse-dot 2s ease-in-out infinite; }
+.status-pending { background: rgba(239, 68, 68, 0.1); color: var(--color-red-400); }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
@@ -410,14 +392,14 @@ body::before {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-amber-600), var(--color-amber-500));
-  color: #000;
-  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.25);
+  background: linear-gradient(135deg, var(--color-red-600), var(--color-red-500));
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(220, 38, 38, 0.25);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--color-amber-500), var(--color-amber-400));
-  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.35);
+  background: linear-gradient(135deg, var(--color-red-700), var(--color-red-600));
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.35);
   transform: translateY(-1px);
 }
 
@@ -439,7 +421,7 @@ body::before {
 
 .btn-ghost:hover {
   background: var(--bg-glass-1);
-  color: var(--color-amber-500);
+  color: var(--color-red-600);
 }
 
 .btn-destructive {
@@ -562,7 +544,7 @@ body::before {
 .progress-bar-fill {
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--color-amber-600), var(--color-amber-400));
+  background: linear-gradient(90deg, var(--color-red-600), var(--color-red-500));
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

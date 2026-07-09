@@ -31,7 +31,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
   if (!workspace) {
     return (
       <div className="card-glass-static p-12 text-center mt-12 max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold text-rose-400 mb-2 font-heading">Workspace Not Found</h1>
+        <h1 className="text-2xl font-bold text-red-400 mb-2 font-heading">Workspace Not Found</h1>
         <p className="text-noir-400 mb-6">The workspace you are looking for does not exist or you do not have access.</p>
         <Link href="/workspaces" className="btn btn-primary">Back to Workspaces</Link>
       </div>
@@ -82,7 +82,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="flex flex-col gap-4">
-        <Link href="/workspaces" className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-teal-400 transition-colors w-fit">
+        <Link href="/workspaces" className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors w-fit">
           <ChevronLeft size={16} /> Back to Workspaces
         </Link>
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
@@ -110,7 +110,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
           <section className="card-glass p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-noir-50 font-heading flex items-center gap-2">
-                <CheckSquare size={18} className="text-teal-400" /> Milestones & Tasks
+                <CheckSquare size={18} className="text-red-400" /> Milestones & Tasks
               </h2>
               <button className="btn btn-secondary text-xs px-3 py-1.5">+ Add Milestone</button>
             </div>
@@ -125,7 +125,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
                   <div key={m.id} className="p-4 rounded-xl border border-white/5 bg-noir-900/50 flex items-start gap-3">
                     <div className="mt-0.5">
                       {m.status === "completed" ? (
-                        <CheckSquare size={16} className="text-emerald-400" />
+                        <CheckSquare size={16} className="text-red-400" />
                       ) : (
                         <div className="w-4 h-4 rounded border border-noir-500" />
                       )}
@@ -148,7 +148,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
           <section className="card-glass p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-noir-50 font-heading flex items-center gap-2">
-                <FolderOpen size={18} className="text-amber-400" /> Shared Files
+                <FolderOpen size={18} className="text-red-400" /> Shared Files
               </h2>
               <button className="btn btn-secondary text-xs px-3 py-1.5">+ Upload File</button>
             </div>
@@ -161,7 +161,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {files.map(f => (
                   <a href={f.fileUrl} target="_blank" rel="noreferrer" key={f.id} className="p-4 rounded-xl border border-white/5 bg-noir-900/50 flex items-center gap-3 hover:bg-white/5 transition-colors group">
-                    <div className="p-2 rounded-lg bg-white/5 text-amber-400 group-hover:bg-amber-400/20 transition-colors">
+                    <div className="p-2 rounded-lg bg-white/5 text-red-400 group-hover:bg-red-400/20 transition-colors">
                       <FileText size={16} />
                     </div>
                     <div className="flex-1 truncate">
@@ -179,7 +179,7 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
         <div className="space-y-6">
           <section className="card-glass p-6">
             <h2 className="text-lg font-bold text-noir-50 font-heading mb-6 flex items-center gap-2">
-              <UserIcon size={18} className="text-rose-400" /> Team Directory
+              <UserIcon size={18} className="text-red-400" /> Team Directory
             </h2>
             
             <div className="space-y-4">
@@ -195,14 +195,14 @@ export default async function WorkspaceDetailPage(props: { params: Promise<{ id:
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-noir-50 truncate group-hover:text-teal-400 transition-colors">
+                    <p className="text-sm font-bold text-noir-50 truncate group-hover:text-red-400 transition-colors">
                       {member.user.name}
                     </p>
                     <p className="text-xs text-noir-400 capitalize truncate">
                       {member.role.replace("_", " ")}
                     </p>
                   </div>
-                  <Link href={`/messages/new?to=${member.user.id}`} className="p-2 rounded-lg text-noir-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors" title="Message">
+                  <Link href={`/messages/new?to=${member.user.id}`} className="p-2 rounded-lg text-noir-400 hover:text-red-400 hover:bg-red-500/10 transition-colors" title="Message">
                     <ArrowUpRight size={16} />
                   </Link>
                 </div>

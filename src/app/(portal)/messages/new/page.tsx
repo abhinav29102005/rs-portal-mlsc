@@ -60,7 +60,7 @@ export default async function NewMessagePage(props: { searchParams: Promise<{ to
   if (!recipient) {
     return (
       <div className="max-w-2xl mx-auto mt-12 text-center card-glass-static p-12">
-        <h1 className="text-2xl font-bold text-rose-400 mb-2 font-heading">User Not Found</h1>
+        <h1 className="text-2xl font-bold text-red-400 mb-2 font-heading">User Not Found</h1>
         <p className="text-noir-400 mb-6">The person you are trying to message does not exist.</p>
         <Link href="/mentors" className="btn btn-secondary">Go Back</Link>
       </div>

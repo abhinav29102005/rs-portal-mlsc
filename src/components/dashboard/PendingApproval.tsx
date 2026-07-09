@@ -17,8 +17,8 @@ export function PendingApproval({ user }: { user: PendingUser }) {
         transition={{ duration: 0.5 }}
         className="card-glass p-8 text-center"
       >
-        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center mx-auto mb-6">
-          <Clock size={28} className="text-amber-400" />
+        <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+          <Clock size={28} className="text-red-400" />
         </div>
 
         <h1
@@ -38,7 +38,7 @@ export function PendingApproval({ user }: { user: PendingUser }) {
             <Mail size={16} className="text-noir-400 flex-shrink-0" />
             <p className="text-sm text-noir-300">
               Registered as{" "}
-              <span className="text-amber-400 font-medium">{user.email}</span>
+              <span className="text-red-400 font-medium">{user.email}</span>
             </p>
           </div>
           <div className="flex items-center gap-3">

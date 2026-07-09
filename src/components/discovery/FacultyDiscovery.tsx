@@ -44,9 +44,9 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
 
   return (
     <Link href={`/discover/faculty/${faculty.id}`}>
-      <motion.div variants={itemVariants} className="card-glass p-8 flex gap-6 hover:border-amber-500/50 hover:bg-white/[0.02] cursor-pointer">
+      <motion.div variants={itemVariants} className="card-glass p-8 flex gap-6 hover:border-red-500/50 hover:bg-white/[0.02] cursor-pointer">
         {/* Avatar */}
-        <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ring-2 ring-amber-500/10 overflow-hidden relative">
+        <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ring-2 ring-red-500/10 overflow-hidden relative">
           <ImageWithFallback 
             src={faculty.image || ""} 
             fallbackText={getInitials(faculty.name)} 
@@ -62,7 +62,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="text-sm font-semibold text-noir-50 hover:text-amber-400 transition-colors">
+              <h3 className="text-sm font-semibold text-noir-50 hover:text-red-400 transition-colors">
                 {faculty.name}
               </h3>
               <p className="text-xs text-noir-400 mt-0.5">
@@ -83,7 +83,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
           {/* Research tags */}
           <div className="flex flex-wrap gap-2 mt-4">
             {faculty.researchTags.map((tag) => (
-              <span key={tag} className="badge badge-amber">
+              <span key={tag} className="badge badge-red">
                 {tag}
               </span>
             ))}
@@ -93,8 +93,8 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
           <div className="flex items-center gap-5 mt-5 text-sm text-noir-400">
             {faculty.openings > 0 && (
               <span className="flex items-center gap-1.5">
-                <Sparkles size={12} className="text-amber-500" />
-                <span className="text-amber-400 font-medium">
+                <Sparkles size={12} className="text-red-500" />
+                <span className="text-red-400 font-medium">
                   {faculty.openings} opening{faculty.openings > 1 ? "s" : ""}
                 </span>
               </span>
@@ -113,7 +113,6 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
   const [acceptingOnly, setAcceptingOnly] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState("");
   const [selectedDomain, setSelectedDomain] = useState("");
-  const [maxCgpaReq, setMaxCgpaReq] = useState<number | "">("");
 
   const allSkills = React.useMemo(() => {
     const skills = new Set<string>();
@@ -147,10 +146,6 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
     if (selectedSkill && (!f.mentoringStyle || !f.mentoringStyle.includes(selectedSkill))) return false;
     if (selectedDomain && (!f.researchTags || !f.researchTags.includes(selectedDomain))) return false;
     
-    // If faculty requires a CGPA > the max selected by user, filter them out.
-    // So if user selects "8.5", faculty requiring 9.0 are filtered out.
-    if (maxCgpaReq !== "" && f.minimumCgpa !== null && f.minimumCgpa > maxCgpaReq) return false;
-    
     return true;
   });
 
@@ -159,12 +154,12 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1">
-          <GraduationCap size={20} className="text-amber-400" />
+          <GraduationCap size={20} className="text-red-400" />
           <p className="text-label">Faculty Discovery</p>
         </div>
         <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
           Find Your{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
             Research Mentor
           </span>
         </h1>
@@ -189,7 +184,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`btn btn-secondary flex items-center gap-2 ${
-            showFilters ? "border-amber-500/30 text-amber-400" : ""
+            showFilters ? "border-red-500/30 text-red-400" : ""
           }`}
           id="toggle-filters"
         >
@@ -259,34 +254,10 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 </div>
               )}
 
-              {/* CGPA Requirement Filter */}
-              <div>
-                <label className="text-label block mb-2 flex justify-between">
-                  <span>Max CGPA Requirement</span>
-                  <span className="text-amber-400 font-medium">{maxCgpaReq || "Any"}</span>
-                </label>
-                <input
-                  type="range"
-                  min="5"
-                  max="10"
-                  step="0.1"
-                  value={maxCgpaReq || 10}
-                  onChange={(e) => setMaxCgpaReq(parseFloat(e.target.value))}
-                  className="w-full accent-amber-500 h-1.5 bg-noir-800 rounded-lg appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-noir-500 mt-1">
-                  <span>5.0</span>
-                  <span>10.0</span>
-                </div>
-                <p className="text-[10px] text-noir-400 mt-1">
-                  Show faculty asking for at most this CGPA
-                </p>
-              </div>
-
               {/* Accepting Students Toggle */}
               <div>
                 <label className="flex items-center justify-between cursor-pointer group">
-                  <span className="text-sm font-medium text-noir-200 group-hover:text-amber-400 transition-colors">Currently accepting</span>
+                  <span className="text-sm font-medium text-noir-200 group-hover:text-red-400 transition-colors">Currently accepting</span>
                   <div className="relative">
                     <input
                       type="checkbox"
@@ -297,7 +268,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                     />
                     <div
                       className={`w-10 h-5 rounded-full transition-colors ${
-                        acceptingOnly ? "bg-amber-500" : "bg-noir-600"
+                        acceptingOnly ? "bg-red-500" : "bg-noir-600"
                       }`}
                     >
                       <div
@@ -316,7 +287,6 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                   setSelectedDept("");
                   setSelectedSkill("");
                   setSelectedDomain("");
-                  setMaxCgpaReq("");
                   setAcceptingOnly(false);
                   setSearchQuery("");
                 }}

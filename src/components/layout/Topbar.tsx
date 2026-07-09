@@ -33,10 +33,10 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
   }, []);
 
   const roleBadge = {
-    student: { label: "Student", class: "badge-teal" },
-    faculty: { label: "Faculty", class: "badge-amber" },
-    admin: { label: "Admin", class: "badge-rose" },
-    alumni_mentor: { label: "Alumni Mentor", class: "badge-sky" },
+    student: { label: "Student", class: "badge-red" },
+    faculty: { label: "Faculty", class: "badge-red" },
+    admin: { label: "Admin", class: "badge-red" },
+    alumni_mentor: { label: "Alumni Mentor", class: "badge-red" },
   }[user.role];
 
   return (
@@ -65,7 +65,7 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
         >
           <Bell size={18} />
           {notificationCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-amber-500 text-[10px] font-bold text-noir-950 flex items-center justify-center">
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-[10px] font-bold text-noir-950 flex items-center justify-center">
               {notificationCount > 9 ? "9+" : notificationCount}
             </span>
           )}
@@ -78,7 +78,7 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
             className="flex items-center gap-3 px-3 py-1.5 rounded-xl hover:bg-white/[0.04] transition-all"
             id="user-menu-button"
           >
-            <div className="w-8 h-8 rounded-full overflow-hidden bg-noir-700 ring-2 ring-amber-500/20">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-noir-700 ring-2 ring-red-500/20">
               {user.image ? (
                 <Image
                   src={user.image}
@@ -88,7 +88,7 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-amber-400">
+                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-red-400">
                   {user.name?.[0]?.toUpperCase() || "?"}
                 </div>
               )}
@@ -112,7 +112,7 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
               <div className="h-px bg-white/[0.06] my-1" />
               <button
                 onClick={() => signOut({ callbackUrl: "/login" })}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-rose-400 hover:bg-rose-500/10 transition-colors"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/10 transition-colors"
                 id="sign-out-button"
               >
                 <LogOut size={16} />
