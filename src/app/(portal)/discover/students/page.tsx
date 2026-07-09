@@ -31,7 +31,6 @@ export default async function DiscoverStudentsPage() {
       batchYear: studentProfiles.batchYear,
       cgpa: studentProfiles.cgpa,
       bio: studentProfiles.bio,
-      domains: studentProfiles.domains,
       preferredEngagement: studentProfiles.preferredEngagement,
       technicalStack: studentProfiles.technicalStack,
       githubUrl: studentProfiles.githubUrl,

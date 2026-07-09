@@ -12,6 +12,7 @@ import {
   Calendar,
   Users,
   MapPin,
+  Pencil,
   ExternalLink,
 } from "lucide-react";
 import { ProjectDiscovery } from "@/components/discovery/ProjectDiscovery";
