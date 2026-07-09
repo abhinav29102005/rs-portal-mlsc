@@ -109,10 +109,10 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
 export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyData[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(true);
-  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
   const [acceptingOnly, setAcceptingOnly] = useState(false);
-  const [selectedSkill, setSelectedSkill] = useState("");
-  const [selectedDomain, setSelectedDomain] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const allSkills = React.useMemo(() => {
     const skills = new Set<string>();
@@ -141,10 +141,10 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
       )
         return false;
     }
-    if (selectedDept && f.department !== selectedDept) return false;
+    if (selectedDepts.length > 0 && f.department && !selectedDepts.includes(f.department)) return false;
     if (acceptingOnly && !f.isAccepting) return false;
-    if (selectedSkill && (!f.mentoringStyle || !f.mentoringStyle.includes(selectedSkill))) return false;
-    if (selectedDomain && (!f.researchTags || !f.researchTags.includes(selectedDomain))) return false;
+    if (selectedSkills.length > 0 && (!f.mentoringStyle || !selectedSkills.some(s => f.mentoringStyle!.includes(s)))) return false;
+    if (selectedDomains.length > 0 && (!f.researchTags || !selectedDomains.some(d => f.researchTags!.includes(d)))) return false;
     
     return true;
   });
@@ -201,56 +201,70 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
             animate={{ opacity: 1, x: 0 }}
             className="w-full md:w-64 flex-shrink-0 space-y-5"
           >
-            <div className="card-glass-static p-5 space-y-6">
-              {/* Department Filter */}
+            <div className="card-glass-static p-5 space-y-6">              {/* Department Filter */}
               <div>
-                <label className="text-label block mb-2">Department</label>
-                <select
-                  value={selectedDept}
-                  onChange={(e) => setSelectedDept(e.target.value)}
-                  className="input-noir text-sm bg-white text-gray-900 border-gray-300"
-                  id="dept-filter"
-                >
-                  <option value="">All Departments</option>
+                <label className="text-label block mb-3">Departments</label>
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                   {DEPARTMENTS.map((d) => (
-                    <option key={d} value={d}>{d}</option>
+                    <label key={d} className="flex items-center gap-2 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        checked={selectedDepts.includes(d)}
+                        onChange={(e) => {
+                          if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
+                          else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
+                        }}
+                        className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                      />
+                      <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{d}</span>
+                    </label>
                   ))}
-                  </select>
                 </div>
+              </div>
 
-                {/* Research Domain Filter */}
-                {allDomains.length > 0 && (
-                  <div>
-                    <label className="text-label block mb-2">Project Domain</label>
-                    <select
-                      value={selectedDomain}
-                      onChange={(e) => setSelectedDomain(e.target.value)}
-                      className="input-noir text-sm bg-white text-gray-900 border-gray-300"
-                      id="domain-filter"
-                    >
-                      <option value="">All Domains</option>
-                      {allDomains.map((d) => (
-                        <option key={d} value={d}>{d}</option>
-                      ))}
-                    </select>
+              {/* Project Domain Filter */}
+              {allDomains.length > 0 && (
+                <div>
+                  <label className="text-label block mb-3">Project Domain</label>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                    {allDomains.map((d) => (
+                      <label key={d} className="flex items-center gap-2 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={selectedDomains.includes(d)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSelectedDomains([...selectedDomains, d]);
+                            else setSelectedDomains(selectedDomains.filter(domain => domain !== d));
+                          }}
+                          className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                        />
+                        <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{d}</span>
+                      </label>
+                    ))}
                   </div>
-                )}
+                </div>
+              )}
 
-              {/* Skills / Mentoring Style Filter */}
+              {/* Mentoring Style / Skills Filter */}
               {allSkills.length > 0 && (
                 <div>
-                  <label className="text-label block mb-2">Mentoring Style / Skills</label>
-                  <select
-                    value={selectedSkill}
-                    onChange={(e) => setSelectedSkill(e.target.value)}
-                    className="input-noir text-sm bg-white text-gray-900 border-gray-300"
-                    id="skill-filter"
-                  >
-                    <option value="">All Skills</option>
+                  <label className="text-label block mb-3">Mentoring Style / Skills</label>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                     {allSkills.map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                      <label key={s} className="flex items-center gap-2 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={selectedSkills.includes(s)}
+                          onChange={(e) => {
+                            if (e.target.checked) setSelectedSkills([...selectedSkills, s]);
+                            else setSelectedSkills(selectedSkills.filter(skill => skill !== s));
+                          }}
+                          className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                        />
+                        <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{s}</span>
+                      </label>
                     ))}
-                  </select>
+                  </div>
                 </div>
               )}
 
@@ -282,18 +296,20 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
               </div>
 
               {/* Clear Filters */}
-              <button
-                onClick={() => {
-                  setSelectedDept("");
-                  setSelectedSkill("");
-                  setSelectedDomain("");
-                  setAcceptingOnly(false);
-                  setSearchQuery("");
-                }}
+              {(searchQuery || selectedDepts.length > 0 || selectedSkills.length > 0 || selectedDomains.length > 0 || acceptingOnly) && (
+                <button
+                  onClick={() => {
+                    setSelectedDepts([]);
+                    setSelectedSkills([]);
+                    setSelectedDomains([]);
+                    setAcceptingOnly(false);
+                    setSearchQuery("");
+                  }}
                 className="btn btn-ghost btn-sm w-full text-noir-400"
               >
                 Clear all filters
               </button>
+              )}
             </div>
           </motion.aside>
         )}
