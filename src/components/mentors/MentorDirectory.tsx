@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Users, Building2, GraduationCap, ArrowUpRight, Mail, Calendar, X, Clock } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Users, Building2, GraduationCap, ArrowUpRight, Mail, Calendar, X, Clock, Search, Filter, SlidersHorizontal } from "lucide-react";
+import { DEPARTMENTS } from "@/db/seed/taxonomy";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,7 +26,21 @@ export type MentorData = {
 
 export function MentorDirectory({ initialMentors }: { initialMentors: MentorData[] }) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState("");
+  const [showFilters, setShowFilters] = useState(true);
   const [selectedMentor, setSelectedMentor] = useState<MentorData | null>(null);
+
+  const allDomains = useMemo(() => {
+    const domains = new Set<string>();
+    initialMentors.forEach(m => {
+      if (m.mentorshipDomains && Array.isArray(m.mentorshipDomains)) {
+        m.mentorshipDomains.forEach(d => domains.add(d));
+      }
+    });
+    return Array.from(domains).sort();
+  }, [initialMentors]);
 
   const parseOfficeHours = (raw: any): OfficeHour[] => {
     if (!raw) return [];
@@ -58,8 +73,27 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
     if (showAvailableOnly) {
       if (mentor.type !== "faculty") return false; // Only faculty have office hours
       const hours = parseOfficeHours(mentor.officeHours);
-      return isAvailableNow(hours);
+      if (!isAvailableNow(hours)) return false;
     }
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      if (
+        !(mentor.name && mentor.name.toLowerCase().includes(q)) &&
+        !(mentor.company && mentor.company.toLowerCase().includes(q)) &&
+        !(mentor.bio && mentor.bio.toLowerCase().includes(q))
+      ) {
+        return false;
+      }
+    }
+
+    if (selectedDept && mentor.department !== selectedDept) return false;
+    
+    if (selectedDomain) {
+      if (!mentor.mentorshipDomains || !Array.isArray(mentor.mentorshipDomains)) return false;
+      if (!mentor.mentorshipDomains.includes(selectedDomain)) return false;
+    }
+
     return true;
   });
 
@@ -88,22 +122,119 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
             Browse by department to seek guidance on career paths and research opportunities.
           </p>
         </div>
-        <div className="flex gap-3">
-          <label className="flex items-center gap-2 cursor-pointer bg-noir-900 border border-white/5 px-4 py-2 rounded-xl text-sm text-noir-200 hover:text-teal-400 hover:border-teal-500/30 transition-all">
-            <Clock size={16} className={showAvailableOnly ? "text-teal-400" : ""} />
-            <span>Available Now</span>
-            <div className={`relative w-8 h-4 ml-2 rounded-full transition-colors ${showAvailableOnly ? "bg-teal-500" : "bg-noir-600"}`}>
-               <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform ${showAvailableOnly ? "translate-x-4.5 left-0" : "translate-x-0.5"}`} style={{ left: showAvailableOnly ? '16px' : '0' }} />
-            </div>
-            <input 
-              type="checkbox" 
-              className="sr-only" 
-              checked={showAvailableOnly} 
-              onChange={e => setShowAvailableOnly(e.target.checked)} 
-            />
-          </label>
-        </div>
       </div>
+
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar Filters */}
+        <div className={`lg:w-64 flex-shrink-0 space-y-6 ${showFilters ? 'block' : 'hidden lg:block'}`}>
+          <div className="card-glass p-5 space-y-6 sticky top-24">
+            <div className="flex items-center justify-between pb-4 border-b border-white/5">
+              <div className="flex items-center gap-2 text-noir-200 font-medium">
+                <SlidersHorizontal size={18} className="text-amber-400" />
+                Filters
+              </div>
+              <button 
+                className="lg:hidden p-1 text-noir-400 hover:text-white"
+                onClick={() => setShowFilters(false)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Search */}
+              <div>
+                <label className="text-label block mb-2">Search</label>
+                <div className="relative">
+                  <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-noir-400" />
+                  <input
+                    type="text"
+                    placeholder="Name, company..."
+                    className="input-noir pl-9 text-sm"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Department */}
+              <div>
+                <label className="text-label block mb-2">Department</label>
+                <select
+                  value={selectedDept}
+                  onChange={(e) => setSelectedDept(e.target.value)}
+                  className="input-noir text-sm"
+                >
+                  <option value="" className="bg-noir-900 text-noir-50">All Departments</option>
+                  {DEPARTMENTS.map((d) => (
+                    <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                  ))}
+                  <option value="Other / Interdisciplinary" className="bg-noir-900 text-noir-50">Other / Interdisciplinary</option>
+                </select>
+              </div>
+
+              {/* Mentorship Domain */}
+              {allDomains.length > 0 && (
+                <div>
+                  <label className="text-label block mb-2">Mentorship Domain</label>
+                  <select
+                    value={selectedDomain}
+                    onChange={(e) => setSelectedDomain(e.target.value)}
+                    className="input-noir text-sm"
+                  >
+                    <option value="" className="bg-noir-900 text-noir-50">All Domains</option>
+                    {allDomains.map((d) => (
+                      <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* Available Now */}
+              <div>
+                <label className="flex items-center justify-between cursor-pointer group">
+                  <span className="text-sm font-medium text-noir-200 group-hover:text-teal-400 transition-colors">Available Now</span>
+                  <div className={`relative w-10 h-5 rounded-full transition-colors ${showAvailableOnly ? "bg-teal-500" : "bg-noir-700"}`}>
+                    <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${showAvailableOnly ? "translate-x-5 left-0.5" : "translate-x-0.5"}`} style={{ left: showAvailableOnly ? '20px' : '0' }} />
+                  </div>
+                  <input 
+                    type="checkbox" 
+                    className="sr-only" 
+                    checked={showAvailableOnly} 
+                    onChange={e => setShowAvailableOnly(e.target.checked)} 
+                  />
+                </label>
+                <p className="text-xs text-noir-400 mt-1">Show mentors currently in their office hours.</p>
+              </div>
+            </div>
+
+            {(searchQuery || selectedDept || selectedDomain || showAvailableOnly) && (
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedDept("");
+                  setSelectedDomain("");
+                  setShowAvailableOnly(false);
+                }}
+                className="w-full py-2 text-xs font-medium text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 rounded-xl transition-colors border border-rose-500/20"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 space-y-6">
+          <div className="flex items-center justify-between lg:hidden">
+            <h2 className="text-lg font-bold text-noir-100">Mentors ({filteredMentors.length})</h2>
+            <button 
+              className="btn btn-secondary btn-sm flex items-center gap-2"
+              onClick={() => setShowFilters(true)}
+            >
+              <Filter size={16} /> Filters
+            </button>
+          </div>
 
       {sortedDepts.length === 0 ? (
         <div className="card-glass-static p-12 text-center">
@@ -243,6 +374,8 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
           })}
         </div>
       )}
+        </div>
+      </div>
 
       {/* Timetable Modal */}
       <AnimatePresence>

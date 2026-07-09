@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "db:seed:projects": "node --env-file=.env.local --import tsx src/db/seed/projects-2026.ts",
-    "db:seed:scrape": "node --env-file=.env.local --import tsx src/db/seed/scrape-faculty.ts"
+    "db:seed:scrape": "node --env-file=.env.local --import tsx src/db/seed/scrape-faculty.ts",
+    "db:seed:office-hours": "node --env-file=.env.local --import tsx src/db/seed/fake-office-hours.ts"
   },
   "overrides": {
     "nodemailer": "$nodemailer"
