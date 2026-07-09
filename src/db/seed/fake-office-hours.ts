@@ -65,7 +65,7 @@ async function seedFakeOfficeHours() {
     }
 
     await db.update(facultyProfiles)
-      .set({ officeHours: JSON.stringify(slots) })
+      .set({ officeHours: slots as any })
       .where(eq(facultyProfiles.id, faculty.id));
   }
   
