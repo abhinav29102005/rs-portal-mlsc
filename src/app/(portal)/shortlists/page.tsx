@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { toggleShortlistCandidate } from "@/app/actions/shortlists";
 
-export const metadata = { title: "Shortlists — TIET Research Portal" };
+export const metadata = { title: "Shortlists — RAMP" };
 
 export default async function ShortlistsPage() {
   const session = await auth();

@@ -7,7 +7,7 @@ import { facultyProfiles } from "@/db/schema/profiles";
 import { proposals } from "@/db/schema/proposals";
 import { eq } from "drizzle-orm";
 
-export const metadata = { title: "Edit Project — TIET Research Portal" };
+export const metadata = { title: "Edit Project — RAMP" };
 
 export default async function EditOpeningPage({
   params,

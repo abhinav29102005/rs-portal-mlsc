@@ -15,7 +15,7 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
     where: (w, { eq }) => eq(w.id, params.id)
   });
   return {
-    title: `${workspace?.title || "Workspace"} — TIET Research Portal`,
+    title: `${workspace?.title || "Workspace"} — RAMP`,
   };
 }
 

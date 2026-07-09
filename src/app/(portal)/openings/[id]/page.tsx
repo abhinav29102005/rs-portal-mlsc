@@ -21,7 +21,7 @@ import {
   Building,
 } from "lucide-react";
 
-export const metadata = { title: "Project Details — TIET Research Portal" };
+export const metadata = { title: "Project Details — RAMP" };
 
 export default async function OpeningDetailPage({
   params,

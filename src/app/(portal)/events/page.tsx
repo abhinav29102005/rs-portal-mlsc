@@ -15,7 +15,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-export const metadata = { title: "Events & Seminars — TIET Research Portal" };
+export const metadata = { title: "Events & Seminars — RAMP" };
 
 export default async function EventsPage() {
   const session = await auth();

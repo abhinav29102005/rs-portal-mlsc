@@ -10,7 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MentorDirectory } from "@/components/mentors/MentorDirectory";
 
-export const metadata = { title: "Mentors — TIET Research Portal" };
+export const metadata = { title: "Mentors — RAMP" };
 
 export default async function MentorsPage() {
   const session = await auth();

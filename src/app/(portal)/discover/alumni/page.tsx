@@ -7,7 +7,7 @@ import { eq, desc } from "drizzle-orm";
 import { Users, Building2, GraduationCap, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-export const metadata = { title: "Alumni Network — TIET Research Portal" };
+export const metadata = { title: "Alumni Network — RAMP" };
 
 export default async function AlumniDiscoveryPage() {
   const session = await auth();

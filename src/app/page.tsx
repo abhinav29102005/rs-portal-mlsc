@@ -18,10 +18,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg font-heading">T</span>
+              <span className="text-white font-bold text-lg font-heading">R</span>
             </div>
             <span className="text-lg font-bold text-gray-900 font-heading">
-              Thapar Research Portal
+              RAMP
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -171,8 +171,16 @@ export default async function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-12 text-center text-gray-500">
+        <p className="font-medium text-gray-900 mb-4">RAMP — Research and Mentor Platform</p>
         <p>© {new Date().getFullYear()} Thapar Institute of Engineering and Technology.</p>
-        <p className="text-sm mt-2">Built for the research community.</p>
+        <div className="mt-8 flex justify-center items-center gap-2 text-sm">
+          <span>Powered by</span>
+          {/* MLSC Logo Placeholder */}
+          <div className="w-8 h-8 relative rounded-full overflow-hidden bg-gray-100">
+            <img src="/mlsc-logo.png" alt="MLSC Logo" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+          </div>
+          <span className="font-semibold text-gray-800 tracking-wide">MLSC</span>
+        </div>
       </footer>
     </div>
   );

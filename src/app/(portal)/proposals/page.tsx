@@ -9,7 +9,7 @@ import { FileText, Clock, CheckCircle, XCircle, ChevronRight, MessageSquare } fr
 import Link from "next/link";
 import { updateProposalStatus } from "@/app/actions/proposals";
 
-export const metadata = { title: "Proposals — TIET Research Portal" };
+export const metadata = { title: "Proposals — RAMP" };
 
 function getStatusColor(status: string) {
   switch (status) {

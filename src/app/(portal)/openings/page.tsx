@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { ProjectDiscovery } from "@/components/discovery/ProjectDiscovery";
 
-export const metadata = { title: "Openings — TIET Research Portal" };
+export const metadata = { title: "Openings — RAMP" };
 
 async function getFacultyOpenings(userId: string) {
   const profile = await db

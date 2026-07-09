@@ -119,7 +119,7 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
     <aside className="bg-sidebar-gradient fixed left-0 top-0 h-screen w-[260px] z-40 flex flex-col">
       {/* Logo */}
       <div className="px-6 py-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-lg shadow-amber-500/20">
+        <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-lg shadow-red-500/20">
           <Image
             src="/thapar-logo.png"
             alt="Thapar University Logo"
@@ -133,16 +133,16 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
             className="text-sm font-bold tracking-tight"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            TIET Research
+            RAMP
           </h1>
-          <p className="text-[10px] text-noir-400 tracking-widest uppercase">
-            Mentor Portal
+          <p className="text-[10px] text-gray-500 tracking-widest uppercase">
+            Research & Mentor
           </p>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="mx-5 h-px bg-gradient-to-r from-transparent via-amber-500/15 to-transparent" />
+      <div className="mx-5 h-px bg-gradient-to-r from-transparent via-red-500/15 to-transparent" />
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">

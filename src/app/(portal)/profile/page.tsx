@@ -5,7 +5,7 @@ import { facultyProfiles } from "@/db/schema/profiles";
 import { eq } from "drizzle-orm";
 import { ProfileBuilder } from "@/components/profile/ProfileBuilder";
 
-export const metadata = { title: "My Profile — TIET Research Portal" };
+export const metadata = { title: "My Profile — RAMP" };
 
 export default async function FacultyProfilePage() {
   const session = await auth();

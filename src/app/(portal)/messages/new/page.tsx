@@ -9,7 +9,7 @@ import { ChevronLeft, MessageSquare } from "lucide-react";
 import { ChatInput } from "@/components/messages/ChatInput";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
-export const metadata = { title: "New Message — TIET Research Portal" };
+export const metadata = { title: "New Message — RAMP" };
 
 export default async function NewMessagePage(props: { searchParams: Promise<{ to?: string }> }) {
   const searchParams = await props.searchParams;

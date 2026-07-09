@@ -7,7 +7,7 @@ import { eq, desc } from "drizzle-orm";
 import { FolderOpen, ArrowUpRight, Users, Clock } from "lucide-react";
 import Link from "next/link";
 
-export const metadata = { title: "Workspaces — TIET Research Portal" };
+export const metadata = { title: "Workspaces — RAMP" };
 
 export default async function WorkspacesPage() {
   const session = await auth();

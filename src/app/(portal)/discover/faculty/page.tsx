@@ -9,7 +9,7 @@ import { researchDomains } from "@/db/schema/taxonomy";
 import { eq, and, inArray } from "drizzle-orm";
 
 export const metadata = {
-  title: "Discover Faculty — TIET Research Portal",
+  title: "Discover Faculty — RAMP",
   description: "Browse and filter TIET faculty profiles by research domain, department, and availability.",
 };
 

@@ -17,7 +17,7 @@ import {
 } from "@/lib/matching";
 
 export const metadata = {
-  title: "Dashboard — TIET Research Portal",
+  title: "Dashboard — RAMP",
 };
 
 /** Compute profile completeness percentage from filled fields */

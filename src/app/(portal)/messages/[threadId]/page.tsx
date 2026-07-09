@@ -9,7 +9,7 @@ import { ChevronLeft } from "lucide-react";
 import { ChatInput } from "@/components/messages/ChatInput";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
-export const metadata = { title: "Chat — TIET Research Portal" };
+export const metadata = { title: "Chat — RAMP" };
 
 export default async function ThreadPage(props: { params: Promise<{ threadId: string }> }) {
   const params = await props.params;

@@ -5,7 +5,7 @@ import { studentProfiles } from "@/db/schema/profiles";
 import { eq } from "drizzle-orm";
 import { PortfolioBuilder } from "@/components/portfolio/PortfolioBuilder";
 
-export const metadata = { title: "My Portfolio — TIET Research Portal" };
+export const metadata = { title: "My Portfolio — RAMP" };
 
 export default async function PortfolioPage() {
   const session = await auth();

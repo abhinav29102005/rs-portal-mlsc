@@ -8,7 +8,7 @@ import Link from "next/link";
 import { MessageSquare } from "lucide-react";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 
-export const metadata = { title: "Messages — TIET Research Portal" };
+export const metadata = { title: "Messages — RAMP" };
 
 export default async function MessagesInboxPage() {
   const session = await auth();

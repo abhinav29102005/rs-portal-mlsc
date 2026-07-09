@@ -11,7 +11,7 @@ import Image from "next/image";
 import { toggleShortlistCandidate } from "@/app/actions/shortlists";
 import { StudentDiscovery } from "@/components/discovery/StudentDiscovery";
 
-export const metadata = { title: "Discover Students — TIET Research Portal" };
+export const metadata = { title: "Discover Students — RAMP" };
 
 export default async function DiscoverStudentsPage() {
   const session = await auth();

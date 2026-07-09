@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { facultyProfiles } from "@/db/schema/profiles";
 import { eq } from "drizzle-orm";
 
-export const metadata = { title: "Post New Project — TIET Research Portal" };
+export const metadata = { title: "Post New Project — RAMP" };
 
 export default async function NewOpeningPage() {
   const session = await auth();

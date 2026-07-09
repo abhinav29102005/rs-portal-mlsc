@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, MapPin, Users, Info } from "lucide-react";
 import { EventRsvpButton } from "@/components/events/EventRsvpButton";
 
-export const metadata = { title: "Event Details — TIET Research Portal" };
+export const metadata = { title: "Event Details — RAMP" };
 
 export default async function EventDetailPage({
   params,
