@@ -27,6 +27,7 @@ export default async function DiscoverFacultyPage() {
       designation: facultyProfiles.designation,
       department: facultyProfiles.department,
       mentoringStyle: facultyProfiles.mentoringStyle,
+      minimumCgpa: facultyProfiles.minimumCgpa,
     })
     .from(users)
     .innerJoin(facultyProfiles, eq(users.id, facultyProfiles.userId))
@@ -88,6 +89,7 @@ export default async function DiscoverFacultyPage() {
         department: f.department || "Unknown Department",
         researchTags,
         mentoringStyle: f.mentoringStyle || [],
+        minimumCgpa: f.minimumCgpa,
         openings: activeOpeningsCount,
         isAccepting: activeOpeningsCount > 0,
         image: f.image || null,

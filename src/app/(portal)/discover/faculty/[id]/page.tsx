@@ -10,6 +10,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FacultyActionsClient } from "@/components/proposals/FacultyActionsClient";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
+import { TimetableGrid } from "@/components/ui/TimetableGrid";
 
 export default async function FacultyProfilePage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -42,6 +43,15 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
 
   // Parse arrays safely
   const mentoringStyle = profile.mentoringStyle as string[] || [];
+  
+  let officeHours = [];
+  if (profile.officeHours) {
+    try {
+      officeHours = typeof profile.officeHours === 'string' ? JSON.parse(profile.officeHours) : profile.officeHours;
+    } catch {
+      officeHours = [];
+    }
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -196,6 +206,16 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
                   </a>
                 )}
               </div>
+            </section>
+          )}
+
+          {/* Timetable */}
+          {officeHours.length > 0 && (
+            <section className="card-glass p-6 sm:p-8 md:col-span-2 lg:col-span-3">
+              <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
+                <Sparkles className="text-amber-400" size={20} /> Availability & Office Hours
+              </h2>
+              <TimetableGrid officeHours={officeHours} editMode={false} />
             </section>
           )}
 

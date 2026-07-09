@@ -23,6 +23,7 @@ type FacultyData = {
   department: string;
   researchTags: string[];
   mentoringStyle: string[];
+  minimumCgpa: number | null;
   openings: number;
   isAccepting: boolean;
   image: string | null;
@@ -111,6 +112,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
   const [selectedDept, setSelectedDept] = useState("");
   const [acceptingOnly, setAcceptingOnly] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState("");
+  const [maxCgpaReq, setMaxCgpaReq] = useState<number | "">("");
 
   const allSkills = React.useMemo(() => {
     const skills = new Set<string>();
@@ -134,6 +136,11 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
     if (selectedDept && f.department !== selectedDept) return false;
     if (acceptingOnly && !f.isAccepting) return false;
     if (selectedSkill && (!f.mentoringStyle || !f.mentoringStyle.includes(selectedSkill))) return false;
+    
+    // If faculty requires a CGPA > the max selected by user, filter them out.
+    // So if user selects "8.5", faculty requiring 9.0 are filtered out.
+    if (maxCgpaReq !== "" && f.minimumCgpa !== null && f.minimumCgpa > maxCgpaReq) return false;
+    
     return true;
   });
 
@@ -224,6 +231,30 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 </div>
               )}
 
+              {/* CGPA Requirement Filter */}
+              <div>
+                <label className="text-label block mb-2 flex justify-between">
+                  <span>Max CGPA Requirement</span>
+                  <span className="text-amber-400 font-medium">{maxCgpaReq || "Any"}</span>
+                </label>
+                <input
+                  type="range"
+                  min="5"
+                  max="10"
+                  step="0.1"
+                  value={maxCgpaReq || 10}
+                  onChange={(e) => setMaxCgpaReq(parseFloat(e.target.value))}
+                  className="w-full accent-amber-500 h-1.5 bg-noir-800 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-noir-500 mt-1">
+                  <span>5.0</span>
+                  <span>10.0</span>
+                </div>
+                <p className="text-[10px] text-noir-400 mt-1">
+                  Show faculty asking for at most this CGPA
+                </p>
+              </div>
+
               {/* Accepting Students Toggle */}
               <div>
                 <label className="flex items-center justify-between cursor-pointer group">
@@ -256,6 +287,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 onClick={() => {
                   setSelectedDept("");
                   setSelectedSkill("");
+                  setMaxCgpaReq("");
                   setAcceptingOnly(false);
                   setSearchQuery("");
                 }}
