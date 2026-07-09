@@ -19,18 +19,33 @@ export default async function DiscoverStudentsPage() {
     redirect("/login");
   }
 
-  // 1. Fetch Students who are open to research from NestJS
-  let studentsData: any[] = [];
-  try {
-    const res = await fetch('http://localhost:3001/students/discover', {
-      next: { revalidate: 60 }
-    });
-    if (res.ok) {
-      studentsData = await res.json();
-    }
-  } catch (error) {
-    console.error("Failed to fetch students from backend:", error);
-  }
+  // 1. Fetch Students who are open to research
+  const studentsData = await db
+    .select({
+      id: studentProfiles.id,
+      userId: users.id,
+      name: users.name,
+      image: users.image,
+      department: studentProfiles.department,
+      program: studentProfiles.program,
+      batchYear: studentProfiles.batchYear,
+      cgpa: studentProfiles.cgpa,
+      bio: studentProfiles.bio,
+      preferredEngagement: studentProfiles.preferredEngagement,
+      technicalStack: studentProfiles.technicalStack,
+      githubUrl: studentProfiles.githubUrl,
+      linkedinUrl: studentProfiles.linkedinUrl,
+    })
+    .from(studentProfiles)
+    .innerJoin(users, eq(studentProfiles.userId, users.id))
+    .where(
+      and(
+        eq(studentProfiles.openToResearch, true),
+        inArray(studentProfiles.visibility, ["public", "faculty_only"])
+      )
+    )
+    .orderBy(desc(studentProfiles.createdAt))
+    .all();
 
   // 2. Fetch the faculty's shortlist to show which students are already saved
   let savedStudentIds: string[] = [];

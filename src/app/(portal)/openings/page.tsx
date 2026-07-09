@@ -42,17 +42,18 @@ async function getFacultyOpenings(userId: string) {
 }
 
 async function getPublicOpenings() {
-  try {
-    const res = await fetch('http://localhost:3001/openings/discover', {
-      next: { revalidate: 60 }
-    });
-    if (res.ok) {
-      return await res.json();
-    }
-  } catch (error) {
-    console.error("Failed to fetch openings from backend:", error);
-  }
-  return [];
+  return db
+    .select({
+      opening: openings,
+      facultyName: users.name,
+      facultyDepartment: facultyProfiles.department,
+    })
+    .from(openings)
+    .leftJoin(facultyProfiles, eq(openings.facultyProfileId, facultyProfiles.id))
+    .leftJoin(users, eq(facultyProfiles.userId, users.id))
+    .where(eq(openings.status, "open"))
+    .orderBy(desc(openings.createdAt))
+    .all();
 }
 
 const STATUS_CLASSES: Record<string, string> = {
@@ -203,11 +204,9 @@ async function StudentOpeningsList() {
     );
   }
 
-  const projectData = results.map((item: any) => {
-    const { opening, facultyName, facultyDepartment } = item;
-    return {
-      id: opening.id,
-      title: opening.title,
+  const projectData = results.map(({ opening, facultyName, facultyDepartment }) => ({
+    id: opening.id,
+    title: opening.title,
     description: opening.description,
     department: opening.department || facultyDepartment,
     engagementType: opening.engagementType,
@@ -218,8 +217,7 @@ async function StudentOpeningsList() {
     coMentors: opening.coMentors,
     facultyName: facultyName,
     domain: null, // Since we don't have domain natively on openings yet
-    };
-  });
+  }));
 
   return <ProjectDiscovery initialProjects={projectData} />;
 }

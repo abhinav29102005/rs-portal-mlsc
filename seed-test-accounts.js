@@ -12,6 +12,9 @@ async function run() {
   console.log("Promoting asingh3_be24@thapar.edu to admin...");
   await client.execute(`UPDATE users SET role = 'admin', name = 'Abhinav Singh (Admin)' WHERE email = 'asingh3_be24@thapar.edu'`);
 
+  console.log("Promoting ojain_be24@thapar.edu to admin...");
+  await client.execute(`UPDATE users SET role = 'admin', name = 'Ojasvi' WHERE email = 'ojain_be24@thapar.edu'`);
+
   console.log("Creating Test Account 1: asingh2910.official@gmail.com (Faculty)...");
   const facId = crypto.randomUUID();
   await client.execute({
