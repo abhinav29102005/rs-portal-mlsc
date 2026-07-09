@@ -12,9 +12,9 @@ import {
   Calendar,
   Users,
   MapPin,
-  Pencil,
   ExternalLink,
 } from "lucide-react";
+import { ProjectDiscovery } from "@/components/discovery/ProjectDiscovery";
 
 export const metadata = { title: "Openings — TIET Research Portal" };
 
@@ -203,64 +203,20 @@ async function StudentOpeningsList() {
     );
   }
 
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      {results.map(({ opening, facultyName, facultyDepartment }) => (
-        <Link href={`/openings/${opening.id}`} key={opening.id} className="card-glass p-5 space-y-3 group hover:border-amber-500/30 transition-colors block">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3
-              className="heading-3 text-noir-50 line-clamp-2 mb-1 group-hover:text-amber-400 transition-colors"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              {opening.title}
-            </h3>
-            <p className="text-sm text-amber-400">
-              {facultyName || "Faculty Member"}
-            </p>
-            </div>
-            <ExternalLink size={16} className="text-noir-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
+  const projectData = results.map(({ opening, facultyName, facultyDepartment }) => ({
+    id: opening.id,
+    title: opening.title,
+    description: opening.description,
+    department: opening.department || facultyDepartment,
+    engagementType: opening.engagementType,
+    stipendType: opening.stipendType,
+    stipendAmount: opening.stipendAmount,
+    seatsAvailable: opening.seatsAvailable,
+    duration: opening.duration,
+    coMentors: opening.coMentors,
+    facultyName: facultyName,
+    domain: null, // Since we don't have domain natively on openings yet
+  }));
 
-          <p className="text-sm text-noir-400 line-clamp-3">
-            {opening.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2">
-            {opening.department && (
-              <span className="badge badge-amber">{opening.department}</span>
-            )}
-            {opening.engagementType && (
-              <span className="badge badge-teal">{opening.engagementType}</span>
-            )}
-            {opening.stipendType && (
-              <span className="badge badge-sky">
-                {opening.stipendType}
-                {opening.stipendAmount && ` — ${opening.stipendAmount}`}
-              </span>
-            )}
-            {opening.seatsAvailable && opening.seatsAvailable > 0 && (
-              <span className="badge badge-neutral">
-                {opening.seatsAvailable} seat{opening.seatsAvailable > 1 ? "s" : ""}
-              </span>
-            )}
-          </div>
-
-          {opening.duration && (
-            <p className="text-xs text-noir-500 flex items-center gap-1">
-              <Calendar size={12} />
-              {opening.duration}
-            </p>
-          )}
-
-          {opening.coMentors && (opening.coMentors as any[]).length > 0 && (
-            <p className="text-xs text-noir-500">
-              Co-mentors:{" "}
-              {(opening.coMentors as any[]).map((cm: any) => cm.name).join(", ")}
-            </p>
-          )}
-        </Link>
-      ))}
-    </div>
-  );
+  return <ProjectDiscovery initialProjects={projectData} />;
 }

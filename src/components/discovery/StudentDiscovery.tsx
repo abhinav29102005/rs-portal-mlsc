@@ -10,7 +10,7 @@ import { toggleShortlistCandidate } from "@/app/actions/shortlists";
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.02 } },
 };
 
 const itemVariants = {
@@ -28,6 +28,7 @@ export type StudentData = {
   batchYear: number | null;
   cgpa: number | null;
   bio: string | null;
+  domains: string[] | null;
   preferredEngagement: string[] | null;
   technicalStack: string[] | null;
   githubUrl: string | null;
@@ -43,6 +44,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
   const [selectedBatchYear, setSelectedBatchYear] = useState<string>("");
   const [minCgpa, setMinCgpa] = useState<number>(0);
   const [selectedSkill, setSelectedSkill] = useState<string>("");
+  const [selectedDomain, setSelectedDomain] = useState<string>("");
 
   const allSkills = useMemo(() => {
     const skills = new Set<string>();
@@ -52,6 +54,16 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
       }
     });
     return Array.from(skills).sort();
+  }, [initialStudents]);
+
+  const allDomains = useMemo(() => {
+    const domains = new Set<string>();
+    initialStudents.forEach((s) => {
+      if (s.domains) {
+        s.domains.forEach((d) => domains.add(d));
+      }
+    });
+    return Array.from(domains).sort();
   }, [initialStudents]);
 
   const allBatchYears = useMemo(() => {
@@ -70,7 +82,8 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
       if (
         !s.name?.toLowerCase().includes(q) &&
         !s.department?.toLowerCase().includes(q) &&
-        !s.technicalStack?.some((t) => t.toLowerCase().includes(q))
+        !s.technicalStack?.some((t) => t.toLowerCase().includes(q)) &&
+        !s.domains?.some((d) => d.toLowerCase().includes(q))
       )
         return false;
     }
@@ -78,6 +91,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
     if (selectedBatchYear && s.batchYear !== parseInt(selectedBatchYear)) return false;
     if (minCgpa > 0 && (s.cgpa || 0) < minCgpa) return false;
     if (selectedSkill && (!s.technicalStack || !s.technicalStack.includes(selectedSkill))) return false;
+    if (selectedDomain && (!s.domains || !s.domains.includes(selectedDomain))) return false;
     return true;
   });
 
@@ -166,6 +180,24 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
                 </select>
               </div>
 
+              {/* Research Domain Filter */}
+              {allDomains.length > 0 && (
+                <div>
+                  <label className="text-label block mb-2">Research Domain</label>
+                  <select
+                    value={selectedDomain}
+                    onChange={(e) => setSelectedDomain(e.target.value)}
+                    className="input-noir text-sm"
+                    id="domain-filter"
+                  >
+                    <option value="" className="bg-noir-900 text-noir-50">All Domains</option>
+                    {allDomains.map((d) => (
+                      <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Skill Filter */}
               {allSkills.length > 0 && (
                 <div>
@@ -222,6 +254,7 @@ export function StudentDiscovery({ initialStudents }: { initialStudents: Student
                 onClick={() => {
                   setSelectedDept("");
                   setSelectedSkill("");
+                  setSelectedDomain("");
                   setSelectedBatchYear("");
                   setMinCgpa(0);
                   setSearchQuery("");

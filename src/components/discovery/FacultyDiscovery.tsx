@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.02 } },
 };
 
 const itemVariants = {
@@ -112,6 +112,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
   const [selectedDept, setSelectedDept] = useState("");
   const [acceptingOnly, setAcceptingOnly] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState("");
   const [maxCgpaReq, setMaxCgpaReq] = useState<number | "">("");
 
   const allSkills = React.useMemo(() => {
@@ -120,6 +121,14 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
       if (f.mentoringStyle) f.mentoringStyle.forEach(s => skills.add(s));
     });
     return Array.from(skills).sort();
+  }, [initialFaculty]);
+
+  const allDomains = React.useMemo(() => {
+    const domains = new Set<string>();
+    initialFaculty.forEach(f => {
+      if (f.researchTags) f.researchTags.forEach(d => domains.add(d));
+    });
+    return Array.from(domains).sort();
   }, [initialFaculty]);
 
   const filteredFaculty = initialFaculty.filter((f) => {
@@ -136,6 +145,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
     if (selectedDept && f.department !== selectedDept) return false;
     if (acceptingOnly && !f.isAccepting) return false;
     if (selectedSkill && (!f.mentoringStyle || !f.mentoringStyle.includes(selectedSkill))) return false;
+    if (selectedDomain && (!f.researchTags || !f.researchTags.includes(selectedDomain))) return false;
     
     // If faculty requires a CGPA > the max selected by user, filter them out.
     // So if user selects "8.5", faculty requiring 9.0 are filtered out.
@@ -210,8 +220,26 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                   {DEPARTMENTS.map((d) => (
                     <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
                   ))}
-                </select>
-              </div>
+                  </select>
+                </div>
+
+                {/* Research Domain Filter */}
+                {allDomains.length > 0 && (
+                  <div>
+                    <label className="text-label block mb-2">Research Domain</label>
+                    <select
+                      value={selectedDomain}
+                      onChange={(e) => setSelectedDomain(e.target.value)}
+                      className="input-noir text-sm"
+                      id="domain-filter"
+                    >
+                      <option value="" className="bg-noir-900 text-noir-50">All Domains</option>
+                      {allDomains.map((d) => (
+                        <option key={d} value={d} className="bg-noir-900 text-noir-50">{d}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
               {/* Skills / Mentoring Style Filter */}
               {allSkills.length > 0 && (
@@ -287,6 +315,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 onClick={() => {
                   setSelectedDept("");
                   setSelectedSkill("");
+                  setSelectedDomain("");
                   setMaxCgpaReq("");
                   setAcceptingOnly(false);
                   setSearchQuery("");
