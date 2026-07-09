@@ -26,6 +26,7 @@ export default async function DiscoverFacultyPage() {
       profileId: facultyProfiles.id,
       designation: facultyProfiles.designation,
       department: facultyProfiles.department,
+      mentoringStyle: facultyProfiles.mentoringStyle,
     })
     .from(users)
     .innerJoin(facultyProfiles, eq(users.id, facultyProfiles.userId))
@@ -86,6 +87,7 @@ export default async function DiscoverFacultyPage() {
         designation: f.designation || "Faculty",
         department: f.department || "Unknown Department",
         researchTags,
+        mentoringStyle: f.mentoringStyle || [],
         openings: activeOpeningsCount,
         isAccepting: activeOpeningsCount > 0,
         image: f.image || null,

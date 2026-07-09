@@ -14,7 +14,7 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
 
 export function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
+    <NextThemesProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false} {...props}>
       {children}
     </NextThemesProvider>
   );

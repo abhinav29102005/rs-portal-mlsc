@@ -15,7 +15,6 @@ interface TopbarProps {
   notificationCount?: number;
 }
 
-import { ThemeToggle } from "@/components/ThemeToggle";
 export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -58,8 +57,6 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
 
       {/* Right Section */}
       <div className="flex items-center gap-3">
-        <ThemeToggle />
-        
         {/* Notifications */}
         <button
           className="btn btn-ghost btn-icon relative"

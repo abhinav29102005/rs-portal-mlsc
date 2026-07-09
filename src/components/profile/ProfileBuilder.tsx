@@ -2,9 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
-import { User, Library, Link as LinkIcon, Settings, Save, Loader2, CheckCircle, FolderGit2, BookOpen, Plus, X } from "lucide-react";
+import { User, Library, Link as LinkIcon, Settings, Save, Loader2, CheckCircle, FolderGit2, BookOpen, Plus, X, Clock } from "lucide-react";
 import { updateFacultyProfile } from "@/app/actions/profiles";
 import { DEPARTMENTS, DESIGNATIONS, MENTORSHIP_STYLES } from "@/db/seed/taxonomy";
+import { TimetableGrid } from "@/components/ui/TimetableGrid";
 
 export function ProfileBuilder({ initialData }: { initialData: any }) {
   const [isPending, startTransition] = useTransition();
@@ -34,6 +35,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
   });
 
   const [mentoringStyle, setMentoringStyle] = useState<string[]>(parseJsonStr(initialData.mentoringStyle, []));
+  const [officeHours, setOfficeHours] = useState<any[]>(parseJsonStr(initialData.officeHours, []));
 
   const addProject = () => {
     setFormData(prev => ({ ...prev, projects: [...prev.projects, { title: "", description: "", url: "" }] }));
@@ -91,6 +93,7 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
         await updateFacultyProfile({
           ...formData,
           mentoringStyle: JSON.stringify(mentoringStyle),
+          officeHours: JSON.stringify(officeHours),
           minimumCgpa: formData.minimumCgpa ? Number(formData.minimumCgpa) : null,
         });
         setIsSaved(true);
@@ -326,6 +329,24 @@ export function ProfileBuilder({ initialData }: { initialData: any }) {
             ))}
           </div>
         </div>
+      </motion.div>
+
+      {/* Office Hours / Timetable */}
+      <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.25 }} className="card-glass p-6 sm:p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <Clock className="text-amber-400" size={24} />
+          <h2 className="text-xl font-bold text-noir-50 font-heading">Availability Timetable</h2>
+        </div>
+        <p className="text-sm text-noir-400 mb-6">Set your weekly availability. This will be visible to students in the Mentor Directory.</p>
+        
+        <TimetableGrid 
+          officeHours={officeHours} 
+          onChange={(newHours) => {
+            setOfficeHours(newHours);
+            setIsSaved(false);
+          }} 
+          editMode={true} 
+        />
       </motion.div>
 
       {/* Actions */}

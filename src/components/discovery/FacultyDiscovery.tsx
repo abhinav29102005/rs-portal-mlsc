@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Search, Filter, SlidersHorizontal, BookOpen, GraduationCap, Sparkles } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { DEPARTMENTS } from "@/db/seed/taxonomy";
 import Image from "next/image";
 
@@ -22,6 +22,7 @@ type FacultyData = {
   designation: string;
   department: string;
   researchTags: string[];
+  mentoringStyle: string[];
   openings: number;
   isAccepting: boolean;
   image: string | null;
@@ -109,6 +110,15 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
   const [showFilters, setShowFilters] = useState(true);
   const [selectedDept, setSelectedDept] = useState("");
   const [acceptingOnly, setAcceptingOnly] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState("");
+
+  const allSkills = React.useMemo(() => {
+    const skills = new Set<string>();
+    initialFaculty.forEach(f => {
+      if (f.mentoringStyle) f.mentoringStyle.forEach(s => skills.add(s));
+    });
+    return Array.from(skills).sort();
+  }, [initialFaculty]);
 
   const filteredFaculty = initialFaculty.filter((f) => {
     if (searchQuery) {
@@ -116,12 +126,14 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
       if (
         !f.name.toLowerCase().includes(q) &&
         !f.researchTags.some((t) => t.toLowerCase().includes(q)) &&
-        !f.department.toLowerCase().includes(q)
+        !f.department.toLowerCase().includes(q) &&
+        !(f.mentoringStyle && f.mentoringStyle.some(s => s.toLowerCase().includes(q)))
       )
         return false;
     }
     if (selectedDept && f.department !== selectedDept) return false;
     if (acceptingOnly && !f.isAccepting) return false;
+    if (selectedSkill && (!f.mentoringStyle || !f.mentoringStyle.includes(selectedSkill))) return false;
     return true;
   });
 
@@ -194,6 +206,24 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
                 </select>
               </div>
 
+              {/* Skills / Mentoring Style Filter */}
+              {allSkills.length > 0 && (
+                <div>
+                  <label className="text-label block mb-2">Mentoring Style / Skills</label>
+                  <select
+                    value={selectedSkill}
+                    onChange={(e) => setSelectedSkill(e.target.value)}
+                    className="input-noir text-sm"
+                    id="skill-filter"
+                  >
+                    <option value="" className="bg-noir-900 text-noir-50">All Skills</option>
+                    {allSkills.map((s) => (
+                      <option key={s} value={s} className="bg-noir-900 text-noir-50">{s}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Accepting Students Toggle */}
               <div>
                 <label className="flex items-center justify-between cursor-pointer group">
@@ -225,6 +255,7 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
               <button
                 onClick={() => {
                   setSelectedDept("");
+                  setSelectedSkill("");
                   setAcceptingOnly(false);
                   setSearchQuery("");
                 }}
