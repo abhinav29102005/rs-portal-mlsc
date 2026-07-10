@@ -37,64 +37,66 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
   const getInitials = (name: string) => {
     const parts = name.split(" ");
     if (parts.length > 1) {
-      return parts[1][0]; // First letter of last name, or adjust as needed
+      return parts[1][0];
     }
     return name[0];
   };
 
   return (
-    <Link href={`/discover/faculty/${faculty.id}`}>
-      <motion.div variants={itemVariants} className="card-glass p-8 flex gap-6 hover:border-red-500/50 hover:bg-white/[0.02] cursor-pointer">
+    <Link href={`/discover/faculty/${faculty.id}`} className="block h-full">
+      <motion.div variants={itemVariants} className="card-glass p-6 h-full flex flex-col items-center text-center hover:border-red-500/50 hover:bg-white/[0.02] cursor-pointer transition-colors relative aspect-square justify-center space-y-4">
+        {/* Status pill (absolute top-right) */}
+        <span
+          className={`absolute top-4 right-4 status-pill ${
+            faculty.isAccepting ? "status-open" : "status-closed"
+          }`}
+        >
+          {faculty.isAccepting ? "Open" : "Closed"}
+        </span>
+        
         {/* Avatar */}
-        <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ring-2 ring-red-500/10 overflow-hidden relative">
+        <div className="w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 ring-4 ring-red-500/10 overflow-hidden relative mb-2 shadow-lg">
           <ImageWithFallback 
             src={faculty.image || ""} 
             fallbackText={getInitials(faculty.name)} 
             alt={faculty.name} 
             fill 
             className="object-cover" 
-            sizes="56px" 
+            sizes="80px" 
             unoptimized 
           />
         </div>
 
         {/* Info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="text-sm font-semibold text-noir-50 hover:text-red-400 transition-colors">
-                {faculty.name}
-              </h3>
-              <p className="text-xs text-noir-400 mt-0.5">
-                {faculty.designation} · {faculty.department}
-              </p>
-            </div>
-
-            {/* Status pill */}
-            <span
-              className={`status-pill flex-shrink-0 ${
-                faculty.isAccepting ? "status-open" : "status-closed"
-              }`}
-            >
-              {faculty.isAccepting ? "Open" : "Not accepting"}
-            </span>
-          </div>
+        <div className="flex flex-col items-center flex-1">
+          <h3 className="text-lg font-bold text-noir-50 hover:text-red-400 transition-colors line-clamp-1 w-full px-2 font-heading">
+            {faculty.name}
+          </h3>
+          <p className="text-xs text-noir-400 mt-1 line-clamp-2 w-full">
+            <span className="font-medium text-noir-300">{faculty.designation}</span><br />
+            {faculty.department}
+          </p>
 
           {/* Research tags */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {faculty.researchTags.map((tag) => (
-              <span key={tag} className="badge badge-red">
+          <div className="flex flex-wrap justify-center gap-1.5 mt-4">
+            {faculty.researchTags.slice(0, 3).map((tag) => (
+              <span key={tag} className="badge badge-red text-[10px] px-1.5 py-0.5">
                 {tag}
               </span>
             ))}
+            {faculty.researchTags.length > 3 && (
+              <span className="badge badge-neutral text-[10px] px-1.5 py-0.5">
+                +{faculty.researchTags.length - 3}
+              </span>
+            )}
           </div>
 
           {/* Bottom stats */}
-          <div className="flex items-center gap-5 mt-5 text-sm text-noir-400">
+          <div className="mt-auto pt-4 flex items-center justify-center gap-5 text-sm text-noir-400">
             {faculty.openings > 0 && (
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 px-2.5 py-1 rounded-full">
                 <Sparkles size={12} className="text-red-500" />
-                <span className="text-red-400 font-medium">
+                <span className="text-red-400 font-bold text-xs tracking-wide uppercase">
                   {faculty.openings} opening{faculty.openings > 1 ? "s" : ""}
                 </span>
               </span>
@@ -319,18 +321,20 @@ export function FacultyDiscovery({ initialFaculty }: { initialFaculty: FacultyDa
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex-1 space-y-10 min-w-0"
+          className="flex-1 min-w-0"
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-noir-400 font-medium">
               {filteredFaculty.length} facult{filteredFaculty.length === 1 ? "y" : "y members"} found
             </p>
           </div>
 
           {filteredFaculty.length > 0 ? (
-            filteredFaculty.map((faculty) => (
-              <FacultyCard key={faculty.id} faculty={faculty} />
-            ))
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredFaculty.map((faculty) => (
+                <FacultyCard key={faculty.id} faculty={faculty} />
+              ))}
+            </div>
           ) : (
             <div className="card-glass-static p-12 text-center">
               <Search size={32} className="text-noir-500 mx-auto mb-3" />
