@@ -17,12 +17,17 @@ export default async function HomePage() {
       <nav className="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-red-100">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg font-heading">R</span>
+            <div className="w-8 h-8 flex items-center justify-center">
+              <img src="/thapar-logo.png" alt="Thapar Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-lg font-bold text-gray-900 font-heading">
               RAMP
             </span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            <a href="#about" className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">About Us</a>
+            <a href="#features" className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">Features</a>
+            <a href="#contact" className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">Contact</a>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">
@@ -97,71 +102,30 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Perks Section */}
-        <section className="max-w-7xl mx-auto mb-32 bg-gray-900 rounded-3xl p-12 md:p-20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-red-600/20 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-          
-          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white font-heading mb-6">
-                Tailored exactly for your academic journey.
-              </h2>
-              <p className="text-gray-400 text-lg mb-8">
-                Whether you are a student looking to publish your first paper, or a professor managing a lab of 20 researchers, the portal scales to your needs.
+        {/* About Us Section */}
+        <section id="about" className="max-w-4xl mx-auto mb-32 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 font-heading mb-6">About Us</h2>
+          <p className="text-lg text-gray-600 leading-relaxed mb-6">
+            The Research and Mentor Platform (RAMP) was developed to streamline the academic and research ecosystem at Thapar Institute of Engineering and Technology. Our mission is to bridge the gap between ambitious students seeking hands-on research experience and visionary faculty members who are pioneering new technologies.
+          </p>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            By eliminating administrative overhead, providing unified discovery, and enabling seamless communication, RAMP accelerates research outcomes and fosters a collaborative academic community.
+          </p>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="max-w-4xl mx-auto mb-20">
+          <div className="bg-red-50 border border-red-100 rounded-3xl p-12 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/10 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold text-gray-900 font-heading mb-4">Get in Touch</h2>
+              <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+                Have questions about the portal, want to report an issue, or need administrative access? Our team is here to help.
               </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <GraduationCap size={20} className="text-red-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">For Students</h4>
-                    <p className="text-gray-400 text-sm">Build a persistent research portfolio, track your CGPA and skills, and directly apply to exclusive faculty projects.</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <Briefcase size={20} className="text-red-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">For Faculty</h4>
-                    <p className="text-gray-400 text-sm">Discover top talent by filtering students by specific tech stacks, batch years, and domains. Manage all applicants in one kanban view.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 shadow-2xl relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent rounded-2xl pointer-events-none" />
-              <div className="space-y-6 relative z-10">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-900 border border-gray-700">
-                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-gray-400">
-                    <Users size={20} />
-                  </div>
-                  <div>
-                    <div className="h-4 w-32 bg-gray-700 rounded mb-2" />
-                    <div className="h-3 w-24 bg-gray-800 rounded" />
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-900 border border-red-900/50 shadow-[0_0_20px_rgba(220,38,38,0.15)] transform translate-x-4">
-                  <div className="w-12 h-12 bg-red-900/50 text-red-500 rounded-full flex items-center justify-center">
-                    <Zap size={20} />
-                  </div>
-                  <div>
-                    <div className="h-4 w-40 bg-red-900/50 rounded mb-2" />
-                    <div className="h-3 w-28 bg-gray-800 rounded" />
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-900 border border-gray-700">
-                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-gray-400">
-                    <Search size={20} />
-                  </div>
-                  <div>
-                    <div className="h-4 w-28 bg-gray-700 rounded mb-2" />
-                    <div className="h-3 w-32 bg-gray-800 rounded" />
-                  </div>
-                </div>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:support@thapar.edu" className="btn btn-primary btn-lg">
+                  Contact Support
+                </a>
               </div>
             </div>
           </div>

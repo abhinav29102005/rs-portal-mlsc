@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
 import { Sparkles, GraduationCap, BookOpen, Users, ArrowRight } from "lucide-react";
 import { ConstellationBackground } from "@/components/layout/ConstellationBackground";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -12,6 +13,13 @@ export default function LoginPage() {
 
       {/* Radial gradient overlays */}
       <div className="absolute inset-0 bg-hero-gradient" />
+
+      {/* Back Button */}
+      <div className="absolute top-8 left-8 z-50">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-noir-400 hover:text-red-400 transition-colors bg-noir-900/50 px-4 py-2 rounded-full border border-white/5 backdrop-blur-sm">
+          <ArrowRight size={16} className="rotate-180" /> Back to Home
+        </Link>
+      </div>
 
       {/* Decorative orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-red-500/5 blur-[120px]" />
