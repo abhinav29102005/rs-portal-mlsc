@@ -67,6 +67,11 @@ export function ProposalModal({ facultyProfileId, facultyName, isOpen, onClose }
               <textarea name="methodology" className="input-noir w-full min-h-[80px]" placeholder="Describe the steps, tools, or algorithms you plan to use." />
             </div>
 
+            <div>
+              <label className="text-label block mb-2">Project Timeline (Optional)</label>
+              <textarea name="timeline" className="input-noir w-full min-h-[60px]" placeholder="Expected milestones, weekly goals, or duration..." />
+            </div>
+
             <div className="flex justify-end gap-3 pt-4 border-t border-white/5">
               <button type="button" onClick={onClose} className="btn btn-ghost text-noir-300">Cancel</button>
               <button type="submit" disabled={isPending} className="btn btn-primary shadow-amber-500/20">

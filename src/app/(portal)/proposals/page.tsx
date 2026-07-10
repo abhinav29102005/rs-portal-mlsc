@@ -109,7 +109,15 @@ export default async function ProposalsPage() {
                     </div>
                     
                     <h3 className="text-lg font-bold text-noir-50 font-heading mb-1">{p.title}</h3>
-                    <p className="text-sm text-noir-300 mb-4 line-clamp-2">{p.abstract}</p>
+                    <div className="space-y-3 mb-4">
+                      <p className="text-sm text-noir-300 line-clamp-2">{p.abstract}</p>
+                      {p.timeline && (
+                        <div className="bg-noir-900/40 border border-white/5 p-3 rounded-lg">
+                          <p className="text-[10px] uppercase tracking-wider text-noir-400 font-bold mb-1">Timeline</p>
+                          <p className="text-sm text-noir-200 whitespace-pre-wrap">{p.timeline}</p>
+                        </div>
+                      )}
+                    </div>
 
                     <div className="flex items-center gap-3 bg-noir-900/50 p-3 rounded-xl border border-white/5 inline-flex">
                       <div className="w-8 h-8 rounded-full bg-noir-800 flex items-center justify-center text-red-400 font-bold overflow-hidden relative">

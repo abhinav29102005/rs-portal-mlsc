@@ -26,6 +26,7 @@ export async function submitProposal(formData: FormData) {
   const title = formData.get("title") as string;
   const abstract = formData.get("abstract") as string;
   const methodology = formData.get("methodology") as string;
+  const timeline = formData.get("timeline") as string;
 
   if (!facultyProfileId || !title || !abstract) {
     throw new Error("Missing required fields");
@@ -38,6 +39,7 @@ export async function submitProposal(formData: FormData) {
     title,
     abstract,
     methodology,
+    timeline,
     status: "submitted",
     submittedAt: new Date(),
   });
