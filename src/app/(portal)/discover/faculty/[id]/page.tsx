@@ -209,18 +209,18 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
             </section>
           )}
 
-          {/* Timetable */}
-          {officeHours.length > 0 && (
-            <section className="card-glass p-6 sm:p-8 md:col-span-2 lg:col-span-3">
-              <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
-                <Sparkles className="text-red-400" size={20} /> Availability & Office Hours
-              </h2>
-              <TimetableGrid officeHours={officeHours} editMode={false} />
-            </section>
-          )}
-
         </div>
       </div>
+
+      {/* Timetable */}
+      {officeHours.length > 0 && (
+        <section className="card-glass p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-noir-50 font-heading mb-4 flex items-center gap-2">
+            <Sparkles className="text-red-400" size={20} /> Availability & Office Hours
+          </h2>
+          <TimetableGrid officeHours={officeHours} editMode={false} />
+        </section>
+      )}
     </div>
   );
 }
