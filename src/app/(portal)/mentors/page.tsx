@@ -4,7 +4,9 @@ import { db } from "@/db";
 import { alumniProfiles } from "@/db/schema/alumni";
 import { facultyProfiles } from "@/db/schema/profiles";
 import { users } from "@/db/schema/users";
-import { eq, desc, sql } from "drizzle-orm";
+import { openings, openingDomains } from "@/db/schema/openings";
+import { researchDomains } from "@/db/schema/taxonomy";
+import { eq, desc, sql, inArray } from "drizzle-orm";
 import { Users, Building2, GraduationCap, ArrowUpRight, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -39,8 +41,8 @@ export default async function MentorsPage() {
     .orderBy(desc(alumniProfiles.createdAt))
     .all();
 
-  // Fetch Faculty Mentors
-  const faculty = await db
+  // Fetch Faculty Mentors Base
+  const facultyRaw = await db
     .select({
       id: facultyProfiles.id,
       userId: users.id,
@@ -52,15 +54,58 @@ export default async function MentorsPage() {
       linkedinUrl: sql<string | null>`null`,
       graduationYear: sql<number | null>`null`,
       type: sql<string>`'faculty'`,
-      mentorshipDomains: facultyProfiles.mentoringStyle,
       bio: facultyProfiles.bio,
       officeHours: facultyProfiles.officeHours,
     })
     .from(facultyProfiles)
     .innerJoin(users, eq(facultyProfiles.userId, users.id))
-    // we assume all faculty are potential mentors for this directory
     .orderBy(desc(facultyProfiles.createdAt))
     .all();
+
+  // Process Faculty Domains
+  const faculty = [];
+  if (facultyRaw.length > 0) {
+    const profileIds = facultyRaw.map((f) => f.id);
+    let allOpenings: any[] = [];
+    let allDomains: any[] = [];
+
+    if (profileIds.length > 0) {
+      allOpenings = await db
+        .select({
+          id: openings.id,
+          facultyProfileId: openings.facultyProfileId,
+        })
+        .from(openings)
+        .where(inArray(openings.facultyProfileId, profileIds))
+        .all();
+
+      const openingIds = allOpenings.map((o) => o.id);
+      if (openingIds.length > 0) {
+        allDomains = await db
+          .select({
+            openingId: openingDomains.openingId,
+            name: researchDomains.name,
+          })
+          .from(openingDomains)
+          .innerJoin(researchDomains, eq(openingDomains.researchDomainId, researchDomains.id))
+          .where(inArray(openingDomains.openingId, openingIds))
+          .all();
+      }
+    }
+
+    for (const f of facultyRaw) {
+      let researchTags: string[] = [];
+      const facultyOpenings = allOpenings.filter((o) => o.facultyProfileId === f.id);
+      const facultyOpeningIds = facultyOpenings.map((o) => o.id);
+      const domains = allDomains.filter((d) => facultyOpeningIds.includes(d.openingId));
+      researchTags = Array.from(new Set(domains.map((d) => d.name)));
+
+      faculty.push({
+        ...f,
+        mentorshipDomains: researchTags,
+      });
+    }
+  }
 
   const allMentors = [...alumni, ...faculty].filter(m => m.name);
 
