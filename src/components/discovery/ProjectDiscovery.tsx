@@ -36,7 +36,8 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(true);
   const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
-  const [selectedEngagement, setSelectedEngagement] = useState("");
+  const [selectedEngagement, setSelectedEngagement] = useState<string[]>([]);
+  const PROJECT_TYPES = ["Capstone Project", "Thapar Project", "Research Opportunity"];
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   const allSkills = useMemo(() => {
@@ -63,7 +64,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
         return false;
     }
     if (selectedDepts.length > 0 && (!p.department || !selectedDepts.includes(p.department))) return false;
-    if (selectedEngagement && p.engagementType !== selectedEngagement) return false;
+    if (selectedEngagement.length > 0 && (!p.engagementType || !selectedEngagement.includes(p.engagementType))) return false;
     if (selectedSkills.length > 0 && (!p.skills || !selectedSkills.some(s => p.skills!.includes(s)))) return false;
     return true;
   });
@@ -121,19 +122,25 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
               </div>
             </div>
 
-            {/* Engagement Type Filter */}
+            {/* Project Type Filter */}
             <div>
-              <label className="text-label block mb-2">Engagement</label>
-              <select
-                value={selectedEngagement}
-                onChange={(e) => setSelectedEngagement(e.target.value)}
-                className="input-noir text-sm bg-white text-gray-900 border-gray-300"
-              >
-                <option value="">All Types</option>
-                <option value="in_person">In-person</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
+              <label className="text-label block mb-3">Project Type</label>
+              <div className="space-y-2">
+                {PROJECT_TYPES.map((t) => (
+                  <label key={t} className="flex items-center gap-2 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={selectedEngagement.includes(t)}
+                      onChange={(e) => {
+                        if (e.target.checked) setSelectedEngagement([...selectedEngagement, t]);
+                        else setSelectedEngagement(selectedEngagement.filter(type => type !== t));
+                      }}
+                      className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
+                    />
+                    <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{t}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* Skills Filter */}
@@ -160,12 +167,12 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
             )}
 
             {/* Clear Filters */}
-            {(searchQuery || selectedDepts.length > 0 || selectedEngagement || selectedSkills.length > 0) && (
+            {(searchQuery || selectedDepts.length > 0 || selectedEngagement.length > 0 || selectedSkills.length > 0) && (
               <button
                 onClick={() => {
                   setSelectedDepts([]);
                   setSelectedSkills([]);
-                  setSelectedEngagement("");
+                  setSelectedEngagement([]);
                   setSearchQuery("");
                 }}
                 className="w-full py-2 text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-colors border border-red-500/20"
