@@ -83,15 +83,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
 
   return (
     <div className="space-y-8">
-      <div>
-        <p className="text-label mb-1">Opportunities</p>
-        <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
-          Project <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">Openings</span>
-        </h1>
-        <p className="text-noir-400 mt-2 max-w-2xl">
-          Discover available Capstone projects, Thapar projects, and research opportunities under the guidance of TIET faculty and alumni.
-        </p>
-      </div>
+
 
       <div className="flex flex-col gap-6 mt-6">
         {/* Permanent Top Filter Bar */}
