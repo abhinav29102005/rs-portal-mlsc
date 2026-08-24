@@ -100,6 +100,7 @@ export default async function DiscoverFacultyPage() {
       const openPositions = facultyOpenings.filter((o) => o.status === "open");
       const activeOpeningsCount = openPositions.length;
       const capstoneOpeningsCount = openPositions.filter((o) => o.engagementType === "Capstone Project").length;
+      const engagementTypes = Array.from(new Set(openPositions.map((o) => o.engagementType).filter(Boolean)));
 
       const facultyOpeningIds = facultyOpenings.map((o) => o.id);
       const domains = allDomains.filter((d) => facultyOpeningIds.includes(d.openingId));
@@ -110,6 +111,7 @@ export default async function DiscoverFacultyPage() {
         mentorshipDomains: researchTags,
         projectOpenings: activeOpeningsCount,
         capstoneOpenings: capstoneOpeningsCount,
+        engagementTypes,
       });
     }
   }
