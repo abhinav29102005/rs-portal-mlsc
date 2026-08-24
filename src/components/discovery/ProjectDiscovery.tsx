@@ -28,17 +28,16 @@ export type ProjectData = {
   duration: string | null;
   coMentors: any;
   facultyName: string | null;
-  domain: string | null; // Using department or extracting a domain from description for now
+  domain: string | null;
   skills: string[] | null;
 };
 
 export function ProjectDiscovery({ initialProjects }: { initialProjects: ProjectData[] }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [showFilters, setShowFilters] = useState(true);
-  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
-  const [selectedEngagement, setSelectedEngagement] = useState<string[]>([]);
+  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedProjectType, setSelectedProjectType] = useState("");
   const PROJECT_TYPES = ["Capstone Project", "Thapar Project", "Research Opportunity"];
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedSkill, setSelectedSkill] = useState("");
 
   const allSkills = useMemo(() => {
     const skills = new Set<string>();
@@ -58,34 +57,51 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
       const q = searchQuery.toLowerCase();
       if (
         !p.title.toLowerCase().includes(q) &&
-        !p.description.toLowerCase().includes(q) &&
+        !(p.description && p.description.toLowerCase().includes(q)) &&
         !(p.facultyName && p.facultyName.toLowerCase().includes(q))
-      )
+      ) {
         return false;
+      }
     }
-    if (selectedDepts.length > 0 && (!p.department || !selectedDepts.includes(p.department))) return false;
-    if (selectedEngagement.length > 0 && (!p.engagementType || !selectedEngagement.includes(p.engagementType))) return false;
-    if (selectedSkills.length > 0 && (!p.skills || !selectedSkills.some(s => p.skills!.includes(s)))) return false;
+
+    if (selectedDept) {
+      const dept = p.department || "Other / Interdisciplinary";
+      if (dept !== selectedDept) return false;
+    }
+
+    if (selectedProjectType) {
+      if (p.engagementType !== selectedProjectType) return false;
+    }
+
+    if (selectedSkill) {
+      if (!p.skills) return false;
+      if (!p.skills.includes(selectedSkill)) return false;
+    }
+
     return true;
   });
 
   return (
-    <div className="flex flex-col gap-8 mt-6">
-      {/* Filter Sidebar */}
-      {showFilters && (
-        <motion.aside
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="w-full space-y-5"
-        >
-          <div className="card-glass-static p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-            <div className="md:col-span-2 lg:col-span-4 flex items-center justify-between pb-4 border-b border-white/5 mb-[-1rem]">
-              <div className="flex items-center gap-2 text-noir-200 font-medium">
-                <SlidersHorizontal size={18} className="text-red-400" />
-                Filters
-              </div>
-            </div>
+    <div className="space-y-8">
+      <div>
+        <p className="text-label mb-1">Opportunities</p>
+        <h1 className="heading-1 text-noir-50" style={{ fontFamily: "var(--font-heading)" }}>
+          Project <span className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">Openings</span>
+        </h1>
+        <p className="text-noir-400 mt-2 max-w-2xl">
+          Discover available Capstone projects, Thapar projects, and research opportunities under the guidance of TIET faculty and alumni.
+        </p>
+      </div>
 
+      <div className="flex flex-col gap-6 mt-6">
+        {/* Permanent Top Filter Bar */}
+        <div className="card-glass-static p-5 space-y-4">
+          <div className="flex items-center gap-2 text-noir-200 font-medium pb-2 border-b border-white/5">
+            <SlidersHorizontal size={18} className="text-red-400" />
+            Filters
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             {/* Search */}
             <div>
               <label className="text-label block mb-2">Search</label>
@@ -93,186 +109,185 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-noir-400" />
                 <input
                   type="text"
-                  placeholder="Keywords, titles..."
-                  className="input-noir pl-9 text-sm"
+                  placeholder="Title, faculty, description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  className="input-noir !pl-10"
                 />
               </div>
             </div>
 
-            {/* Department Filter */}
+            {/* Department Dropdown */}
             <div>
-              <label className="text-label block mb-3">Departments</label>
-              <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-                {DEPARTMENTS.map((d) => (
-                  <label key={d} className="flex items-center gap-2 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={selectedDepts.includes(d)}
-                      onChange={(e) => {
-                        if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
-                        else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{d}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Project Type Filter */}
-            <div>
-              <label className="text-label block mb-3">Project Type</label>
-              <div className="space-y-2">
-                {PROJECT_TYPES.map((t) => (
-                  <label key={t} className="flex items-center gap-2 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={selectedEngagement.includes(t)}
-                      onChange={(e) => {
-                        if (e.target.checked) setSelectedEngagement([...selectedEngagement, t]);
-                        else setSelectedEngagement(selectedEngagement.filter(type => type !== t));
-                      }}
-                      className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{t}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Skills Filter */}
-            {allSkills.length > 0 && (
-              <div>
-                <label className="text-label block mb-3">Skills Used</label>
-                <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-                  {allSkills.map((s) => (
-                    <label key={s} className="flex items-center gap-2 cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        checked={selectedSkills.includes(s)}
-                        onChange={(e) => {
-                          if (e.target.checked) setSelectedSkills([...selectedSkills, s]);
-                          else setSelectedSkills(selectedSkills.filter(skill => skill !== s));
-                        }}
-                        className="w-4 h-4 rounded border-gray-300 bg-white text-red-600 focus:ring-red-500 focus:ring-offset-white"
-                      />
-                      <span className="text-sm text-gray-700 group-hover:text-red-600 transition-colors">{s}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Clear Filters */}
-            {(searchQuery || selectedDepts.length > 0 || selectedEngagement.length > 0 || selectedSkills.length > 0) && (
-              <div className="md:col-span-2 lg:col-span-4 flex justify-end">
-              <button
-                onClick={() => {
-                  setSelectedDepts([]);
-                  setSelectedSkills([]);
-                  setSelectedEngagement([]);
-                  setSearchQuery("");
-                }}
-                className="w-full py-2 text-xs font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-colors border border-red-500/20"
+              <label className="text-label block mb-2">Department</label>
+              <select
+                value={selectedDept}
+                onChange={(e) => setSelectedDept(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
               >
-                Clear All Filters
-              </button>
-              </div>
-            )}
-          </div>
-        </motion.aside>
-      )}
+                <option value="">All Departments</option>
+                {DEPARTMENTS.map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+                <option value="Other / Interdisciplinary">Other / Interdisciplinary</option>
+              </select>
+            </div>
 
-      {/* Results */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-        className="flex-1 space-y-6 min-w-0"
-      >
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-noir-400 font-medium">
-            {filteredProjects.length} project{filteredProjects.length === 1 ? "" : "s"} found
-          </p>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`lg:hidden btn btn-secondary btn-sm flex items-center gap-2 ${
-              showFilters ? "border-red-500/30 text-red-400" : ""
-            }`}
-          >
-            <SlidersHorizontal size={14} />
-            Filters
-          </button>
+            {/* Project Type Dropdown */}
+            <div>
+              <label className="text-label block mb-2">Project Type</label>
+              <select
+                value={selectedProjectType}
+                onChange={(e) => setSelectedProjectType(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
+              >
+                <option value="">All Types</option>
+                {PROJECT_TYPES.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Skills Dropdown */}
+            <div>
+              <label className="text-label block mb-2">Required Skills</label>
+              <select
+                value={selectedSkill}
+                onChange={(e) => setSelectedSkill(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
+              >
+                <option value="">All Skills</option>
+                {allSkills.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Clear Button */}
+            <div className="md:col-span-2 lg:col-span-4 flex justify-end mt-2">
+              {(searchQuery || selectedDept || selectedProjectType || selectedSkill) && (
+                <button
+                  onClick={() => {
+                    setSelectedDept("");
+                    setSelectedProjectType("");
+                    setSelectedSkill("");
+                    setSearchQuery("");
+                  }}
+                  className="btn btn-ghost btn-sm text-red-400 hover:bg-red-500/10"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
-        {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredProjects.map((opening) => (
-              <motion.div variants={itemVariants} key={opening.id}>
-                <Link
-                  href={`/openings/${opening.id}`}
-                  className="card-glass p-5 space-y-3 group hover:border-red-500/30 transition-colors block h-full flex flex-col"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3
-                        className="heading-3 text-noir-50 line-clamp-2 mb-1 group-hover:text-red-400 transition-colors"
-                        style={{ fontFamily: "var(--font-heading)" }}
-                      >
-                        {opening.title}
-                      </h3>
-                      <p className="text-sm text-red-400">{opening.facultyName || "Faculty Member"}</p>
-                    </div>
-                    <ExternalLink size={16} className="text-noir-500 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-                  </div>
-
-                  <p className="text-sm text-noir-400 line-clamp-3 flex-1">
-                    {opening.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-2 mt-auto">
-                    {opening.department && (
-                      <span className="badge badge-red">{opening.department}</span>
-                    )}
-                    {opening.engagementType && (
-                      <span className="badge badge-red">{opening.engagementType.replace("_", "-")}</span>
-                    )}
-                    {opening.stipendType && (
-                      <span className="badge badge-red">
-                        {opening.stipendType}
-                        {opening.stipendAmount && ` — ${opening.stipendAmount}`}
-                      </span>
-                    )}
-                    {opening.seatsAvailable && opening.seatsAvailable > 0 && (
-                      <span className="badge badge-neutral">
-                        {opening.seatsAvailable} seat{opening.seatsAvailable > 1 ? "s" : ""}
-                      </span>
-                    )}
-                  </div>
-
-                  {opening.duration && (
-                    <p className="text-xs text-noir-500 flex items-center gap-1 pt-2 border-t border-white/5 mt-2">
-                      <Calendar size={12} />
-                      {opening.duration}
-                    </p>
-                  )}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="card-glass-static p-12 text-center">
-            <Briefcase size={40} className="text-noir-500 mx-auto mb-4" />
-            <p className="text-noir-300">No open positions match your filters</p>
-            <p className="text-noir-500 text-sm mt-2">
-              Try adjusting your search criteria
+        {/* Results */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="flex-1 min-w-0"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-sm text-noir-400 font-medium">
+              {filteredProjects.length} project{filteredProjects.length === 1 ? "" : "s"} found
             </p>
           </div>
-        )}
-      </motion.div>
+
+          {filteredProjects.length === 0 ? (
+            <div className="card-glass-static p-12 text-center border border-white/5">
+              <Search size={32} className="text-noir-500 mx-auto mb-3" />
+              <p className="text-noir-300 font-medium">No projects match your filters</p>
+              <p className="text-xs text-noir-500 mt-1">Try adjusting your search criteria or clearing filters.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredProjects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  variants={itemVariants}
+                  className="card-glass p-6 group hover:border-red-500/30 transition-all flex flex-col md:flex-row gap-6 items-start"
+                >
+                  <div className="flex-1 min-w-0 w-full">
+                    <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                      <div>
+                        <Link href={`/openings/${project.id}`}>
+                          <h2 className="text-xl font-bold text-noir-50 group-hover:text-red-400 transition-colors">
+                            {project.title}
+                          </h2>
+                        </Link>
+                        {project.facultyName && (
+                          <div className="flex items-center gap-2 mt-1 text-sm text-noir-300">
+                            <span className="font-medium">{project.facultyName}</span>
+                            <span className="text-noir-500">•</span>
+                            <span>{project.department}</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-2 justify-end">
+                        <span className="badge badge-neutral bg-red-500/10 text-red-400 border-red-500/20">
+                          {project.engagementType || "Project"}
+                        </span>
+                        {project.seatsAvailable ? (
+                          <span className="badge badge-neutral">
+                            {project.seatsAvailable} Seat{project.seatsAvailable > 1 ? "s" : ""}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-noir-300 line-clamp-2 mt-2 leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-4 text-xs font-medium text-noir-400">
+                      {project.duration && (
+                        <div className="flex items-center gap-1.5 bg-noir-800/50 px-2 py-1 rounded">
+                          <Calendar size={14} className="text-noir-500" />
+                          {project.duration}
+                        </div>
+                      )}
+                      {(project.stipendType && project.stipendType !== "None") && (
+                        <div className="flex items-center gap-1.5 bg-noir-800/50 px-2 py-1 rounded">
+                          <Briefcase size={14} className="text-noir-500" />
+                          {project.stipendType} {project.stipendAmount ? `• ${project.stipendAmount}` : ""}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="w-full md:w-auto md:border-l md:border-white/5 md:pl-6 pt-4 md:pt-0 flex flex-col gap-3 shrink-0">
+                    <Link
+                      href={`/openings/${project.id}`}
+                      className="btn btn-primary w-full text-sm py-2 px-6 shadow-red-500/20 shadow-lg"
+                    >
+                      View Details <ExternalLink size={14} className="ml-1 opacity-70" />
+                    </Link>
+                    
+                    {project.skills && project.skills.length > 0 && (
+                      <div className="mt-2 hidden md:block">
+                        <p className="text-[10px] uppercase tracking-wider text-noir-500 font-bold mb-2">Required Skills</p>
+                        <div className="flex flex-wrap gap-1 max-w-[200px]">
+                          {project.skills.slice(0, 3).map((s, i) => (
+                            <span key={i} className="text-[11px] px-2 py-0.5 rounded bg-noir-800 text-noir-300 border border-white/5">
+                              {s}
+                            </span>
+                          ))}
+                          {project.skills.length > 3 && (
+                            <span className="text-[11px] px-2 py-0.5 text-noir-500">+{project.skills.length - 3}</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </div>
     </div>
   );
 }

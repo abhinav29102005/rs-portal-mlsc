@@ -37,10 +37,9 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
   const [acceptingOnly, setAcceptingOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
-  const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
-  const [selectedProjectTypes, setSelectedProjectTypes] = useState<string[]>([]);
-  const [showFilters, setShowFilters] = useState(true);
+  const [selectedDept, setSelectedDept] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState("");
+  const [selectedProjectType, setSelectedProjectType] = useState("");
   const [selectedMentor, setSelectedMentor] = useState<MentorData | null>(null);
 
   const allDomains = useMemo(() => {
@@ -103,22 +102,20 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
       }
     }
 
-    if (selectedDepts.length > 0) {
+    if (selectedDept) {
       const dept = mentor.department || "Other / Interdisciplinary";
-      if (!selectedDepts.includes(dept)) return false;
+      if (dept !== selectedDept) return false;
     }
     
-    if (selectedDomains.length > 0) {
+    if (selectedDomain) {
       if (!mentor.mentorshipDomains || !Array.isArray(mentor.mentorshipDomains)) return false;
-      const hasDomain = selectedDomains.some(d => mentor.mentorshipDomains.includes(d));
-      if (!hasDomain) return false;
+      if (!mentor.mentorshipDomains.includes(selectedDomain)) return false;
     }
 
-    if (selectedProjectTypes.length > 0) {
+    if (selectedProjectType) {
       if (mentor.type !== "faculty") return false;
       if (!mentor.engagementTypes) return false;
-      const hasType = selectedProjectTypes.some(t => mentor.engagementTypes!.includes(t));
-      if (!hasType) return false;
+      if (!mentor.engagementTypes.includes(selectedProjectType)) return false;
     }
 
     return true;
@@ -145,168 +142,120 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
         </p>
       </div>
 
-      {/* Search & Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-noir-400" />
-          <input
-            type="text"
-            placeholder="Search by name, company, or bio..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="input-noir !pl-10 py-2.5"
-            id="faculty-search"
-          />
-        </div>
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={`btn btn-secondary flex items-center gap-2 ${
-            showFilters ? "border-red-500/30 text-red-400" : ""
-          }`}
-          id="toggle-filters"
-        >
-          <SlidersHorizontal size={16} />
-          Filters
-        </button>
-      </div>
-
-      <div className="flex flex-col gap-8">
-        {/* Filter Sidebar */}
-        <AnimatePresence>
-          {showFilters && (
-            <motion.aside
-              initial={{ opacity: 0, x: -20, width: 0 }}
-              animate={{ opacity: 1, x: 0, width: "auto" }}
-              exit={{ opacity: 0, x: -20, width: 0 }}
-              className="w-full space-y-5"
-            >
-              <div className="card-glass-static p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-                
-                {/* Department Filter */}
-                <div>
-                  <label className="text-label block mb-3">Departments</label>
-                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-                    {DEPARTMENTS.map((d) => (
-                      <label key={d} className="flex items-center gap-2 cursor-pointer group">
-                        <input
-                          type="checkbox"
-                          checked={selectedDepts.includes(d)}
-                          onChange={(e) => {
-                            if (e.target.checked) setSelectedDepts([...selectedDepts, d]);
-                            else setSelectedDepts(selectedDepts.filter(dept => dept !== d));
-                          }}
-                          className="w-4 h-4 rounded border-gray-300 bg-noir-800 text-red-600 focus:ring-red-500"
-                        />
-                        <span className="text-sm text-noir-300 group-hover:text-red-400 transition-colors">{d}</span>
-                      </label>
-                    ))}
-                    <label className="flex items-center gap-2 cursor-pointer group">
-                      <input
-                        type="checkbox"
-                        checked={selectedDepts.includes("Other / Interdisciplinary")}
-                        onChange={(e) => {
-                          if (e.target.checked) setSelectedDepts([...selectedDepts, "Other / Interdisciplinary"]);
-                          else setSelectedDepts(selectedDepts.filter(dept => dept !== "Other / Interdisciplinary"));
-                        }}
-                        className="w-4 h-4 rounded border-gray-300 bg-noir-800 text-red-600 focus:ring-red-500"
-                      />
-                      <span className="text-sm text-noir-300 group-hover:text-red-400 transition-colors">Other / Interdisciplinary</span>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Project Domain Filter */}
-                {allDomains.length > 0 && (
-                  <div>
-                    <label className="text-label block mb-3">Mentorship / Project Domain</label>
-                    <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-                      {allDomains.map((d) => (
-                        <label key={d} className="flex items-center gap-2 cursor-pointer group">
-                          <input
-                            type="checkbox"
-                            checked={selectedDomains.includes(d)}
-                            onChange={(e) => {
-                              if (e.target.checked) setSelectedDomains([...selectedDomains, d]);
-                              else setSelectedDomains(selectedDomains.filter(domain => domain !== d));
-                            }}
-                            className="w-4 h-4 rounded border-gray-300 bg-noir-800 text-red-600 focus:ring-red-500"
-                          />
-                          <span className="text-sm text-noir-300 group-hover:text-red-400 transition-colors">{d}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Project Type Filter */}
-                <div>
-                  <label className="text-label block mb-3">Project Type</label>
-                  <div className="space-y-2">
-                    {PROJECT_TYPES.map((t) => (
-                      <label key={t} className="flex items-center gap-2 cursor-pointer group">
-                        <input
-                          type="checkbox"
-                          checked={selectedProjectTypes.includes(t)}
-                          onChange={(e) => {
-                            if (e.target.checked) setSelectedProjectTypes([...selectedProjectTypes, t]);
-                            else setSelectedProjectTypes(selectedProjectTypes.filter(type => type !== t));
-                          }}
-                          className="w-4 h-4 rounded border-gray-300 bg-noir-800 text-red-600 focus:ring-red-500"
-                        />
-                        <span className="text-sm text-noir-300 group-hover:text-red-400 transition-colors">{t}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Accepting Students Toggle */}
-                <div>
-                  <label className="flex items-center justify-between cursor-pointer group">
-                    <span className="text-sm font-medium text-noir-200 group-hover:text-red-400 transition-colors">Currently accepting</span>
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={acceptingOnly}
-                        onChange={(e) => setAcceptingOnly(e.target.checked)}
-                        className="sr-only"
-                        id="accepting-filter"
-                      />
-                      <div
-                        className={`w-10 h-5 rounded-full transition-colors ${
-                          acceptingOnly ? "bg-red-500" : "bg-noir-600"
-                        }`}
-                      >
-                        <div
-                          className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform mt-0.5 ${
-                            acceptingOnly ? "translate-x-5 ml-0.5" : "translate-x-0.5"
-                          }`}
-                        />
-                      </div>
-                    </div>
-                  </label>
-                </div>
-
-                {/* Clear Filters */}
-                {(searchQuery || selectedDepts.length > 0 || selectedDomains.length > 0 || selectedProjectTypes.length > 0 || acceptingOnly) && (
-                  <div className="md:col-span-2 lg:col-span-4 flex justify-end">
-                  <button
-                    onClick={() => {
-                      setSelectedDepts([]);
-                      setSelectedDomains([]);
-                      setSelectedProjectTypes([]);
-                      setAcceptingOnly(false);
-                      setSearchQuery("");
-                    }}
-                    className="btn btn-ghost btn-sm text-noir-400"
-                  >
-                    Clear all filters
-                  </button>
-                </div>
-                )}
+      <div className="flex flex-col gap-6">
+        {/* Permanent Top Filter Bar */}
+        <div className="card-glass-static p-5 space-y-4">
+          <div className="flex items-center gap-2 text-noir-200 font-medium pb-2 border-b border-white/5">
+            <SlidersHorizontal size={18} className="text-red-400" />
+            Filters
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            {/* Search */}
+            <div>
+              <label className="text-label block mb-2">Search</label>
+              <div className="relative">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-noir-400" />
+                <input
+                  type="text"
+                  placeholder="Name, company, bio..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="input-noir !pl-10"
+                />
               </div>
-            </motion.aside>
-          )}
-        </AnimatePresence>
+            </div>
+
+            {/* Department Dropdown */}
+            <div>
+              <label className="text-label block mb-2">Department</label>
+              <select
+                value={selectedDept}
+                onChange={(e) => setSelectedDept(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
+              >
+                <option value="">All Departments</option>
+                {DEPARTMENTS.map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+                <option value="Other / Interdisciplinary">Other / Interdisciplinary</option>
+              </select>
+            </div>
+
+            {/* Domain Dropdown */}
+            <div>
+              <label className="text-label block mb-2">Mentorship / Domain</label>
+              <select
+                value={selectedDomain}
+                onChange={(e) => setSelectedDomain(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
+              >
+                <option value="">All Domains</option>
+                {allDomains.map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Project Type Dropdown */}
+            <div>
+              <label className="text-label block mb-2">Project Type</label>
+              <select
+                value={selectedProjectType}
+                onChange={(e) => setSelectedProjectType(e.target.value)}
+                className="input-noir bg-noir-800 text-noir-200"
+              >
+                <option value="">All Types</option>
+                {PROJECT_TYPES.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Toggles & Clear */}
+            <div className="md:col-span-2 lg:col-span-4 flex flex-wrap items-center justify-between gap-4 mt-2">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={acceptingOnly}
+                    onChange={(e) => setAcceptingOnly(e.target.checked)}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`w-10 h-5 rounded-full transition-colors ${
+                      acceptingOnly ? "bg-red-500" : "bg-noir-600"
+                    }`}
+                  >
+                    <div
+                      className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform mt-0.5 ${
+                        acceptingOnly ? "translate-x-5 ml-0.5" : "translate-x-0.5"
+                      }`}
+                    />
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-noir-200 group-hover:text-red-400 transition-colors">
+                  Only show faculty accepting students
+                </span>
+              </label>
+
+              {(searchQuery || selectedDept || selectedDomain || selectedProjectType || acceptingOnly) && (
+                <button
+                  onClick={() => {
+                    setSelectedDept("");
+                    setSelectedDomain("");
+                    setSelectedProjectType("");
+                    setAcceptingOnly(false);
+                    setSearchQuery("");
+                  }}
+                  className="btn btn-ghost btn-sm text-red-400 hover:bg-red-500/10"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Results */}
         <div className="flex-1 min-w-0">
