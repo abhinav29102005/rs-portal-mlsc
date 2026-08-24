@@ -70,16 +70,16 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
   });
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 mt-6">
+    <div className="flex flex-col gap-8 mt-6">
       {/* Filter Sidebar */}
       {showFilters && (
         <motion.aside
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="w-full lg:w-64 flex-shrink-0 space-y-5"
+          className="w-full space-y-5"
         >
-          <div className="card-glass-static p-5 space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-white/5">
+          <div className="card-glass-static p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+            <div className="md:col-span-2 lg:col-span-4 flex items-center justify-between pb-4 border-b border-white/5 mb-[-1rem]">
               <div className="flex items-center gap-2 text-noir-200 font-medium">
                 <SlidersHorizontal size={18} className="text-red-400" />
                 Filters
@@ -168,6 +168,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
 
             {/* Clear Filters */}
             {(searchQuery || selectedDepts.length > 0 || selectedEngagement.length > 0 || selectedSkills.length > 0) && (
+              <div className="md:col-span-2 lg:col-span-4 flex justify-end">
               <button
                 onClick={() => {
                   setSelectedDepts([]);
@@ -179,6 +180,7 @@ export function ProjectDiscovery({ initialProjects }: { initialProjects: Project
               >
                 Clear All Filters
               </button>
+              </div>
             )}
           </div>
         </motion.aside>

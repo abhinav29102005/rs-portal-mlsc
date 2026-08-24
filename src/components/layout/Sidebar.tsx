@@ -59,7 +59,7 @@ const navItems: NavItem[] = [
     roles: ["faculty", "alumni_mentor"],
   },
   {
-    label: "Events & Seminars",
+    label: "Events Events & Seminars Opportunities",
     href: "/events",
     icon: <Bell size={18} />,
     roles: ["student", "faculty", "admin", "alumni_mentor"],

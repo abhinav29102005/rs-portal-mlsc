@@ -170,7 +170,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col gap-8">
         {/* Filter Sidebar */}
         <AnimatePresence>
           {showFilters && (
@@ -178,9 +178,9 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
               initial={{ opacity: 0, x: -20, width: 0 }}
               animate={{ opacity: 1, x: 0, width: "auto" }}
               exit={{ opacity: 0, x: -20, width: 0 }}
-              className="w-full md:w-64 flex-shrink-0 space-y-5"
+              className="w-full space-y-5"
             >
-              <div className="card-glass-static p-5 space-y-6">
+              <div className="card-glass-static p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
                 
                 {/* Department Filter */}
                 <div>
@@ -288,6 +288,7 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
 
                 {/* Clear Filters */}
                 {(searchQuery || selectedDepts.length > 0 || selectedDomains.length > 0 || selectedProjectTypes.length > 0 || acceptingOnly) && (
+                  <div className="md:col-span-2 lg:col-span-4 flex justify-end">
                   <button
                     onClick={() => {
                       setSelectedDepts([]);
@@ -296,10 +297,11 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                       setAcceptingOnly(false);
                       setSearchQuery("");
                     }}
-                    className="btn btn-ghost btn-sm w-full text-noir-400 mt-2"
+                    className="btn btn-ghost btn-sm text-noir-400"
                   >
                     Clear all filters
                   </button>
+                </div>
                 )}
               </div>
             </motion.aside>

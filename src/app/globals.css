@@ -20,17 +20,18 @@
   --color-noir-100: var(--bg-100);
   --color-noir-50: var(--bg-50);
 
-  /* ── Thapar Red Accent ── */
-  --color-amber-950: #450a0a;
-  --color-amber-900: #7f1d1d;
-  --color-amber-800: #991b1b;
-  --color-amber-700: #b91c1c;
-  --color-amber-600: #dc2626;
-  --color-amber-500: #ef4444;
-  --color-amber-400: #f87171;
-  --color-amber-300: #fca5a5;
-  --color-amber-200: #fecaca;
-  --color-amber-100: #fee2e2;
+  /* ── Thapar Red Accent (Exact Logo Match) ── */
+  --color-red-950: #34080b;
+  --color-red-900: #601417;
+  --color-red-800: #711216;
+  --color-red-700: #881216;
+  --color-red-600: #a71920;
+  --color-red-500: #b54949;
+  --color-red-400: #cc7878;
+  --color-red-300: #dfa8a8;
+  --color-red-200: #eccbcb;
+  --color-red-100: #f6e3e3;
+  --color-red-50:  #fbf3f3;
 
   /* ── Red Success (no green allowed) ── */
   --color-teal-600: #b91c1c;
