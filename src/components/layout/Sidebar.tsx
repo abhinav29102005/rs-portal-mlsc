@@ -53,12 +53,6 @@ const navItems: NavItem[] = [
     roles: ["student"],
   },
   {
-    label: "Mentor Directory",
-    href: "/mentors",
-    icon: <GraduationCap size={18} />,
-    roles: ["student"],
-  },
-  {
     label: "Discover Students",
     href: "/discover/students",
     icon: <Users size={18} />,
@@ -136,7 +130,7 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
             RAMP
           </h1>
           <p className="text-[10px] text-gray-500 tracking-widest uppercase">
-            Research & Mentor
+            Research and Mentorship Portal
           </p>
         </div>
       </div>

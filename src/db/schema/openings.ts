@@ -57,6 +57,9 @@ export const openings = sqliteTable("openings", {
       "Co-authorship",
       "Internship",
       "ELC Activity",
+      "Capstone Project",
+      "Thapar Project",
+      "Research Opportunity",
     ],
   }),
   stipendType: text("stipend_type", {

@@ -51,6 +51,9 @@ const ENGAGEMENT_TYPES = [
   "Co-authorship",
   "Internship",
   "ELC Activity",
+  "Capstone Project",
+  "Thapar Project",
+  "Research Opportunity",
 ];
 
 const STIPEND_TYPES = ["Paid", "Academic Credit", "Unpaid"];

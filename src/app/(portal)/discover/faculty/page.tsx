@@ -1,44 +1,70 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { FacultyDiscovery } from "@/components/discovery/FacultyDiscovery";
 import { db } from "@/db";
-import { users } from "@/db/schema/users";
+import { alumniProfiles } from "@/db/schema/alumni";
 import { facultyProfiles } from "@/db/schema/profiles";
+import { users } from "@/db/schema/users";
 import { openings, openingDomains } from "@/db/schema/openings";
 import { researchDomains } from "@/db/schema/taxonomy";
-import { eq, and, inArray } from "drizzle-orm";
+import { eq, desc, sql, inArray } from "drizzle-orm";
+import { MentorDirectory } from "@/components/mentors/MentorDirectory";
 
-export const metadata = {
-  title: "Discover Faculty — RAMP",
-  description: "Browse and filter TIET faculty profiles by research domain, department, and availability.",
-};
+export const metadata = { title: "Discover Faculty — Research and Mentorship Portal" };
 
 export default async function DiscoverFacultyPage() {
   const session = await auth();
   if (!session?.user) redirect("/login");
 
-  // Fetch all active faculty users with their profiles
-  const facultyDataRaw = await db
+  // Fetch Alumni Mentors
+  const alumni = await db
     .select({
-      id: users.id,
+      id: alumniProfiles.id,
+      userId: users.id,
       name: users.name,
       image: users.image,
-      profileId: facultyProfiles.id,
-      designation: facultyProfiles.designation,
-      department: facultyProfiles.department,
-      mentoringStyle: facultyProfiles.mentoringStyle,
-      minimumCgpa: facultyProfiles.minimumCgpa,
+      department: alumniProfiles.degreeProgram, // Treat degree program as department for grouping
+      designation: alumniProfiles.currentRole,
+      company: alumniProfiles.currentCompany,
+      type: sql<string>`'alumni'`,
+      mentorshipDomains: alumniProfiles.mentorshipDomains,
+      linkedinUrl: alumniProfiles.linkedinUrl,
+      bio: alumniProfiles.bio,
+      graduationYear: alumniProfiles.graduationYear,
+      officeHours: sql<string | null>`null`,
+      projectOpenings: sql<number>`0`,
+      capstoneOpenings: sql<number>`0`,
     })
-    .from(users)
-    .innerJoin(facultyProfiles, eq(users.id, facultyProfiles.userId))
-    .where(and(eq(users.role, "faculty"), eq(users.status, "active")))
+    .from(alumniProfiles)
+    .innerJoin(users, eq(alumniProfiles.userId, users.id))
+    .where(eq(alumniProfiles.willingToMentor, true))
+    .orderBy(desc(alumniProfiles.createdAt))
     .all();
 
-  const formattedFaculty = [];
+  // Fetch Faculty Mentors Base
+  const facultyRaw = await db
+    .select({
+      id: facultyProfiles.id,
+      userId: users.id,
+      name: users.name,
+      image: users.image,
+      department: facultyProfiles.department,
+      designation: facultyProfiles.designation,
+      company: sql<string | null>`null`,
+      linkedinUrl: sql<string | null>`null`,
+      graduationYear: sql<number | null>`null`,
+      type: sql<string>`'faculty'`,
+      bio: facultyProfiles.bio,
+      officeHours: facultyProfiles.officeHours,
+    })
+    .from(facultyProfiles)
+    .innerJoin(users, eq(facultyProfiles.userId, users.id))
+    .orderBy(desc(facultyProfiles.createdAt))
+    .all();
 
-  if (facultyDataRaw.length > 0) {
-    const profileIds = facultyDataRaw.map((f) => f.profileId).filter(Boolean) as string[];
-
+  // Process Faculty Domains and Openings
+  const faculty = [];
+  if (facultyRaw.length > 0) {
+    const profileIds = facultyRaw.map((f) => f.id);
     let allOpenings: any[] = [];
     let allDomains: any[] = [];
 
@@ -46,15 +72,15 @@ export default async function DiscoverFacultyPage() {
       allOpenings = await db
         .select({
           id: openings.id,
-          status: openings.status,
           facultyProfileId: openings.facultyProfileId,
+          status: openings.status,
+          engagementType: openings.engagementType,
         })
         .from(openings)
         .where(inArray(openings.facultyProfileId, profileIds))
         .all();
 
       const openingIds = allOpenings.map((o) => o.id);
-
       if (openingIds.length > 0) {
         allDomains = await db
           .select({
@@ -68,34 +94,27 @@ export default async function DiscoverFacultyPage() {
       }
     }
 
-    for (const f of facultyDataRaw) {
+    for (const f of facultyRaw) {
       let researchTags: string[] = [];
-      let activeOpeningsCount = 0;
+      const facultyOpenings = allOpenings.filter((o) => o.facultyProfileId === f.id);
+      const openPositions = facultyOpenings.filter((o) => o.status === "open");
+      const activeOpeningsCount = openPositions.length;
+      const capstoneOpeningsCount = openPositions.filter((o) => o.engagementType === "Capstone Project").length;
 
-      if (f.profileId) {
-        const facultyOpenings = allOpenings.filter((o) => o.facultyProfileId === f.profileId);
-        const openPositions = facultyOpenings.filter((o) => o.status === "open");
-        activeOpeningsCount = openPositions.length;
+      const facultyOpeningIds = facultyOpenings.map((o) => o.id);
+      const domains = allDomains.filter((d) => facultyOpeningIds.includes(d.openingId));
+      researchTags = Array.from(new Set(domains.map((d) => d.name)));
 
-        const facultyOpeningIds = facultyOpenings.map((o) => o.id);
-        const domains = allDomains.filter((d) => facultyOpeningIds.includes(d.openingId));
-        researchTags = Array.from(new Set(domains.map((d) => d.name)));
-      }
-
-      formattedFaculty.push({
-        id: f.id,
-        name: f.name || "Unknown Faculty",
-        designation: f.designation || "Faculty",
-        department: f.department || "Unknown Department",
-        researchTags,
-        mentoringStyle: f.mentoringStyle || [],
-        minimumCgpa: f.minimumCgpa,
-        openings: activeOpeningsCount,
-        isAccepting: activeOpeningsCount > 0,
-        image: f.image || null,
+      faculty.push({
+        ...f,
+        mentorshipDomains: researchTags,
+        projectOpenings: activeOpeningsCount,
+        capstoneOpenings: capstoneOpeningsCount,
       });
     }
   }
 
-  return <FacultyDiscovery initialFaculty={formattedFaculty} />;
+  const allMentors = [...alumni, ...faculty].filter(m => m.name);
+
+  return <MentorDirectory initialMentors={allMentors} />;
 }

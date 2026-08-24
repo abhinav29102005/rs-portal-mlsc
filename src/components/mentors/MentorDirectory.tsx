@@ -22,6 +22,8 @@ export type MentorData = {
   bio: string | null;
   graduationYear: number | null;
   officeHours: any;
+  projectOpenings?: number;
+  capstoneOpenings?: number;
 };
 
 export function MentorDirectory({ initialMentors }: { initialMentors: MentorData[] }) {
@@ -280,9 +282,14 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                           return (
                             <div key={mentor.id} className="card-glass p-6 flex flex-col h-full min-w-0 break-words hover:border-red-500/30 transition-colors relative">
                               {isAvailable && (
-                                <span className="absolute -top-2 -right-2 flex h-4 w-4">
+                                <span className="absolute -top-2 -left-2 flex h-4 w-4 z-10">
                                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                   <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-white"></span>
+                                </span>
+                              )}
+                              {mentor.type === "faculty" && (
+                                <span className="absolute top-4 right-4 bg-red-500/10 border border-red-500/20 text-[10px] font-bold px-2 py-1 rounded-full text-red-400">
+                                  Capstone Openings: {mentor.capstoneOpenings || 0}/4
                                 </span>
                               )}
                               <div className="flex-1 min-w-0">
@@ -346,6 +353,11 @@ export function MentorDirectory({ initialMentors }: { initialMentors: MentorData
                               </div>
 
                               <div className="mt-6 flex flex-col gap-2 pt-4 border-t border-gray-100">
+                                {mentor.type === "faculty" && (
+                                  <div className="text-xs font-semibold text-noir-300 mb-1">
+                                    Project Openings: {mentor.projectOpenings || 0}
+                                  </div>
+                                )}
                                 {mentor.type === "faculty" && hours.length > 0 && (
                                   <button onClick={() => setSelectedMentor(mentor)} className="w-full btn btn-ghost bg-gray-50 py-2 text-xs text-gray-700 hover:text-red-600 flex items-center justify-center gap-2">
                                     <Calendar size={14} /> View Timetable
