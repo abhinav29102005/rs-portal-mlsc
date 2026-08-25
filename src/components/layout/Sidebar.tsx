@@ -130,7 +130,7 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
             RAMP
           </h1>
           <p className="text-[10px] text-gray-500 tracking-widest uppercase">
-            Research and Mentorship Portal
+            Research, Academic & Mentorship Portal
           </p>
         </div>
       </div>
@@ -139,7 +139,7 @@ export function Sidebar({ role, isSuperAdmin }: SidebarProps) {
       <div className="mx-5 h-px bg-gradient-to-r from-transparent via-red-500/15 to-transparent" />
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto sidebar-nav">
         {filteredItems.map((item) => {
           const isActive =
             pathname === item.href || pathname?.startsWith(item.href + "/");

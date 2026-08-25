@@ -1,4 +1,8 @@
-"use client";
+import os
+
+filepath = "src/components/layout/Topbar.tsx"
+
+new_content = """"use client";
 
 import { Bell, Search, LogOut, ChevronDown, PlayCircle } from "lucide-react";
 import { signOut } from "next-auth/react";
@@ -140,3 +144,7 @@ export function Topbar({ user, notificationCount = 0 }: TopbarProps) {
     </header>
   );
 }
+"""
+
+with open(filepath, "w") as f:
+    f.write(new_content)

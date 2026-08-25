@@ -86,7 +86,7 @@ apply_theme(slide)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
 
-title.text = "Thapar Research & Mentorship Portal"
+title.text = "Thapar Research, Academic & Mentorship Portal"
 format_title(title)
 title.text_frame.paragraphs[0].font.size = Pt(44)
 

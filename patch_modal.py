@@ -1,4 +1,8 @@
-"use client";
+import os
+
+filepath = "src/components/proposals/ProposalModal.tsx"
+
+new_content = """"use client";
 
 import { useState, useTransition, useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -160,3 +164,7 @@ export function ProposalModal({ facultyProfileId, facultyName, isOpen, onClose }
     document.body
   );
 }
+"""
+
+with open(filepath, "w") as f:
+    f.write(new_content)

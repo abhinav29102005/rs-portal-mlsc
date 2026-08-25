@@ -22,12 +22,20 @@ export const proposals = sqliteTable("proposals", {
   openingId: text("opening_id").references(() => openings.id, {
     onDelete: "set null",
   }),
+  type: text("type", {
+    enum: ["research", "academic_query", "mentorship"],
+  })
+    .notNull()
+    .default("research"),
   title: text("title").notNull(),
   abstract: text("abstract").notNull(),
   methodology: text("methodology"),
   expectedOutcomes: text("expected_outcomes"),
   timeline: text("timeline"),
   resourceRequirements: text("resource_requirements"),
+  preferredTimeSlot: text("preferred_time_slot"),
+  queryTopic: text("query_topic"),
+  mentorshipGoals: text("mentorship_goals"),
   pdfAttachmentUrl: text("pdf_attachment_url"),
   pitchVideoUrl: text("pitch_video_url"),
   status: text("status", {

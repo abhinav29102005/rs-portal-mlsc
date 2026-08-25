@@ -53,6 +53,8 @@ const itemVariants = {
 export function AdminDashboard({ user, stats, pendingFaculty, allUsers = [] }: AdminDashboardProps) {
   const [isPending, startTransition] = useTransition();
   const [activeTab, setActiveTab] = useState<"overview" | "users" | "system">("overview");
+
+  const isSpecialAdmin = user.name?.toLowerCase().includes("ojasvi") || user.name?.toLowerCase().includes("abhinav");
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleApprove = (id: string) => {

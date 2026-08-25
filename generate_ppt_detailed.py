@@ -139,7 +139,7 @@ apply_theme(slide)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
 
-title.text = "RAMP: Research And Mentorship Portal"
+title.text = "RAMP: Research, Academic & Mentorship Portal"
 format_title(title)
 title.text_frame.paragraphs[0].font.size = Pt(44)
 
@@ -173,7 +173,7 @@ add_slide("Introduction: The Need for Innovation", [
     "Context: Thapar Institute of Engineering & Technology has a vibrant research culture.",
     "Challenge: Despite high enthusiasm, connecting the right students with the right faculty can be daunting.",
     "Goal: We require a system that matches academic rigor with technological efficiency to streamline workflows.",
-    "Vision: RAMP (Research And Mentorship Portal) is designed to act as a definitive bridge, turning potential collaboration into tangible outputs."
+    "Vision: RAMP (Research, Academic & Mentorship Portal) is designed to act as a definitive bridge, turning potential collaboration into tangible outputs."
 ])
 
 add_slide("The Current Problem: Fragmented Systems", [

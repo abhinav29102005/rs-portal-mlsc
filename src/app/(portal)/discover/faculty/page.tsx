@@ -9,7 +9,7 @@ import { researchDomains } from "@/db/schema/taxonomy";
 import { eq, desc, sql, inArray } from "drizzle-orm";
 import { MentorDirectory } from "@/components/mentors/MentorDirectory";
 
-export const metadata = { title: "Discover Faculty — Research and Mentorship Portal" };
+export const metadata = { title: "Discover Faculty — Research, Academic & Mentorship Portal" };
 
 export default async function DiscoverFacultyPage() {
   const session = await auth();

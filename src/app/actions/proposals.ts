@@ -23,10 +23,16 @@ export async function submitProposal(formData: FormData) {
 
   const facultyProfileId = formData.get("facultyProfileId") as string;
   const openingId = formData.get("openingId") as string | null;
+  const type = formData.get("type") as "research" | "academic_query" | "mentorship" | null || "research";
+  
   const title = formData.get("title") as string;
   const abstract = formData.get("abstract") as string;
   const methodology = formData.get("methodology") as string;
   const timeline = formData.get("timeline") as string;
+  
+  const preferredTimeSlot = formData.get("preferredTimeSlot") as string;
+  const queryTopic = formData.get("queryTopic") as string;
+  const mentorshipGoals = formData.get("mentorshipGoals") as string;
 
   if (!facultyProfileId || !title || !abstract) {
     throw new Error("Missing required fields");
@@ -36,10 +42,14 @@ export async function submitProposal(formData: FormData) {
     studentProfileId: student.id,
     facultyProfileId,
     openingId: openingId || undefined,
+    type,
     title,
     abstract,
     methodology,
     timeline,
+    preferredTimeSlot,
+    queryTopic,
+    mentorshipGoals,
     status: "submitted",
     submittedAt: new Date(),
   });

@@ -129,8 +129,8 @@ export function FacultyDashboard({
           {[
             {
               icon: <ClipboardList size={18} />,
-              label: "Review Proposals",
-              description: "Check incoming research proposals from students",
+              label: "Review Outreach Requests",
+              description: "Check incoming research proposals, queries, and mentorship requests from students",
               href: "/proposals",
             },
             {
