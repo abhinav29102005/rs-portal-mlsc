@@ -8,12 +8,12 @@ import Image from "next/image";
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.02 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+  hidden: { opacity: 0, y: 15, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring" as const, stiffness: 260, damping: 20 } },
 };
 
 type FacultyData = {
@@ -44,7 +44,7 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
 
   return (
     <Link href={`/discover/faculty/${faculty.id}`} className="block h-full">
-      <motion.div variants={itemVariants} className="card-glass p-6 h-full flex flex-col items-center text-center hover:border-red-500/50 hover:bg-white/[0.02] cursor-pointer transition-colors relative aspect-square justify-center space-y-4">
+      <motion.div variants={itemVariants} whileHover={{ scale: 1.02 }} className="card-glass p-6 h-full flex flex-col items-center text-center hover:border-red-500/50 hover:bg-white/[0.02] cursor-pointer transition-all relative aspect-square justify-center space-y-4">
         {/* Status pill (absolute top-right) */}
         <span
           className={`absolute top-4 right-4 status-pill ${

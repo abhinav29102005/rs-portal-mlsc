@@ -1,4 +1,8 @@
-"use client";
+import os
+
+filepath = "src/components/layout/ProductTour.tsx"
+
+new_content = """"use client";
 
 import { useEffect } from "react";
 import { driver } from "driver.js";
@@ -27,8 +31,8 @@ export function ProductTour({ startTour, onTourEnd }: { startTour: boolean, onTo
       animate: true,
       allowClose: false,
       doneBtnText: "Finish Demo",
-      nextBtnText: "Next →",
-      prevBtnText: "← Previous",
+      nextBtnText: "Next \u2192",
+      prevBtnText: "\u2190 Previous",
       steps: [
         {
           element: '#global-search',
@@ -131,3 +135,7 @@ export function ProductTour({ startTour, onTourEnd }: { startTour: boolean, onTo
 
   return null;
 }
+"""
+
+with open(filepath, "w") as f:
+    f.write(new_content)
