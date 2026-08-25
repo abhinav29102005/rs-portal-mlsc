@@ -15,6 +15,7 @@ export function ProposalModal({ facultyProfileId, facultyName, isOpen, onClose }
   const [outreachType, setOutreachType] = useState<OutreachType>("research");
 
   useEffect(() => {
+    // eslint-disable-next-line
     setMounted(true);
   }, []);
   
@@ -31,8 +32,8 @@ export function ProposalModal({ facultyProfileId, facultyName, isOpen, onClose }
       try {
         await submitProposal(formData);
         onClose();
-      } catch (err: any) {
-        setError(err.message || "Failed to submit request");
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to submit request");
       }
     });
   };
